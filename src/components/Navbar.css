@@ -1,0 +1,62 @@
+header {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 10vh;
+    color: black;
+}
+
+header h1 {
+    width: 100%;
+    height: 100%;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-1);
+    padding: 20px;
+    align-items: center;
+}
+
+nav #left-part,
+nav #central-part,
+nav #right-part {
+    display: flex;
+    align-items: center;
+    width: 30%;
+    height: 100%;
+    gap: 20px;
+}
+
+nav #left-part {
+    justify-content: left;
+}
+
+nav #central-part {
+    justify-content: center;
+}
+
+nav #right-part {
+    justify-content: right;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--font-color-1);
+    font-weight: bold;
+    max-height: 100%;
+}
+
+nav #central-part a {
+    height: 100%;
+}
+
+nav a img {
+    height: 100%;
+}

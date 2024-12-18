@@ -1,0 +1,10 @@
+footer {
+    padding: 20px;
+    box-sizing: border-box;
+    color: var(--font-color-1);
+    background-color: var(--font-color-1);
+}
+
+footer p {
+    margin: 0;
+}
