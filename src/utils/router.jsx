@@ -1,7 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import Root from "../pages/Root";
 import Home from "../pages/Home";
-import About from "../pages/About";
+import Anime from "../pages/Anime";
+import Manga from "../pages/Manga";
 import User from "../pages/User";
 // import ErrorPage from "./pages/ErrorPage";
 
@@ -17,8 +18,12 @@ const router = createBrowserRouter([
                 element: <Home />,
             },
             {
-                path: "about",
-                element: <About />,
+                path: "anime",
+                element: <Anime />,
+            },
+            {
+                path: "manga",
+                element: <Manga />,
             },
             {
                 path: "user",

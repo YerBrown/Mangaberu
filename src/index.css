@@ -4,7 +4,8 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  background-color: var(--background-color);
+  color: var(--text-color);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -19,28 +20,45 @@
   --font-color-1: black;
   --font-color-2: white;
   --font-color-3: blue;
+
+  --background-color: var(--color-1);
+  --text-color: var(--font-color-1);
+  --primary-color: var(--color-1);
+  --secondary-color: var(--color-2);
+}
+
+/* Tema claro */
+@media (prefers-color-scheme: light) {
+  :root {
+    --background-color: var(--color-1);
+    --text-color: var(--font-color-1);
+    --primary-color: var(--color-1);
+    --secondary-color: var(--color-2);
+  }
+}
+
+/* Tema oscuro */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: var(--color-2);
+    --text-color: var(--font-color-2);
+    --primary-color: var(--color-2);
+    --secondary-color: var(--color-1);
+  }
 }
 
 html,
 body {
-  display: flex;
-  flex-direction: column;
-  min-width: 100vw;
-  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
   margin: 0;
   padding: 0;
 }
 
 main {
-  margin-top: 10vh;
-  flex: 1;
   display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-footer {
-  background-color: #f1f1f1;
-  text-align: center;
-  padding: 10px 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  flex: 1;
 }

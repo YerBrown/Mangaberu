@@ -1,0 +1,14 @@
+#anime-menu {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    color: var(--text-color);
+    box-sizing: border-box;
+}
+
+#anime-menu section {
+    display: flex;
+    box-sizing: border-box;
+    overflow: hidden;
+    height: 100vh;
+}
