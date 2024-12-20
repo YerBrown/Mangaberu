@@ -4,15 +4,30 @@ import { useTheme } from "../context/ThemeContext";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SearchBar from "./SearchBar";
 import "./Navbar.css";
+const getCSSVariable = (variableName) => {
+    return getComputedStyle(document.documentElement).getPropertyValue(
+        variableName
+    );
+};
+const primaryColor = getCSSVariable("--primary-color");
 function Navbar() {
     const { theme } = useTheme();
-    const [isActive, setIsActive] = useState(false);
+    const [primaryColor, setPrimaryColor] = useState("");
+    const [navbarStyle, setNavbarStyle] = useState({
+        backgroundColor: "rgba(0, 0, 0, 0)", // Inicialmente transparente
+    });
 
     useEffect(() => {
-        // Detectar scroll para activar el color del nav
+        const primaryColor = getCSSVariable("--primary-color");
+        const rgbColor = hexToRgb(primaryColor); // Convierte hex a RGB si es necesario
+
         const handleScroll = () => {
-            const scrollThreshold = 40;
-            setIsActive(window.scrollY > scrollThreshold);
+            const scrollThreshold = 35; // Umbral en px para alcanzar opacidad completa
+            const scrollPosition = window.scrollY;
+            const opacity = Math.min(scrollPosition / scrollThreshold, 1); // Limita opacidad a 1 máximo
+            setNavbarStyle({
+                backgroundColor: `rgba(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}, ${opacity})`,
+            });
         };
 
         window.addEventListener("scroll", handleScroll);
@@ -21,8 +36,17 @@ function Navbar() {
         };
     }, []);
 
+    const hexToRgb = (hex) => {
+        const bigint = parseInt(hex.replace("#", ""), 16);
+        return {
+            r: (bigint >> 16) & 255,
+            g: (bigint >> 8) & 255,
+            b: bigint & 255,
+        };
+    };
+
     return (
-        <nav className={isActive ? "active" : ""}>
+        <nav style={navbarStyle}>
             <div id="left-part">
                 <Link to="/">Home</Link>
                 <Link to="/anime">Anime</Link>

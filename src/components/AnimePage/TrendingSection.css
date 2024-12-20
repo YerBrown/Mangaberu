@@ -1,8 +1,45 @@
 #anime-menu #trending-section {
     background-color: var(--primary-color);
     flex-direction: column;
-    padding-top: 80px;
+    padding-top: 70px;
     box-sizing: border-box;
+    overflow: hidden;
+    height: 900px;
+    position: relative;
+}
+
+#trending-section .banner {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    object-position: center;
+    filter: blur(2px);
+    overflow: hidden;
+    z-index: 1;
+}
+
+#trending-section iframe {
+    position: absolute;
+    width: 100%;
+    padding-top: 70px;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    pointer-events: none;
+    box-sizing: border-box;
+    border: none;
+    background-color: var(--primary-color);
+}
+
+#trending-section iframe.active {
+    opacity: 1;
+    pointer-events: all;
 }
 
 #anime-menu .current-anime {
@@ -13,44 +50,132 @@
     box-sizing: border-box;
     width: 100%;
     height: 70%;
-    padding: 20px;
-    z-index: 1;
-    color: var(--text-color);
+    padding: 20px 10%;
+    z-index: 3;
+    color: var(--text-color-1);
     gap: 20px;
-
+    overflow: hidden;
+    pointer-events: all;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
 }
 
-#trending-section img.banner {
-    position: absolute;
-    width: 100%;
+#anime-menu .current-anime.disable {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.current-anime .current-anime-buttons {
+    display: flex;
+    flex-direction: column;
+    width: 325px;
     height: 100%;
-    top: 0;
-    left: 0;
-    object-fit: cover;
-    object-position: center;
-    /* filter: blur(10px); */
+}
+
+.current-anime .buttons-container {
+    display: flex;
+    padding: 10px 0;
+    flex-direction: row;
+    justify-content: left;
+    gap: 10px;
+    width: 100%;
+    height: 30px;
+}
+
+.buttons-container button {
+    display: flex;
+    align-items: center;
+    height: auto;
 }
 
 .current-anime img {
-    width: 350px;
-    height: 100%;
-    overflow: hidden;
+    width: 325px;
+    height: 500px;
     object-fit: cover;
     border-radius: 10px;
 }
 
-#anime-menu .top-5 {
-    display: grid;
+.current-anime-data {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.current-anime-data .anime-data {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
     box-sizing: border-box;
+    height: 500px;
+    padding: 20px 0;
+}
+
+.current-anime-data h2,
+.current-anime-data h3 {
+    margin: 10px 0;
+
+}
+
+.current-anime-data h4 {
+    font-weight: normal;
+    margin: 0;
+}
+
+.current-anime-data p {
+    margin: 5px 0;
+}
+
+.current-anime-data .year-genres {
+    display: flex;
+    flex-direction: row;
     align-items: center;
-    grid-template-columns: repeat(5, minmax(100px, 1fr));
-    grid-template-rows: 100%;
-    padding: 20px;
+    gap: 5px;
+}
+
+.year-genres h4 {
+    border-right: 2px solid var(--text-color-1);
+    padding-right: 5px;
+}
+
+#trending-section>h3 {
+    z-index: 2;
+    padding: 0 10%;
+    margin: 0;
+}
+
+#anime-menu .top-5 {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 20px 10%;
     width: 100%;
     height: 30%;
+
+    z-index: 3;
+    pointer-events: all;
+    background: linear-gradient(to top, var(--primary-color) 30%, rgba(0, 0, 0, 0)100%);
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+#anime-menu .top-5.disable {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#anime-menu .top-5 h3 {
+    display: flex;
+    height: 20%;
+}
+
+.anime-items-container {
+    display: grid;
+    box-sizing: border-box;
+    grid-template-columns: repeat(5, minmax(100px, 1fr));
+    grid-template-rows: 80%;
+    width: 100%;
+    height: 80%;
     gap: 10px;
-    z-index: 1;
-    background: linear-gradient(to top, var(--primary-color) 50%, rgba(0, 0, 0, 0)100%);
 }
 
 .trending-anime-item {
@@ -61,7 +186,7 @@
     position: relative;
     padding: 20px;
     width: 100%;
-    height: 70%;
+    height: 100%;
     border-radius: 10px;
     overflow: hidden;
     transform: scale(1);

@@ -20,9 +20,21 @@ export const GET_MEDIA_COVER_IMAGES = gql`
 `;
 
 export const GET_ANIME_TRENDING = gql`
-    query ($type: MediaType, $sort: [MediaSort], $page: Int, $perPage: Int) {
+    query (
+        $type: MediaType
+        $sort: [MediaSort]
+        $page: Int
+        $perPage: Int
+        $season: MediaSeason
+        $seasonYear: Int
+    ) {
         Page(page: $page, perPage: $perPage) {
-            media(type: $type, sort: $sort) {
+            media(
+                type: $type
+                sort: $sort
+                season: $season
+                seasonYear: $seasonYear
+            ) {
                 id
                 title {
                     english
@@ -43,6 +55,10 @@ export const GET_ANIME_TRENDING = gql`
                     id
                     site
                     thumbnail
+                }
+                averageScore
+                startDate {
+                    year
                 }
             }
         }

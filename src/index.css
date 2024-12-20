@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   background-color: var(--background-color);
-  color: var(--text-color);
+  color: var(--text-color-1);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -22,7 +22,8 @@
   --font-color-3: blue;
 
   --background-color: var(--color-1);
-  --text-color: var(--font-color-1);
+  --text-color-1: var(--font-color-1);
+  --text-color-2: var(--font-color-2);
   --primary-color: var(--color-1);
   --secondary-color: var(--color-2);
 }
@@ -31,7 +32,8 @@
 @media (prefers-color-scheme: light) {
   :root {
     --background-color: var(--color-1);
-    --text-color: var(--font-color-1);
+    --text-color-1: var(--font-color-1);
+    --text-color-2: var(--font-color-2);
     --primary-color: var(--color-1);
     --secondary-color: var(--color-2);
   }
@@ -41,7 +43,8 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background-color: var(--color-2);
-    --text-color: var(--font-color-2);
+    --text-color-1: var(--font-color-2);
+    --text-color-2: var(--font-color-1);
     --primary-color: var(--color-2);
     --secondary-color: var(--color-1);
   }
@@ -51,7 +54,7 @@ html,
 body {
   font-family: Arial, sans-serif;
   background-color: var(--background-color);
-  color: var(--text-color);
+  color: var(--text-color-1);
   margin: 0;
   padding: 0;
 }
