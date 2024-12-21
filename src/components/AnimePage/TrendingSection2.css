@@ -1,3 +1,4 @@
+/* General Section Styles */
 #anime-menu #trending-section {
     background-color: var(--primary-color);
     flex-direction: column;
@@ -16,7 +17,7 @@
     left: 0;
     object-fit: cover;
     object-position: center;
-    filter: blur(2px);
+    /* filter: blur(2px); */
     overflow: hidden;
     z-index: 1;
 }
@@ -42,7 +43,7 @@
     pointer-events: all;
 }
 
-/*Current anime*/
+/* Current Anime Section */
 #anime-menu .current-anime {
     position: relative;
     display: flex;
@@ -66,21 +67,71 @@
     pointer-events: none;
 }
 
-/*Current anime left part*/
-.current-anime .current-anime-buttons {
-    display: flex;
-    flex-direction: column;
-    width: 250px;
-    height: 100%;
-}
-
-.current-anime .current-anime-buttons img {
-    width: 250px;
-    height: 350px;
+.current-anime img {
+    width: 325px;
+    height: 500px;
     object-fit: cover;
     border-radius: 10px;
 }
 
+/* Current Anime Data Section */
+.current-anime-data {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-sizing: border-box;
+    background-color: rgb(0, 0, 0, 0.8);
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+}
+
+.current-anime-data h2 {
+    font-size: clamp(1rem, 200%, 3rem);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    text-align: left;
+    margin: 10px 0;
+}
+
+.current-anime-data .year-genres {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.year-genres h4 {
+    border-right: 2px solid var(--text-color-1);
+    padding-right: 5px;
+    font-weight: normal;
+    margin: 0;
+}
+
+.year-genres p {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    margin: 0 0 0 5px;
+}
+
+.current-anime-data>p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-clamp: 8;
+    -webkit-line-clamp: 8;
+    -webkit-box-orient: vertical;
+    text-align: left;
+    max-height: calc(1.5rem * 8);
+    line-height: 1.5rem;
+}
+
+/* Button Container Section */
 .current-anime .buttons-container {
     display: flex;
     padding: 10px 0;
@@ -94,88 +145,12 @@
 .buttons-container button {
     display: flex;
     align-items: center;
-    height: auto;
+    gap: 5px;
     padding: 5px;
-    gap: 5px;
+    box-sizing: content-box;
 }
 
-/*Current anime right part data*/
-.current-anime-data {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
-.current-anime-data .anime-data {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    box-sizing: border-box;
-    height: 350px;
-}
-
-.current-anime-data h2,
-.current-anime-data h3 {
-    margin: 10px 0;
-}
-
-.current-anime-data h2 {
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-align: left;
-}
-
-.current-anime-data h4 {
-    font-weight: normal;
-    margin: 0;
-}
-
-.current-anime-data p {
-    margin: 5px 0;
-}
-
-.current-anime-data .year-genres {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 5px;
-}
-
-.year-genres h4 {
-    border-right: 2px solid var(--text-color-1);
-    padding-right: 5px;
-}
-
-.year-genres p {
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-align: left;
-    margin: 0 0 0 5px;
-}
-
-.current-anime-data .description {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    line-clamp: 8;
-    -webkit-line-clamp: 8;
-    -webkit-box-orient: vertical;
-    text-align: left;
-    max-height: calc(1.5rem * 8);
-    line-height: 1.5rem;
-}
-
-
-#trending-section>h3 {
-    z-index: 2;
-    padding: 0 10%;
-    margin: 0;
-}
-
+/* Top 5 Section */
 #anime-menu .top-5 {
     display: flex;
     flex-direction: column;
@@ -183,10 +158,9 @@
     padding: 20px 10%;
     width: 100%;
     height: 30%;
-
     z-index: 3;
     pointer-events: all;
-    background: linear-gradient(to top, var(--primary-color) 30%, rgba(0, 0, 0, 0)100%);
+    background: linear-gradient(to top, var(--primary-color) 30%, rgba(0, 0, 0, 0) 100%);
     opacity: 1;
     transition: opacity 0.5s ease-in-out;
 }
@@ -196,18 +170,13 @@
     pointer-events: none;
 }
 
-#anime-menu .top-5>h3 {
-    display: flex;
-    height: 20%;
-    align-items: center;
-    font-size: 1rem;
-    margin: 0;
-}
 
+/* Anime Items Section */
 .anime-items-container {
     display: grid;
     box-sizing: border-box;
-    grid-template-columns: repeat(5, 1fr);
+    align-items: center;
+    grid-template-columns: repeat(5, minmax(100px, 1fr));
     width: 100%;
     height: 80%;
     gap: 10px;
@@ -220,19 +189,19 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    padding: 10px;
+    padding: 20px;
     width: 100%;
     height: 100%;
     border-radius: 10px;
     overflow: hidden;
     transform: scale(1);
     transition: transform 0.2s ease-in-out;
+    padding: 10px;
 }
 
 .trending-anime-item:hover {
     transform: scale(1.05);
 }
-
 
 .trending-anime-item img {
     position: absolute;
@@ -243,7 +212,6 @@
     object-fit: cover;
     object-position: top;
     z-index: 1;
-    filter: blur(1px);
 }
 
 .trending-anime-item .filter {

@@ -1,17 +1,15 @@
-import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { useTheme } from "../../context/ThemeContext";
 import { GET_ANIME_TRENDING } from "../../graphql/queries";
 import DOMPurify from "dompurify";
-import "./TrendingSection.css";
+import "./TrendingSection2.css";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import SentimentSatisfiedOutlinedIcon from "@mui/icons-material/SentimentSatisfiedOutlined";
 import SentimentNeutralOutlinedIcon from "@mui/icons-material/SentimentNeutralOutlined";
 import SentimentDissatisfiedOutlinedIcon from "@mui/icons-material/SentimentDissatisfiedOutlined";
 import PlayCircleRoundedIcon from "@mui/icons-material/PlayCircleRounded";
 import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
-
 function getCurrentSeasonAndYear() {
     const date = new Date();
     const month = date.getMonth() + 1;
@@ -30,7 +28,7 @@ function getCurrentSeasonAndYear() {
 
     return { season, seasonYear: year };
 }
-function TrendingSection() {
+function TrendingSection2() {
     const { season, seasonYear } = getCurrentSeasonAndYear();
     const { theme } = useTheme();
     const [currentTrendingIndex, setCurrentTrendingIndex] = useState(0);
@@ -45,16 +43,12 @@ function TrendingSection() {
             seasonYear: seasonYear,
         },
     });
-    const navigate = useNavigate();
 
     const handleTrendingChange = (index) => {
         setCurrentTrendingIndex(index);
     };
     const handleWatchTrailer = (disable) => {
         setIsWatchTrailer(disable);
-    };
-    const handleNavigate = (route) => {
-        navigate(route);
     };
 
     if (loading)
@@ -69,7 +63,7 @@ function TrendingSection() {
                 <p>Error: {error.message}</p>;
             </section>
         );
-    const sanitizedDescriptionHTML = DOMPurify.sanitize(
+    const sanitizedHTML = DOMPurify.sanitize(
         data.Page.media[currentTrendingIndex].description
     );
     const averageScore = data.Page.media[currentTrendingIndex].averageScore;
@@ -96,13 +90,6 @@ function TrendingSection() {
                 alt="banner-image"
                 className="banner"
             />
-            <div
-                className={
-                    theme == "light"
-                        ? "banner-filter light"
-                        : "banner-filter dark"
-                }
-            ></div>
             <iframe
                 src={`https://www.youtube.com/embed/${data.Page.media[currentTrendingIndex].trailer.id}`}
                 title="YouTube video player"
@@ -110,77 +97,43 @@ function TrendingSection() {
                 allowFullScreen
                 className={isWatchTrailer ? "active" : ""}
             ></iframe>
+            <div
+                className={
+                    theme == "light"
+                        ? "banner-filter light"
+                        : "banner-filter dark"
+                }
+            ></div>
             <div className={`current-anime ${isWatchTrailer ? "disable" : ""}`}>
-                <div className="current-anime-buttons">
-                    <img
-                        src={
-                            data.Page.media[currentTrendingIndex].coverImage
-                                .extraLarge
-                        }
-                        alt="current-anime-cover"
-                    />
-                    <div className="buttons-container">
-                        <button>Add To List</button>
-                        <button>
-                            <FavoriteOutlinedIcon />
-                        </button>
-                    </div>
-                </div>
-
                 <div className="current-anime-data">
-                    <div className="anime-data">
-                        <h2>
+                    <h2>
+                        {data.Page.media[currentTrendingIndex].title.english}
+                    </h2>
+                    <div className="year-genres">
+                        <h4>
                             {
-                                data.Page.media[currentTrendingIndex].title
-                                    .english
+                                data.Page.media[currentTrendingIndex].startDate
+                                    .year
                             }
-                        </h2>
-                        <div className="year-genres">
-                            <h4>
-                                {
-                                    data.Page.media[currentTrendingIndex]
-                                        .startDate.year
-                                }
-                            </h4>
-                            <p>
-                                {data.Page.media[
-                                    currentTrendingIndex
-                                ].genres.join(", ")}
-                            </p>
-                        </div>
+                        </h4>
                         <p>
-                            {"Average Score: "}
-                            {data.Page.media[currentTrendingIndex].averageScore}
-                            {" % "}
-                            {renderFace()}
+                            {data.Page.media[currentTrendingIndex].genres.join(
+                                ", "
+                            )}
                         </p>
-                        {data.Page.media[currentTrendingIndex].episodes !==
-                            null && (
-                            <p>
-                                Episodes:{" "}
-                                {data.Page.media[currentTrendingIndex].episodes}
-                            </p>
-                        )}
-                        <p
-                            className="description"
-                            dangerouslySetInnerHTML={{
-                                __html: sanitizedDescriptionHTML,
-                            }}
-                        ></p>
                     </div>
+                    <p
+                        dangerouslySetInnerHTML={{
+                            __html: sanitizedHTML,
+                        }}
+                    ></p>
                     <div className="buttons-container">
                         <button onClick={() => handleWatchTrailer(true)}>
-                            {"Watch Trailer"}
+                            {"Watch Trailer "}
                             {<PlayCircleRoundedIcon />}
                         </button>
-                        <button
-                            onClick={() =>
-                                handleNavigate(
-                                    `/anime/${data.Page.media[currentTrendingIndex].id}`
-                                )
-                            }
-                        >
-                            {"More Info"}
+                        <button>
+                            {"More Info "}
                             {<InfoRoundedIcon />}
                         </button>
                     </div>
@@ -220,4 +173,4 @@ function TrendingSection() {
     );
 }
 
-export default TrendingSection;
+export default TrendingSection2;

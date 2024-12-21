@@ -1,7 +1,13 @@
+import Navbar from "../components/Navbar";
 function Manga() {
     return (
         <>
-            <h1>Manga</h1>
+            <header>
+                <Navbar activeMenu="manga" />
+            </header>
+            <main>
+                <h1>Manga</h1>
+            </main>
         </>
     );
 }

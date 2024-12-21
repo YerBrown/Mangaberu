@@ -10,7 +10,7 @@ const getCSSVariable = (variableName) => {
     );
 };
 const primaryColor = getCSSVariable("--primary-color");
-function Navbar() {
+function Navbar({ activeMenu = "" }) {
     const { theme } = useTheme();
     const [primaryColor, setPrimaryColor] = useState("");
     const [navbarStyle, setNavbarStyle] = useState({
@@ -48,9 +48,21 @@ function Navbar() {
     return (
         <nav style={navbarStyle}>
             <div id="left-part">
-                <Link to="/">Home</Link>
-                <Link to="/anime">Anime</Link>
-                <Link to="/manga">Manga</Link>
+                <Link to="/" className={activeMenu === "home" ? "active" : ""}>
+                    Home
+                </Link>
+                <Link
+                    to="/anime"
+                    className={activeMenu === "anime" ? "active" : ""}
+                >
+                    Anime
+                </Link>
+                <Link
+                    to="/manga"
+                    className={activeMenu === "manga" ? "active" : ""}
+                >
+                    Manga
+                </Link>
             </div>
             <div id="central-part">
                 <Link to="/">

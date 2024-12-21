@@ -64,3 +64,48 @@ export const GET_ANIME_TRENDING = gql`
         }
     }
 `;
+
+export const GET_ANIME_BY_ID = gql`
+    query Media($mediaId: Int) {
+        Media(id: $mediaId) {
+            id
+            title {
+                english
+                romaji
+            }
+            genres
+            episodes
+            averageScore
+            coverImage {
+                extraLarge
+                large
+                medium
+            }
+            bannerImage
+            externalLinks {
+                color
+                icon
+                site
+                url
+                type
+            }
+            isFavourite
+            trailer {
+                id
+                site
+                thumbnail
+            }
+            status
+            startDate {
+                day
+                month
+                year
+            }
+            endDate {
+                day
+                month
+                year
+            }
+        }
+    }
+`;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useQuery, gql } from "@apollo/client";
 import { useTheme } from "../context/ThemeContext";
 import MangaGallery from "../components/HomePage/MangaGallery";
-
+import Navbar from "../components/Navbar";
 import "./Home.css";
 function Home() {
     // Array de URLs de imágenes
@@ -34,33 +34,44 @@ function Home() {
     }, [bannerImages]);
 
     return (
-        <div id="home-menu">
-            <section id="main-banner">
-                <img src={bannerImages[currentImageIndex]} alt="Main Banner" />
-                <div
-                    className={
-                        theme == "light"
-                            ? "banner-filter light"
-                            : "banner-filter dark"
-                    }
-                ></div>
-                <div id="banner-text">
-                    <h2>Explore the World of Anime and Manga!</h2>
-                    <p>
-                        Discover the most popular anime and manga! <br />
-                        Your next adventure awaits.
-                    </p>
+        <>
+            <header>
+                <Navbar activeMenu="home" />
+            </header>
+            <main>
+                <div id="home-menu">
+                    <section id="main-banner">
+                        <img
+                            src={bannerImages[currentImageIndex]}
+                            alt="Main Banner"
+                        />
+                        <div
+                            className={
+                                theme == "light"
+                                    ? "banner-filter light"
+                                    : "banner-filter dark"
+                            }
+                        ></div>
+                        <div id="banner-text">
+                            <h2>Explore the World of Anime and Manga!</h2>
+                            <p>
+                                Discover the most popular anime and manga!{" "}
+                                <br />
+                                Your next adventure awaits.
+                            </p>
+                        </div>
+                    </section>
+                    <section id="trending-manga">
+                        <MangaGallery
+                            type={"MANGA"}
+                            sort={["TRENDING_DESC"]}
+                            page={1}
+                            perPage={5}
+                        />
+                    </section>
                 </div>
-            </section>
-            <section id="trending-manga">
-                <MangaGallery
-                    type={"MANGA"}
-                    sort={["TRENDING_DESC"]}
-                    page={1}
-                    perPage={5}
-                />
-            </section>
-        </div>
+            </main>
+        </>
     );
 }
 

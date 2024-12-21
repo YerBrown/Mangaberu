@@ -6,12 +6,7 @@ import "./Root.css";
 function Root() {
     return (
         <>
-            <header>
-                <Navbar />
-            </header>
-            <main>
-                <Outlet />
-            </main>
+            <Outlet />
             <footer>
                 <Footer />
             </footer>
