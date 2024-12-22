@@ -1,18 +1,34 @@
 import { gql } from "@apollo/client";
 
-export const GET_MEDIA_COVER_IMAGES = gql`
-    query ($type: MediaType, $sort: [MediaSort], $page: Int, $perPage: Int) {
+export const GET_MEDIA_TRENDING_SEASON = gql`
+    query Recommendation(
+        $type: MediaType
+        $sort: [MediaSort]
+        $page: Int
+        $perPage: Int
+        $season: MediaSeason
+        $seasonYear: Int
+    ) {
         Page(page: $page, perPage: $perPage) {
-            media(type: $type, sort: $sort) {
+            media(
+                type: $type
+                sort: $sort
+                seasonYear: $seasonYear
+                season: $season
+            ) {
                 id
-                chapters
-                coverImage {
-                    extraLarge
-                }
                 title {
                     english
-                    native
                     romaji
+                }
+                status
+                genres
+                episodes
+                startDate {
+                    year
+                }
+                coverImage {
+                    extraLarge
                 }
             }
         }
