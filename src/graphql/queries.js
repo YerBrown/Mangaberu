@@ -109,3 +109,41 @@ export const GET_ANIME_BY_ID = gql`
         }
     }
 `;
+
+export const GET_GENRES = gql`
+    query Media {
+        GenreCollection
+    }
+`;
+
+export const GET_TOP_10_SORT_GENRE = gql`
+    query Media(
+        $page: Int
+        $perPage: Int
+        $genreIn: [String]
+        $sort: [MediaSort]
+        $type: MediaType
+    ) {
+        Page(page: $page, perPage: $perPage) {
+            media(genre_in: $genreIn, sort: $sort, type: $type) {
+                id
+                title {
+                    english
+                    romaji
+                }
+                startDate {
+                    year
+                }
+                genres
+                episodes
+                status
+                averageScore
+                coverImage {
+                    extraLarge
+                    large
+                    medium
+                }
+            }
+        }
+    }
+`;

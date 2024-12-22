@@ -1,6 +1,6 @@
 import Navbar from "../components/Navbar";
 import TrendingSection from "../components/AnimePage/TrendingSection";
-// import TrendingSection2 from "../components/AnimePage/TrendingSection2";
+import AnimeTop10FilterSection from "../components/AnimePage/AnimeTop10FilterSection";
 import "./Anime.css";
 function Anime() {
     return (
@@ -11,6 +11,7 @@ function Anime() {
             <main>
                 <div id="anime-menu">
                     <TrendingSection />
+                    <AnimeTop10FilterSection />
                 </div>
             </main>
         </>

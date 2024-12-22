@@ -4,13 +4,13 @@ import { useQuery } from "@apollo/client";
 import { useTheme } from "../../context/ThemeContext";
 import { GET_ANIME_TRENDING } from "../../graphql/queries";
 import DOMPurify from "dompurify";
-import "./TrendingSection.css";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import SentimentSatisfiedOutlinedIcon from "@mui/icons-material/SentimentSatisfiedOutlined";
 import SentimentNeutralOutlinedIcon from "@mui/icons-material/SentimentNeutralOutlined";
 import SentimentDissatisfiedOutlinedIcon from "@mui/icons-material/SentimentDissatisfiedOutlined";
 import PlayCircleRoundedIcon from "@mui/icons-material/PlayCircleRounded";
 import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
+import "./TrendingSection.css";
 
 function getCurrentSeasonAndYear() {
     const date = new Date();

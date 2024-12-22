@@ -1,0 +1,46 @@
+#top10-filter-section {
+    height: 1000px;
+    background-color: var(--primary-color);
+    flex-direction: column;
+    padding: 20px;
+}
+
+#top10-filter-section>h2 {
+    margin: 0;
+}
+
+#top10-filter-section .filters-container {
+    height: 20%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.filters-container h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.filters-container .sort-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.filters-container .genre-buttons {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    height: auto;
+    gap: 10px;
+}
+
+.filter-button.active {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.filter-button.active p {
+    transform: scale(1.1);
+}
