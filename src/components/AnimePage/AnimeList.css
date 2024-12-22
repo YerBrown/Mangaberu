@@ -1,5 +1,11 @@
 .anime-list {
+    display: flex;
+    flex-direction: row;
     height: 80%;
+}
+
+.anime-card-container {
+    height: 100%;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(2, 1fr);

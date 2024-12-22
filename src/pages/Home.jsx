@@ -53,11 +53,10 @@ function Home() {
                             }
                         ></div>
                         <div id="banner-text">
-                            <h2>Explore the World of Anime and Manga!</h2>
+                            <h2>Your next adventure begins here!</h2>
                             <p>
-                                Discover the most popular anime and manga!{" "}
-                                <br />
-                                Your next adventure awaits.
+                                Keep a record of what you love and explore new
+                                stories waiting for you
                             </p>
                         </div>
                     </section>

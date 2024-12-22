@@ -12,6 +12,7 @@ function AnimeList({ sortFilter, genreFilter, mediaType }) {
             genreIn: genreFilter,
         },
     });
+
     const navigate = useNavigate();
     if (loading)
         return (
@@ -31,31 +32,36 @@ function AnimeList({ sortFilter, genreFilter, mediaType }) {
     };
     return (
         <div className="anime-list">
-            {data.Page.media.map((anime) => (
-                <button
-                    key={anime.id}
-                    className="anime-card"
-                    onClick={() => handleNavigate(`/anime/${anime.id}`)}
-                >
-                    <img
-                        src={anime.coverImage.extraLarge}
-                        alt={anime.title.romaji || anime.title.english}
-                    />
-                    <div className="anime-data">
-                        <h3>{anime.title.romaji || anime.title.english}</h3>
-                        <div className="genres-episodes">
-                            <p className="genres"> {anime.genres.join(", ")}</p>
-                            {anime.episodes != null && (
-                                <p>Episodes: {anime.episodes}</p>
-                            )}
+            <div className="anime-card-container">
+                {data.Page.media.map((anime) => (
+                    <button
+                        key={anime.id}
+                        className="anime-card"
+                        onClick={() => handleNavigate(`/anime/${anime.id}`)}
+                    >
+                        <img
+                            src={anime.coverImage.extraLarge}
+                            alt={anime.title.romaji || anime.title.english}
+                        />
+                        <div className="anime-data">
+                            <h3>{anime.title.romaji || anime.title.english}</h3>
+                            <div className="genres-episodes">
+                                <p className="genres">
+                                    {" "}
+                                    {anime.genres.join(", ")}
+                                </p>
+                                {anime.episodes != null && (
+                                    <p>Episodes: {anime.episodes}</p>
+                                )}
+                            </div>
+                            <div className="score-status">
+                                <p>Score: {anime.averageScore} %</p>
+                                <p>Status: {anime.status}</p>
+                            </div>
                         </div>
-                        <div className="score-status">
-                            <p>Score: {anime.averageScore} %</p>
-                            <p>Status: {anime.status}</p>
-                        </div>
-                    </div>
-                </button>
-            ))}
+                    </button>
+                ))}
+            </div>
         </div>
     );
 }

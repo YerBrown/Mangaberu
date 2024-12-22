@@ -144,6 +144,12 @@ export const GET_TOP_10_SORT_GENRE = gql`
                     medium
                 }
             }
+            pageInfo {
+                currentPage
+                hasNextPage
+                total
+                perPage
+            }
         }
     }
 `;
