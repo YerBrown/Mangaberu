@@ -5,7 +5,7 @@ import { useTheme } from "../context/ThemeContext";
 import Navbar from "../components/Navbar";
 import MediaGallery from "../components/HomePage/MediaGallery";
 import AnimeUpcomingNextSeason from "../components/HomePage/AnimeUpcomingNextSeason";
-
+import MyListSummary from "../components/HomePage/MyListSummary";
 import "./Home.css";
 
 function getSeasonAndYear() {
@@ -149,6 +149,7 @@ function Home() {
                         season={nextSeason}
                         seasonYear={nextSeasonYear}
                     />
+                    <MyListSummary />
                 </div>
             </main>
         </>

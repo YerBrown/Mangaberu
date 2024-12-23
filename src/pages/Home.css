@@ -68,16 +68,27 @@
 #trending-this-season .select-media-container {
     position: relative;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    height: 20%;
+    justify-content: space-between;
     padding: 20px;
+}
+
+#trending-this-season .select-media-container>h2 {
+    margin: 0;
+}
+
+#trending-this-season .select-media-container>h2,
+#trending-this-season .select-media-container>div,
+#trending-this-season .select-media-container>a {
+    width: 30%;
 }
 
 .select-media-container div {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     gap: 20px;
 }
 
@@ -91,10 +102,8 @@
     font-weight: bold;
 }
 
-.select-media-container a {
-    position: absolute;
-    right: 20px;
-    bottom: 20px;
+#trending-this-season .select-media-container>a {
+    text-align: right;
 }
 
 #trending-this-season .media-gallery {

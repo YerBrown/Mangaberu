@@ -118,6 +118,7 @@ function AnimeUpcomingNextSeason({ season, seasonYear }) {
                 <div className="anime-list-container">
                     {animesArray.map((animeData, index) => (
                         <button
+                            key={animeData.id}
                             className={"upcoming-season-anime-item"}
                             onClick={() => handleSelectAnimeDirectly(index)}
                         >
