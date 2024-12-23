@@ -4,6 +4,7 @@
     flex: 1;
     color: var(--text-color);
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 #home-menu section {
@@ -11,6 +12,7 @@
     box-sizing: border-box;
     overflow: hidden;
     height: 800px;
+    width: 100%;
 }
 
 #main-banner {

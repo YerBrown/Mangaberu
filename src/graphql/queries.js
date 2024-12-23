@@ -35,6 +35,42 @@ export const GET_MEDIA_TRENDING_SEASON = gql`
     }
 `;
 
+export const GET_ANIME_UPCOMING_SEASON = gql`
+    query Page(
+        $page: Int
+        $perPage: Int
+        $type: MediaType
+        $status: MediaStatus
+        $season: MediaSeason
+        $sort: [MediaSort]
+    ) {
+        Page(page: $page, perPage: $perPage) {
+            media(type: $type, status: $status, season: $season, sort: $sort) {
+                id
+                title {
+                    english
+                    romaji
+                }
+                coverImage {
+                    extraLarge
+                    large
+                    medium
+                }
+                trailer {
+                    id
+                    site
+                }
+                startDate {
+                    day
+                    month
+                    year
+                }
+                genres
+            }
+        }
+    }
+`;
+
 export const GET_ANIME_TRENDING = gql`
     query (
         $type: MediaType

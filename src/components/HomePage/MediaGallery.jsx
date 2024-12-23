@@ -41,7 +41,8 @@ function MediaGallery({ type, sort, page, perPage, season, seasonYear }) {
                             }
                         />
                         <div className="more-info">
-                            <p>Hola</p>
+                            <p>Genres: {mediaItem.genres.join(", ")}</p>
+                            <p>{mediaItem.episodes} Episodes</p>
                         </div>
                     </div>
                     <h3>{mediaItem.title.english || mediaItem.title.romaji}</h3>

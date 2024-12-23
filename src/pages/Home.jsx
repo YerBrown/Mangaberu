@@ -2,28 +2,39 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useQuery, gql } from "@apollo/client";
 import { useTheme } from "../context/ThemeContext";
-import MediaGallery from "../components/HomePage/MediaGallery";
 import Navbar from "../components/Navbar";
+import MediaGallery from "../components/HomePage/MediaGallery";
+import AnimeUpcomingNextSeason from "../components/HomePage/AnimeUpcomingNextSeason";
+
 import "./Home.css";
 
-function getCurrentSeasonAndYear() {
+function getSeasonAndYear() {
     const date = new Date();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
 
     let season;
+    let nextSeason;
+    let nextSeasonYear = year;
+
     if (month >= 1 && month <= 3) {
         season = "WINTER"; // Enero, Febrero, Marzo
+        nextSeason = "SPRING"; // Invierno ➡ Primavera
     } else if (month >= 4 && month <= 6) {
         season = "SPRING"; // Abril, Mayo, Junio
+        nextSeason = "SUMMER"; // Primavera ➡ Verano
     } else if (month >= 7 && month <= 9) {
         season = "SUMMER"; // Julio, Agosto, Septiembre
+        nextSeason = "FALL"; // Verano ➡ Otoño
     } else {
         season = "FALL"; // Octubre, Noviembre, Diciembre
+        nextSeason = "WINTER"; // Otoño ➡ Invierno (cambia el año)
+        nextSeasonYear += 1;
     }
 
-    return { season, seasonYear: year };
+    return { season, seasonYear: year, nextSeason, nextSeasonYear };
 }
+
 function Home() {
     // Array de URLs de imágenes
     const bannerImages = [
@@ -41,7 +52,8 @@ function Home() {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const { theme } = useTheme();
     const [trendingMediaType, setTrendingMediaType] = useState("ANIME");
-    const { season, seasonYear } = getCurrentSeasonAndYear();
+    const { season, seasonYear, nextSeason, nextSeasonYear } =
+        getSeasonAndYear();
     useEffect(() => {
         // Cambiar imagen cada 5 segundos
         const interval = setInterval(() => {
@@ -133,6 +145,10 @@ function Home() {
                             }
                         />
                     </section>
+                    <AnimeUpcomingNextSeason
+                        season={nextSeason}
+                        seasonYear={nextSeasonYear}
+                    />
                 </div>
             </main>
         </>
