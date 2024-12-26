@@ -21,9 +21,11 @@ export const GET_MEDIA_TRENDING_SEASON = gql`
                     english
                     romaji
                 }
+                type
                 status
                 genres
                 episodes
+                chapters
                 startDate {
                     year
                 }
@@ -42,10 +44,17 @@ export const GET_ANIME_UPCOMING_SEASON = gql`
         $type: MediaType
         $status: MediaStatus
         $season: MediaSeason
+        $seasonYear: Int
         $sort: [MediaSort]
     ) {
         Page(page: $page, perPage: $perPage) {
-            media(type: $type, status: $status, season: $season, sort: $sort) {
+            media(
+                type: $type
+                status: $status
+                season: $season
+                seasonYear: $seasonYear
+                sort: $sort
+            ) {
                 id
                 title {
                     english
@@ -53,12 +62,9 @@ export const GET_ANIME_UPCOMING_SEASON = gql`
                 }
                 coverImage {
                     extraLarge
-                    large
-                    medium
                 }
                 trailer {
                     id
-                    site
                 }
                 startDate {
                     day
@@ -125,6 +131,7 @@ export const GET_ANIME_BY_ID = gql`
                 english
                 romaji
             }
+            description
             genres
             episodes
             averageScore

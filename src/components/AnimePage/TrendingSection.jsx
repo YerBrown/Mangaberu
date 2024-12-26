@@ -129,7 +129,7 @@ function TrendingSection() {
 
                 <div className="current-anime-data">
                     <div className="anime-data">
-                        <h2>
+                        <h2 className="title">
                             {
                                 data.Page.media[currentTrendingIndex].title
                                     .english
@@ -148,7 +148,7 @@ function TrendingSection() {
                                 ].genres.join(", ")}
                             </p>
                         </div>
-                        <p>
+                        <p className="score">
                             {"Average Score: "}
                             {data.Page.media[currentTrendingIndex].averageScore}
                             {" % "}
@@ -156,7 +156,7 @@ function TrendingSection() {
                         </p>
                         {data.Page.media[currentTrendingIndex].episodes !==
                             null && (
-                            <p>
+                            <p className="episodes">
                                 Episodes:{" "}
                                 {data.Page.media[currentTrendingIndex].episodes}
                             </p>

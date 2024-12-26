@@ -4,7 +4,7 @@
     padding-top: 70px;
     box-sizing: border-box;
     overflow: hidden;
-    height: 700px;
+    height: 600px;
     position: relative;
 }
 
@@ -61,6 +61,10 @@
     transition: opacity 0.5s ease-in-out;
 }
 
+#anime-menu .current-anime button:active {
+    color: var(--text-color-2);
+}
+
 #anime-menu .current-anime.disable {
     opacity: 0;
     pointer-events: none;
@@ -75,8 +79,8 @@
 }
 
 .current-anime .current-anime-buttons img {
-    width: 250px;
-    height: 350px;
+    width: 200px;
+    height: 280px;
     object-fit: cover;
     border-radius: 10px;
 }
@@ -104,6 +108,7 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    width: 100%;
 }
 
 .current-anime-data .anime-data {
@@ -111,12 +116,13 @@
     flex-direction: column;
     overflow: hidden;
     box-sizing: border-box;
-    height: 350px;
+    height: 280px;
 }
+
 
 .current-anime-data h2,
 .current-anime-data h3 {
-    margin: 10px 0;
+    margin: 0;
 }
 
 .current-anime-data h2 {
@@ -125,6 +131,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: left;
+    font-size: 2rem;
 }
 
 .current-anime-data h4 {
@@ -133,7 +140,22 @@
 }
 
 .current-anime-data p {
-    margin: 5px 0;
+    margin: 0;
+}
+
+.current-anime-data .title {
+    height: 20%;
+}
+
+.current-anime-data .score {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 10%;
+}
+
+.current-anime-data .episodes {
+    height: 10%;
 }
 
 .current-anime-data .year-genres {
@@ -141,6 +163,7 @@
     flex-direction: row;
     align-items: center;
     gap: 5px;
+    height: 10%;
 }
 
 .year-genres h4 {
@@ -154,21 +177,35 @@
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: left;
-    margin: 0 0 0 5px;
+    margin: 0;
 }
 
 .current-anime-data .description {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    line-clamp: 8;
-    -webkit-line-clamp: 8;
-    -webkit-box-orient: vertical;
-    text-align: left;
-    max-height: calc(1.5rem * 8);
-    line-height: 1.5rem;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding-right: 10px;
+    height: 50%;
+    scrollbar-width: 8px;
+    scrollbar-color: var(--secondary-color) transparent;
 }
 
+.current-anime-data .description::-webkit-scrollbar {
+    width: 8px;
+}
+
+.current-anime-data .description::-webkit-scrollbar-track {
+    background: none;
+    box-shadow: none;
+}
+
+.current-anime-data .description::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: 10px;
+}
+
+.current-anime-data .description::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
 
 #trending-section>h3 {
     z-index: 2;
@@ -273,4 +310,5 @@
     -webkit-box-orient: vertical;
     max-height: calc(1.5rem * 2);
     line-height: 1.5rem;
+    margin: 0;
 }

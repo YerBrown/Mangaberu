@@ -16,14 +16,24 @@ function MediaGallery({ type, sort, page, perPage, season, seasonYear }) {
         },
     });
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error.message}</p>;
+    if (loading)
+        return (
+            <div className="media-gallery">
+                <p>Loading...</p>;
+            </div>
+        );
+    if (error)
+        return (
+            <div className="media-gallery">
+                <p>Error: {error.message}</p>;
+            </div>
+        );
 
     const handleNavigate = (route) => {
         navigate(route);
     };
     return (
-        <div className="media-gallery" onClick={() => {}}>
+        <div className="media-gallery">
             {data.Page.media.map((mediaItem) => (
                 <button
                     key={mediaItem.id}
@@ -42,7 +52,16 @@ function MediaGallery({ type, sort, page, perPage, season, seasonYear }) {
                         />
                         <div className="more-info">
                             <p>Genres: {mediaItem.genres.join(", ")}</p>
-                            <p>{mediaItem.episodes} Episodes</p>
+
+                            <p>
+                                {mediaItem.type === "ANIME"
+                                    ? mediaItem.episodes
+                                        ? `${mediaItem.episodes} episodes`
+                                        : ""
+                                    : mediaItem.chapters
+                                    ? `${mediaItem.chapters} chapters`
+                                    : ""}
+                            </p>
                         </div>
                     </div>
                     <h3>{mediaItem.title.english || mediaItem.title.romaji}</h3>

@@ -4,15 +4,11 @@
     height: 900px;
 }
 
-#anime-upcoming-season h2 {
-    margin-left: 20px;
-}
-
 #anime-upcoming-season .main-container {
     position: relative;
     display: flex;
-    flex-direction: row;
-    align-items: end;
+    flex-direction: column;
+    align-items: start;
     width: 100%;
     height: 100%;
     box-sizing: border-box;
@@ -23,45 +19,69 @@
     position: absolute;
     top: 0;
     right: 0;
-    height: 100%;
-    width: 100%;
+    height: 60%;
+    width: 70%;
     box-sizing: border-box;
-    pointer-events: none;
+    pointer-events: all;
+    padding-bottom: 5px;
 }
 
 .video-overlay {
     position: absolute;
     top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
+    right: 0;
+    height: 60%;
+    width: 70%;
     pointer-events: none;
     z-index: 1;
     background: linear-gradient(to left,
-            rgba(0, 0, 0, 1) 10%,
-            rgba(0, 0, 0, 0) 50%,
-            rgba(0, 0, 0, 1) 90%);
+            rgba(0, 0, 0, 1) 0%,
+            rgba(0, 0, 0, 0) 20%,
+            rgba(0, 0, 0, 0) 60%,
+            rgba(0, 0, 0, 1) 100%);
 }
 
 .main-container .anime-data {
+
+    gap: 10px;
     z-index: 1;
     width: 40%;
-    height: 60%;
-    padding: 20px;
+    height: 50%;
+    box-sizing: border-box;
 }
 
+
+
 .main-container .anime-data button {
-    width: 30%;
-    margin: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: content-box;
+    gap: 5px;
+    padding: 5px;
+}
+
+.main-container .anime-data button:active {
+    color: var(--text-color-2);
 }
 
 .main-container .change-anime-container {
     z-index: 1;
     display: flex;
     justify-content: space-between;
-    padding: 10px;
-    width: 10%;
-    height: 8%;
+    padding: 20px 0;
+    height: 10%;
+    gap: 20px;
+    box-sizing: border-box;
+}
+
+.change-anime-container h2 {
+    margin: 0;
+    width: 240px;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
 }
 
 .change-anime-container button {
@@ -79,36 +99,35 @@
 
 .anime-list-container {
     z-index: 1;
+
     display: flex;
     flex-direction: row;
     gap: 20px;
     align-items: center;
     box-sizing: border-box;
-    overflow: hidden;
-    width: 50%;
+    width: 100%;
     height: 40%;
+    padding-bottom: 20px;
 }
 
 .anime-list-container .upcoming-season-anime-item {
-    display: flex;
+    display: inline-block;
     flex-direction: column;
     height: 100%;
-    width: 1fr;
     padding: 0;
     border: none;
     background-color: transparent;
-    border-radius: 0;
+    border-radius: 5px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
-.anime-list-container .upcoming-season-anime-item img {
-    height: 85%;
-    border-radius: 5px;
+.anime-list-container .upcoming-season-anime-item.active {
+    outline: 3px solid var(--color-1);
 }
 
-.anime-list-container .upcoming-season-anime-item p {
-    margin: 0;
-    height: 15%;
-    text-align: left;
-    padding-top: 5px;
+.anime-list-container .upcoming-season-anime-item img {
+    display: block;
+    height: 100%;
+    width: auto;
+    border-radius: 4px;
 }

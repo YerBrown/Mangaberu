@@ -38,8 +38,11 @@ function getSeasonAndYear() {
 function Home() {
     // Array de URLs de imágenes
     const bannerImages = [
+        "https://i.pinimg.com/originals/a1/62/e4/a162e4b44e2b2976a6e0b9ec2049cea5.jpg",
+        "https://i.redd.it/zrjrv8639k561.jpg",
+        "https://wallpapercave.com/wp/wp10891943.jpg",
+        "https://wallpapercave.com/wp/wp10891944.jpg",
         "https://i.redd.it/lklft848moxa1.png",
-        "https://wallpapers.com/images/hd/handsome-gojo-jujutsu-kaisen-manga-b0a89to1nqdkglfw.jpg",
         "https://wallpapercave.com/wp/wp8339914.jpg",
         "https://i.imgur.com/qAvWSrT.jpeg",
         "https://i.imgur.com/1CzsXnD.jpeg",

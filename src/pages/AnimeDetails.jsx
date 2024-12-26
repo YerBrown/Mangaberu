@@ -1,8 +1,11 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
+import DOMPurify from "dompurify";
 import { GET_ANIME_BY_ID } from "../graphql/queries";
 import Navbar from "../components/Navbar";
+
+import "./AnimeDetails.css";
 function AnimeDetails() {
     const { id_anime } = useParams();
     const { data, loading, error } = useQuery(GET_ANIME_BY_ID, {
@@ -24,6 +27,7 @@ function AnimeDetails() {
             </div>
         );
 
+    const sanitizedDescriptionHTML = DOMPurify.sanitize(data.Media.description);
     return (
         <>
             <header>
@@ -31,21 +35,34 @@ function AnimeDetails() {
             </header>
             <main>
                 <div id="anime-details-menu">
-                    <h1>
-                        {data.Media.title.romaji || data.Media.title.english}
-                    </h1>
                     <img
-                        src={data.Media.coverImage.large}
+                        src={data.Media.bannerImage}
                         alt={data.Media.title.romaji}
+                        className="banner"
                     />
-                    <p>{data.Media.description}</p>
-                    <p>
-                        <strong>Episodes:</strong>{" "}
-                        {data.Media.episodes || "N/A"}
-                    </p>
-                    <p>
-                        <strong>Genres:</strong> {data.Media.genres.join(", ")}
-                    </p>
+                    <div className="main-container">
+                        <h1>
+                            {data.Media.title.romaji ||
+                                data.Media.title.english}
+                        </h1>
+                        <img
+                            src={data.Media.coverImage.large}
+                            alt={data.Media.title.romaji}
+                        />
+                        <p>
+                            <strong>Episodes:</strong>{" "}
+                            {data.Media.episodes || "N/A"}
+                        </p>
+                        <p>
+                            <strong>Genres:</strong>{" "}
+                            {data.Media.genres.join(", ")}
+                        </p>
+                        <p
+                            dangerouslySetInnerHTML={{
+                                __html: sanitizedDescriptionHTML,
+                            }}
+                        ></p>
+                    </div>
                 </div>
             </main>
         </>

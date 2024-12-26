@@ -1,0 +1,16 @@
+#anime-details-menu {
+    position: relative;
+}
+
+#anime-details-menu img.banner {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+#anime-details-menu .main-container {
+    padding-top: 80px;
+    position: relative;
+    z-index: 1;
+}

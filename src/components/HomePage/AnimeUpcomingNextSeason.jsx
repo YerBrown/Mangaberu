@@ -4,6 +4,9 @@ import { useQuery } from "@apollo/client";
 import { GET_ANIME_UPCOMING_SEASON } from "../../graphql/queries";
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
 import ArrowForwardNewRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
+import MusicOffRoundedIcon from "@mui/icons-material/MusicOffRounded";
+import MusicNoteRoundedIcon from "@mui/icons-material/MusicNoteRounded";
+import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
 import "./AnimeUpcomingNextSeason.css";
 function reorderArrayByIndex(array, index) {
     return [
@@ -74,7 +77,6 @@ function AnimeUpcomingNextSeason({ season, seasonYear }) {
     const animesArray = reorderArrayByIndex(data.Page.media, currentAnimeIndex);
     return (
         <section id="anime-upcoming-season">
-            <h2>Anime upcoming next season</h2>
             <div className="main-container">
                 <iframe
                     ref={iframeRef}
@@ -91,35 +93,45 @@ function AnimeUpcomingNextSeason({ season, seasonYear }) {
                         {animesArray[0].title.english ||
                             animesArray[0].title.romaji}
                     </h3>
-                    <p>Genres: {animesArray[0].genres.join(", ")}</p>
                     <p>
                         Release date:{" "}
-                        {animesArray[0].day
+                        {animesArray[0].startDate.day != null
                             ? `${animesArray[0].startDate.year}/${animesArray[0].startDate.month}/${animesArray[0].startDate.day}`
                             : `${animesArray[0].startDate.year}/${animesArray[0].startDate.month}`}
                     </p>
+                    <p>Genres: {animesArray[0].genres.join(", ")}</p>
                     <button
                         onClick={() => handleNavigateToAnime(animesArray[0].id)}
                     >
                         More Info
-                    </button>
-                    <button onClick={toggleMute}>
-                        {isMuted ? "Unmute Trailer" : "Mute Trailer"}
+                        <InfoRoundedIcon />
                     </button>
                 </div>
                 <div className="change-anime-container">
+                    <h2>Upcoming Next Season</h2>
                     <button onClick={() => handlePreviousAnime()}>
                         <ArrowBackIosNewRoundedIcon />
                     </button>
                     <button onClick={() => handleNextAnime()}>
                         <ArrowForwardNewRoundedIcon />
                     </button>
+                    <button onClick={toggleMute}>
+                        {isMuted ? (
+                            <MusicOffRoundedIcon />
+                        ) : (
+                            <MusicNoteRoundedIcon />
+                        )}
+                    </button>
                 </div>
                 <div className="anime-list-container">
                     {animesArray.map((animeData, index) => (
                         <button
                             key={animeData.id}
-                            className={"upcoming-season-anime-item"}
+                            className={
+                                index === 0
+                                    ? "upcoming-season-anime-item active"
+                                    : "upcoming-season-anime-item"
+                            }
                             onClick={() => handleSelectAnimeDirectly(index)}
                         >
                             <img
@@ -129,10 +141,10 @@ function AnimeUpcomingNextSeason({ season, seasonYear }) {
                                     animeData.title.romaji
                                 }
                             />
-                            <p>
+                            {/* <p>
                                 {animeData.title.english ||
                                     animeData.title.romaji}
-                            </p>
+                            </p> */}
                         </button>
                     ))}
                 </div>

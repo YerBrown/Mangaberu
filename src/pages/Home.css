@@ -58,11 +58,12 @@
     background-color: rgba(255, 255, 255, 0.4);
 }
 
-#trending-this-season {
+#home-menu section#trending-this-season {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
     overflow: hidden;
+    height: 700px;
 }
 
 #trending-this-season .select-media-container {
@@ -71,11 +72,14 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 20px;
+    padding: 20px 20px 20px 5%;
+    height: 10%;
+    box-sizing: border-box;
 }
 
 #trending-this-season .select-media-container>h2 {
     margin: 0;
+    font-size: 1.3rem;
 }
 
 #trending-this-season .select-media-container>h2,
@@ -95,23 +99,37 @@
 .select-media-container button {
     font-size: 1.5rem;
     align-items: center;
+    font-weight: bold;
+    background-color: transparent;
+    border: none;
+}
+
+.select-media-container button:active {
+    background-color: transparent;
 }
 
 .select-media-container button.active {
     text-decoration: underline;
-    font-weight: bold;
 }
 
 #trending-this-season .select-media-container>a {
     text-align: right;
+    font-size: .9rem;
+    text-decoration: none;
+    color: var(--text-color-1);
+    font-weight: bold;
+}
+
+#trending-this-season .select-media-container>a:hover {
+    text-decoration: underline;
 }
 
 #trending-this-season .media-gallery {
-    height: 70%;
+    height: 90%;
 }
 
 @media (prefers-color-scheme: dark) {
     #main-banner img {
-        filter: invert(1);
+        /* filter: invert(1); */
     }
 }
