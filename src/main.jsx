@@ -6,6 +6,7 @@ import client from "./utils/apolloClient.js";
 import router from "./utils/router";
 import { ThemeProvider } from "./context/ThemeContext";
 import { AuthProvider } from "./context/AuthContext.jsx";
+import { ModalProvider } from "./context/ModalContext.jsx";
 import "./index.css";
 
 createRoot(document.getElementById("root")).render(
@@ -13,7 +14,9 @@ createRoot(document.getElementById("root")).render(
         <ApolloProvider client={client}>
             <ThemeProvider>
                 <AuthProvider>
-                    <RouterProvider router={router} />
+                    <ModalProvider>
+                        <RouterProvider router={router} />
+                    </ModalProvider>
                 </AuthProvider>
             </ThemeProvider>
         </ApolloProvider>

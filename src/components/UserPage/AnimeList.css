@@ -74,6 +74,18 @@
     text-overflow: ellipsis;
 }
 
+.list-grid .anime-item .progress-data a,
+.list-grid .manga-item .progress-data a {
+    color: var(--text-color-1);
+    text-decoration: none;
+}
+
+.list-grid .anime-item .progress-data a:hover,
+.list-grid .manga-item .progress-data a:hover {
+    color: var(--text-color-1-hover);
+    text-decoration: none;
+}
+
 .list-grid .anime-item .progress-data p,
 .list-grid .manga-item .progress-data p {
     font-size: 0.8rem;

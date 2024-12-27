@@ -22,10 +22,14 @@
   --font-color-1: black;
   --font-color-2: white;
   --font-color-3: blue;
+  --font-color-1-hover: rgb(76, 76, 76);
+  --font-color-2-hover: rgb(184, 184, 184);
 
   --background-color: var(--color-1);
   --text-color-1: var(--font-color-1);
   --text-color-2: var(--font-color-2);
+  --text-color-1-hover: var(--font-color-1-hover);
+  --text-color-2-hover: var(--font-color-2-hover);
   --primary-color: var(--color-1);
   --secondary-color: var(--color-2);
   --button-color-1: var(--color-4);
@@ -38,6 +42,8 @@
     --background-color: var(--color-1);
     --text-color-1: var(--font-color-1);
     --text-color-2: var(--font-color-2);
+    --text-color-1-hover: var(--font-color-1-hover);
+    --text-color-2-hover: var(--font-color-2-hover);
     --primary-color: var(--color-1);
     --secondary-color: var(--color-2);
     --button-color-1: var(--color-3);
@@ -51,6 +57,8 @@
     --background-color: var(--color-2);
     --text-color-1: var(--font-color-2);
     --text-color-2: var(--font-color-1);
+    --text-color-1-hover: var(--font-color-2-hover);
+    --text-color-2-hover: var(--font-color-1-hover);
     --primary-color: var(--color-2);
     --secondary-color: var(--color-1);
     --button-color-1: var(--color-4);

@@ -246,26 +246,40 @@ export const GET_USER_DATA = gql`
 `;
 
 export const GET_USER_ANIME_LIST = gql`
-    query ($userId: Int) {
+    query Query($userId: Int) {
         MediaListCollection(userId: $userId, type: ANIME) {
             lists {
                 name
                 status
                 entries {
-                    progress
-                    score
                     media {
+                        type
                         id
                         title {
-                            romaji
                             english
+                            romaji
                         }
+                        bannerImage
                         episodes
                         coverImage {
                             large
+                            extraLarge
                         }
                     }
+                    id
+                    status
+                    score
                     progress
+                    startedAt {
+                        day
+                        month
+                        year
+                    }
+                    completedAt {
+                        day
+                        month
+                        year
+                    }
                 }
             }
         }
@@ -273,21 +287,74 @@ export const GET_USER_ANIME_LIST = gql`
 `;
 
 export const GET_USER_MANGA_LIST = gql`
-    query ($userId: Int) {
+    query Query($userId: Int) {
         MediaListCollection(userId: $userId, type: MANGA) {
             lists {
                 name
                 status
                 entries {
-                    progress
-                    score
                     media {
+                        type
                         id
                         title {
-                            romaji
                             english
+                            romaji
                         }
+                        bannerImage
                         chapters
+                        coverImage {
+                            large
+                            extraLarge
+                        }
+                    }
+                    id
+                    status
+                    score
+                    progress
+                    startedAt {
+                        day
+                        month
+                        year
+                    }
+                    completedAt {
+                        day
+                        month
+                        year
+                    }
+                }
+            }
+        }
+    }
+`;
+
+export const GET_USER_FAVOURITES_LIST = gql`
+    query {
+        Viewer {
+            favourites {
+                anime {
+                    nodes {
+                        id
+                        title {
+                            english
+                            romaji
+                        }
+                        coverImage {
+                            large
+                        }
+                    }
+                }
+                manga {
+                    pageInfo {
+                        currentPage
+                        hasNextPage
+                        total
+                    }
+                    nodes {
+                        id
+                        title {
+                            english
+                            romaji
+                        }
                         coverImage {
                             large
                         }

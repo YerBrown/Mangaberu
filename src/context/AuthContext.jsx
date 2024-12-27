@@ -3,6 +3,7 @@ import {
     GET_USER_DATA,
     GET_USER_ANIME_LIST,
     GET_USER_MANGA_LIST,
+    GET_USER_FAVOURITES_LIST,
 } from "../graphql/queries";
 const AuthContext = createContext();
 
@@ -10,6 +11,7 @@ export const AuthProvider = ({ children }) => {
     const [userData, setUserData] = useState(null);
     const [animeLists, setAnimeLists] = useState([]);
     const [mangaLists, setMangaLists] = useState([]);
+    const [favouritesLists, setFavouritesLists] = useState({});
 
     const [isLoading, setIsLoading] = useState(true);
 
@@ -38,7 +40,7 @@ export const AuthProvider = ({ children }) => {
         });
 
         const data = await response.json();
-        console.log(data);
+
         setUserData(data.data.Viewer);
         fetchUserMediaLists(data.data.Viewer.id);
     };
@@ -49,37 +51,52 @@ export const AuthProvider = ({ children }) => {
 
         const mangaQuery = GET_USER_MANGA_LIST;
 
+        const favouritesQuery = GET_USER_FAVOURITES_LIST;
         // Hacer ambas peticiones en paralelo
-        const [animeResponse, mangaResponse] = await Promise.all([
-            fetch("https://graphql.anilist.co", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify({
-                    query: animeQuery.loc.source.body,
-                    variables: { userId },
+        const [animeResponse, mangaResponse, favouritesResponse] =
+            await Promise.all([
+                fetch("https://graphql.anilist.co", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({
+                        query: animeQuery.loc.source.body,
+                        variables: { userId },
+                    }),
                 }),
-            }),
-            fetch("https://graphql.anilist.co", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify({
-                    query: mangaQuery.loc.source.body,
-                    variables: { userId },
+                fetch("https://graphql.anilist.co", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({
+                        query: mangaQuery.loc.source.body,
+                        variables: { userId },
+                    }),
                 }),
-            }),
-        ]);
+                fetch("https://graphql.anilist.co", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({
+                        query: favouritesQuery.loc.source.body,
+                        // variables: { page: 1, perPage: 10 },
+                    }),
+                }),
+            ]);
 
         const animeData = await animeResponse.json();
         const mangaData = await mangaResponse.json();
+        const favouritesData = await favouritesResponse.json();
 
         setAnimeLists(animeData.data.MediaListCollection.lists);
         setMangaLists(mangaData.data.MediaListCollection.lists);
+        setFavouritesLists(favouritesData.data.Viewer.favourites);
         setIsLoading(false);
     };
 
@@ -93,7 +110,17 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider
-            value={{ userData, animeLists, mangaLists, isLoading }}
+            value={{
+                userData,
+                animeLists,
+                mangaLists,
+                favouritesLists,
+                isLoading,
+                setAnimeLists,
+                setMangaLists,
+                fetchUserData,
+                fetchUserMediaLists,
+            }}
         >
             {children}
         </AuthContext.Provider>

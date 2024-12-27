@@ -1,0 +1,110 @@
+.user-menu .anime-favourites-container,
+.user-menu .manga-favourites-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 150px);
+    gap: 20px;
+}
+
+.user-menu .favourite-item {
+    position: relative;
+    display: flex;
+    align-items: end;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 100%;
+    height: 200px;
+}
+
+.user-menu .favourite-item img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.user-menu .favourite-item button {
+    z-index: 1;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border-radius: 50px;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.user-menu .favourite-item:hover button {
+    opacity: 1;
+}
+
+.user-menu .favourite-item .data {
+    width: 100%;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.646);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    height: 30%;
+}
+
+.user-menu .favourite-item .data a {
+    color: var(--text-color-1);
+    text-decoration: none;
+}
+
+.user-menu .favourite-item .data a:hover {
+    color: var(--text-color-1-hover);
+}
+
+.user-menu .favourite-item .data h4 {
+    font-size: 1rem;
+    margin: 10px 0;
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.modal {
+    position: fixed;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: fadein 0.3s ease-in-out, fadeout 0.5s 1.5s forwards;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50px);
+        /* Aparece desde arriba */
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0px);
+    }
+}
+
+@keyframes fadeout {
+    to {
+        opacity: 0;
+        transform: translate(-50%, -50px);
+        /* Desaparece hacia arriba */
+    }
+}

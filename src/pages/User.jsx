@@ -2,7 +2,6 @@ import Navbar from "../components/Navbar";
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
-
 import ProfileStats from "../components/UserPage/ProfileStats";
 import AnimeList from "../components/UserPage/AnimeList";
 import MangaList from "../components/UserPage/MangaList";
@@ -10,13 +9,19 @@ import Favourites from "../components/UserPage/Favourites";
 
 import "./User.css";
 function User() {
-    const { userData, animeLists, mangaLists, isLoading } = useAuth();
+    const { userData, animeLists, mangaLists, favouritesLists, isLoading } =
+        useAuth();
 
     const { theme } = useTheme();
     const [selectedOption, setSelectedOption] = useState("profileStats");
-
     const CLIENT_ID = "23265";
 
+    const handleNavigateToAnime = (animeId) => {
+        navigate(`/anime/${animeId}`);
+    };
+    const handleNavigateToManga = (mangaId) => {
+        navigate(`/manga/${mangaId}`);
+    };
     const token = localStorage.getItem("access_token");
 
     const handleLogin = () => {
@@ -32,7 +37,7 @@ function User() {
             case "mangaList":
                 return <MangaList mangaLists={mangaLists} />;
             case "favorites":
-                return <Favourites />;
+                return <Favourites favouritesList={favouritesLists} />;
             default:
                 return <ProfileStats />;
         }
