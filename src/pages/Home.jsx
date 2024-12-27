@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useQuery, gql } from "@apollo/client";
 import { useTheme } from "../context/ThemeContext";
+import { useAuth } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
 import MediaGallery from "../components/HomePage/MediaGallery";
 import AnimeUpcomingNextSeason from "../components/HomePage/AnimeUpcomingNextSeason";
@@ -36,7 +37,6 @@ function getSeasonAndYear() {
 }
 
 function Home() {
-    // Array de URLs de imágenes
     const bannerImages = [
         "https://i.pinimg.com/originals/a1/62/e4/a162e4b44e2b2976a6e0b9ec2049cea5.jpg",
         "https://i.redd.it/zrjrv8639k561.jpg",
@@ -51,7 +51,7 @@ function Home() {
         "https://i.imgur.com/sHjNF6L.jpeg",
     ];
 
-    // Estado para la imagen actual
+    const { userData, isLoading } = useAuth();
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const { theme } = useTheme();
     const [trendingMediaType, setTrendingMediaType] = useState("ANIME");
@@ -65,7 +65,6 @@ function Home() {
             );
         }, 5000);
 
-        // Limpiar el intervalo al desmontar
         return () => clearInterval(interval);
     }, [bannerImages]);
 
@@ -76,7 +75,11 @@ function Home() {
     return (
         <>
             <header>
-                <Navbar activeMenu="home" />
+                {userData ? (
+                    <Navbar userAvatar={userData.avatar.medium} />
+                ) : (
+                    <Navbar activeMenu="home" />
+                )}
             </header>
             <main>
                 <div id="home-menu">

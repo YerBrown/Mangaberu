@@ -212,3 +212,88 @@ export const GET_TOP_10_SORT_GENRE = gql`
         }
     }
 `;
+
+export const GET_USER_DATA = gql`
+    query ($limit: Int, $sort: [UserStatisticsSort]) {
+        Viewer {
+            id
+            name
+            avatar {
+                large
+                medium
+            }
+            bannerImage
+            statistics {
+                anime {
+                    count
+                    episodesWatched
+                    genres(limit: $limit, sort: $sort) {
+                        count
+                        genre
+                    }
+                }
+                manga {
+                    count
+                    chaptersRead
+                    genres(limit: $limit, sort: $sort) {
+                        count
+                        genre
+                    }
+                }
+            }
+        }
+    }
+`;
+
+export const GET_USER_ANIME_LIST = gql`
+    query ($userId: Int) {
+        MediaListCollection(userId: $userId, type: ANIME) {
+            lists {
+                name
+                status
+                entries {
+                    progress
+                    score
+                    media {
+                        id
+                        title {
+                            romaji
+                            english
+                        }
+                        episodes
+                        coverImage {
+                            large
+                        }
+                    }
+                    progress
+                }
+            }
+        }
+    }
+`;
+
+export const GET_USER_MANGA_LIST = gql`
+    query ($userId: Int) {
+        MediaListCollection(userId: $userId, type: MANGA) {
+            lists {
+                name
+                status
+                entries {
+                    progress
+                    score
+                    media {
+                        id
+                        title {
+                            romaji
+                            english
+                        }
+                        chapters
+                        coverImage {
+                            large
+                        }
+                    }
+                }
+            }
+        }
+    }
+`;

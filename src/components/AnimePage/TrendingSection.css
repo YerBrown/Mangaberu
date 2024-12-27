@@ -61,9 +61,6 @@
     transition: opacity 0.5s ease-in-out;
 }
 
-#anime-menu .current-anime button:active {
-    color: var(--text-color-2);
-}
 
 #anime-menu .current-anime.disable {
     opacity: 0;

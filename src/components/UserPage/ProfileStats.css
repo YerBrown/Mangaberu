@@ -1,0 +1,5 @@
+.genre-stats {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}

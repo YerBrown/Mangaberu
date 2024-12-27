@@ -1,3 +1,4 @@
+import { useAuth } from "../context/AuthContext";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
@@ -7,6 +8,7 @@ import Navbar from "../components/Navbar";
 
 import "./AnimeDetails.css";
 function AnimeDetails() {
+    const { userData, isLoading } = useAuth();
     const { id_anime } = useParams();
     const { data, loading, error } = useQuery(GET_ANIME_BY_ID, {
         variables: {
@@ -31,7 +33,11 @@ function AnimeDetails() {
     return (
         <>
             <header>
-                <Navbar />
+                {userData ? (
+                    <Navbar userAvatar={userData.avatar.medium} />
+                ) : (
+                    <Navbar />
+                )}
             </header>
             <main>
                 <div id="anime-details-menu">

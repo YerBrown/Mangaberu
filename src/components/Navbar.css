@@ -55,10 +55,12 @@ nav #right-part {
 nav a {
     display: flex;
     align-items: center;
+    justify-content: center;
     text-decoration: none;
     color: var(--text-color);
     font-weight: bold;
     max-height: 100%;
+    box-sizing: border-box;
 }
 
 nav a.active {
@@ -66,10 +68,18 @@ nav a.active {
 
 }
 
-nav #central-part a {
+nav #central-part a,
+nav #right-part a {
     height: 100%;
 }
 
-nav a img {
+nav #right-part a {
+    border-radius: 100px;
+}
+
+nav a img,
+nav a svg {
     height: 100%;
+    width: 100%;
+    object-fit: contain;
 }

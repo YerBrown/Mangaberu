@@ -61,9 +61,6 @@
     padding: 5px;
 }
 
-.main-container .anime-data button:active {
-    color: var(--text-color-2);
-}
 
 .main-container .change-anime-container {
     z-index: 1;
@@ -93,11 +90,9 @@
     color: var(--text-color-1);
 }
 
-.change-anime-container button:active {
-    color: var(--text-color-2);
-}
 
-.anime-list-container {
+
+#anime-upcoming-season .anime-list-container {
     z-index: 1;
 
     display: flex;
@@ -110,7 +105,7 @@
     padding-bottom: 20px;
 }
 
-.anime-list-container .upcoming-season-anime-item {
+#anime-upcoming-season .anime-list-container .upcoming-season-anime-item {
     display: inline-block;
     flex-direction: column;
     height: 100%;
@@ -121,11 +116,11 @@
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
-.anime-list-container .upcoming-season-anime-item.active {
+#anime-upcoming-season .anime-list-container .upcoming-season-anime-item.active {
     outline: 3px solid var(--color-1);
 }
 
-.anime-list-container .upcoming-season-anime-item img {
+#anime-upcoming-season .anime-list-container .upcoming-season-anime-item img {
     display: block;
     height: 100%;
     width: auto;

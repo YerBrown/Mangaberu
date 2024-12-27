@@ -41,8 +41,8 @@ section#my-list-summary-section>h2 {}
     gap: 10px
 }
 
-.anime-list-container .list-item,
-.manga-list-container .list-item {
+.my-list-container .anime-list-container .list-item,
+.my-list-container .manga-list-container .list-item {
     width: 100%;
     height: 100%;
     display: flex;
@@ -54,8 +54,8 @@ section#my-list-summary-section>h2 {}
     position: relative;
 }
 
-.anime-list-container .list-item img,
-.manga-list-container .list-item img {
+.my-list-container .anime-list-container .list-item img,
+.my-list-container .manga-list-container .list-item img {
     position: absolute;
     top: 0;
     left: 0;

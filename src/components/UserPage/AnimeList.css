@@ -1,0 +1,81 @@
+.user-anime-list .list-container {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.list-container .list-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 200px);
+    /* grid-template-rows: repeat(auto-fit, 300px); */
+    gap: 20px;
+}
+
+.list-grid .anime-item,
+.list-grid .manga-item {
+    position: relative;
+    display: flex;
+    align-items: end;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 100%;
+    height: 300px;
+}
+
+.list-grid .anime-item img,
+.list-grid .manga-item img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.list-grid .anime-item button,
+.list-grid .manga-item button {
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border-radius: 50px;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.list-grid .anime-item:hover button,
+.list-grid .manga-item:hover button {
+    opacity: 1;
+}
+
+.list-grid .anime-item .progress-data,
+.list-grid .manga-item .progress-data {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.609);
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.list-grid .anime-item .progress-data h4,
+.list-grid .manga-item .progress-data h4 {
+    font-size: 1.1rem;
+    margin: 10px 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.list-grid .anime-item .progress-data p,
+.list-grid .manga-item .progress-data p {
+    font-size: 0.8rem;
+    margin: 10px 0;
+}

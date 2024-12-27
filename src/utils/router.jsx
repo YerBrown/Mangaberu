@@ -5,6 +5,7 @@ import Anime from "../pages/Anime";
 import AnimeDetails from "../pages/AnimeDetails";
 import Manga from "../pages/Manga";
 import User from "../pages/User";
+import AniListAuth from "./AniListAuth";
 // import ErrorPage from "./pages/ErrorPage";
 
 // Definimos nuestras rutas
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
             {
                 path: "user",
                 element: <User />,
+            },
+            {
+                path: "auth-redirect",
+                element: <AniListAuth />,
             },
         ],
     },

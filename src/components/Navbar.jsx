@@ -10,7 +10,7 @@ const getCSSVariable = (variableName) => {
     );
 };
 const primaryColor = getCSSVariable("--primary-color");
-function Navbar({ activeMenu = "" }) {
+function Navbar({ activeMenu = "", userAvatar = null }) {
     const { theme } = useTheme();
     const [primaryColor, setPrimaryColor] = useState("");
     const [navbarStyle, setNavbarStyle] = useState({
@@ -82,7 +82,11 @@ function Navbar({ activeMenu = "" }) {
             <div id="right-part">
                 <SearchBar />
                 <Link to="/user">
-                    <AccountCircleIcon fontSize="large" />
+                    {userAvatar ? (
+                        <img src={userAvatar} alt="user avatar" />
+                    ) : (
+                        <AccountCircleIcon fontSize="large" />
+                    )}
                 </Link>
             </div>
         </nav>
