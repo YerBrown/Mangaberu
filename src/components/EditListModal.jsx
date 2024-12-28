@@ -6,6 +6,8 @@ import "./EditListModal.css";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import HeartBrokenRoundedIcon from "@mui/icons-material/HeartBrokenRounded";
+import SaveAsRoundedIcon from "@mui/icons-material/SaveAsRounded";
+import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
 function EditListModal() {
     const { isOpen, modalData, closeModal } = useModal();
     const { fetchUserMediaLists, userData } = useAuth();
@@ -19,10 +21,22 @@ function EditListModal() {
     }, [modalData, isOpen]);
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setEditedData((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
+        if (name === "startedAt" || name === "completedAt") {
+            const [year, month, day] = value.split("-"); // Divide el valor yyyy-mm-dd
+            setEditedData((prev) => ({
+                ...prev,
+                [name]: {
+                    year: parseInt(year, 10),
+                    month: parseInt(month, 10),
+                    day: parseInt(day, 10),
+                },
+            }));
+        } else {
+            setEditedData((prev) => ({
+                ...prev,
+                [name]: value,
+            }));
+        }
     };
 
     const hasChanges = JSON.stringify(modalData) !== JSON.stringify(editedData);
@@ -180,12 +194,13 @@ function EditListModal() {
                             onClick={handleSave}
                             disabled={isSaving || isDeleting}
                         >
+                            <SaveAsRoundedIcon fontSize="small" />
                             {isSaving ? "Saving..." : "Save"}
                         </button>
                     </div>
                     <form action="" className="bottom-part">
                         <div className="status">
-                            <label htmlFor="media-status">Score:</label>
+                            <label htmlFor="media-status">Status:</label>
                             <select
                                 name="status"
                                 id="media-status"
@@ -239,7 +254,7 @@ function EditListModal() {
                             <label htmlFor="start-date">Start Date:</label>
                             <input
                                 type="date"
-                                name="start-date"
+                                name="startedAt"
                                 id="start-date"
                                 value={
                                     editedData.startedAt
@@ -259,7 +274,7 @@ function EditListModal() {
                             <label htmlFor="finish-date">Finish Date:</label>
                             <input
                                 type="date"
-                                name="finish-date"
+                                name="completedAt"
                                 id="finish-date"
                                 value={
                                     editedData.completedAt
@@ -280,6 +295,7 @@ function EditListModal() {
                                 onClick={handleDelete}
                                 disabled={isDeleting || isSaving}
                             >
+                                <DeleteForeverRoundedIcon fontSize="small" />
                                 {isDeleting ? "Deleting..." : "Delete"}
                             </button>
                         </div>

@@ -9,24 +9,19 @@ const getCSSVariable = (variableName) => {
         variableName
     );
 };
-const primaryColor = getCSSVariable("--primary-color");
 function Navbar({ activeMenu = "", userAvatar = null }) {
     const { theme } = useTheme();
-    const [primaryColor, setPrimaryColor] = useState("");
     const [navbarStyle, setNavbarStyle] = useState({
         backgroundColor: "rgba(0, 0, 0, 0)", // Inicialmente transparente
     });
 
     useEffect(() => {
-        const primaryColor = getCSSVariable("--primary-color");
-        const rgbColor = hexToRgb(primaryColor); // Convierte hex a RGB si es necesario
-
         const handleScroll = () => {
             const scrollThreshold = 35; // Umbral en px para alcanzar opacidad completa
             const scrollPosition = window.scrollY;
             const opacity = Math.min(scrollPosition / scrollThreshold, 1); // Limita opacidad a 1 máximo
             setNavbarStyle({
-                backgroundColor: `rgba(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}, ${opacity})`,
+                backgroundColor: `rgba(0,0,0, ${opacity})`,
             });
         };
 
@@ -66,7 +61,7 @@ function Navbar({ activeMenu = "", userAvatar = null }) {
             </div>
             <div id="central-part">
                 <Link to="/">
-                    {theme === "dark" ? (
+                    {/* {theme === "dark" ? (
                         <img
                             src="/src/assets/images/M-White.png"
                             alt="Dark Theme Logo"
@@ -76,7 +71,11 @@ function Navbar({ activeMenu = "", userAvatar = null }) {
                             src="/src/assets/images/M-Black.png"
                             alt="Light Theme Logo"
                         />
-                    )}
+                    )} */}
+                    <img
+                        src="/src/assets/images/M-White.png"
+                        alt="Dark Theme Logo"
+                    />
                 </Link>
             </div>
             <div id="right-part">

@@ -1,8 +1,15 @@
+.favourites-list {
+    width: 100%;
+}
+
 .user-menu .anime-favourites-container,
 .user-menu .manga-favourites-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, 150px);
     gap: 20px;
+    border-bottom: 2px solid var(--secondary-color);
+    padding: 20px 0;
+
 }
 
 .user-menu .favourite-item {

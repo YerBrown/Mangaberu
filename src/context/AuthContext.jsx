@@ -40,7 +40,6 @@ export const AuthProvider = ({ children }) => {
         });
 
         const data = await response.json();
-
         setUserData(data.data.Viewer);
         fetchUserMediaLists(data.data.Viewer.id);
     };

@@ -214,7 +214,7 @@ export const GET_TOP_10_SORT_GENRE = gql`
 `;
 
 export const GET_USER_DATA = gql`
-    query ($limit: Int, $sort: [UserStatisticsSort]) {
+    query {
         Viewer {
             id
             name
@@ -223,24 +223,6 @@ export const GET_USER_DATA = gql`
                 medium
             }
             bannerImage
-            statistics {
-                anime {
-                    count
-                    episodesWatched
-                    genres(limit: $limit, sort: $sort) {
-                        count
-                        genre
-                    }
-                }
-                manga {
-                    count
-                    chaptersRead
-                    genres(limit: $limit, sort: $sort) {
-                        count
-                        genre
-                    }
-                }
-            }
         }
     }
 `;

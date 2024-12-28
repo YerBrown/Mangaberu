@@ -11,6 +11,12 @@
     z-index: 1050;
 }
 
+.modal-content button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
 .modal-content {
     background: var(--background-color);
     color: var(--text-color-1);
@@ -90,4 +96,14 @@
     align-items: start;
     justify-content: center;
     gap: 5px;
+}
+
+.modal-content .modal-data .bottom-part input {
+    font-size: 1rem;
+    border: none;
+}
+
+.modal-content .modal-data .bottom-part .delete button {
+    font-size: 1rem;
+    padding: 10px;
 }

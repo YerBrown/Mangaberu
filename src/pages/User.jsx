@@ -2,36 +2,33 @@ import Navbar from "../components/Navbar";
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
-import ProfileStats from "../components/UserPage/ProfileStats";
 import AnimeList from "../components/UserPage/AnimeList";
 import MangaList from "../components/UserPage/MangaList";
 import Favourites from "../components/UserPage/Favourites";
-
+import LiveTvRoundedIcon from "@mui/icons-material/LiveTvRounded";
+import AutoStoriesRoundedIcon from "@mui/icons-material/AutoStoriesRounded";
+import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
+import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 import "./User.css";
 function User() {
     const { userData, animeLists, mangaLists, favouritesLists, isLoading } =
         useAuth();
 
     const { theme } = useTheme();
-    const [selectedOption, setSelectedOption] = useState("profileStats");
-    const CLIENT_ID = "23265";
+    const [selectedOption, setSelectedOption] = useState("animeList");
 
-    const handleNavigateToAnime = (animeId) => {
-        navigate(`/anime/${animeId}`);
-    };
-    const handleNavigateToManga = (mangaId) => {
-        navigate(`/manga/${mangaId}`);
-    };
     const token = localStorage.getItem("access_token");
 
     const handleLogin = () => {
-        window.location.href = `https://anilist.co/api/v2/oauth/authorize?client_id=${CLIENT_ID}&response_type=token&redirect_uri=http://localhost:3000/user`;
+        const clientId = "23300";
+        const redirectUri = "https://localhost:3000/auth-redirect";
+        const authUrl = `https://anilist.co/api/v2/oauth/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}`;
+        console.log("Redirigiendo a:", authUrl);
+        window.location.href = authUrl;
     };
 
     const renderContent = () => {
         switch (selectedOption) {
-            case "profileStats":
-                return <ProfileStats userStats={userData.statistics} />;
             case "animeList":
                 return <AnimeList animeLists={animeLists} />;
             case "mangaList":
@@ -39,7 +36,7 @@ function User() {
             case "favorites":
                 return <Favourites favouritesList={favouritesLists} />;
             default:
-                return <ProfileStats />;
+                return <AnimeList animeLists={animeLists} />;
         }
     };
 
@@ -65,11 +62,12 @@ function User() {
                                     alt="user banner"
                                 />
                                 <div
-                                    className={
-                                        theme == "light"
-                                            ? "banner-filter light"
-                                            : "banner-filter dark"
-                                    }
+                                    // className={
+                                    //     theme == "light"
+                                    //         ? "banner-filter light"
+                                    //         : "banner-filter dark"
+                                    // }
+                                    className="banner-filter dark"
                                 ></div>
                                 <img
                                     className="avatar"
@@ -78,47 +76,66 @@ function User() {
                                 />
                                 <h1 className="username">{userData.name}</h1>
                             </div>
+                            <div className="user-options">
+                                <button
+                                    onClick={() =>
+                                        setSelectedOption("animeList")
+                                    }
+                                    className={
+                                        selectedOption === "animeList"
+                                            ? "active"
+                                            : ""
+                                    }
+                                >
+                                    <LiveTvRoundedIcon fontSize="small" />
+                                    Anime List
+                                </button>
+                                <button
+                                    onClick={() =>
+                                        setSelectedOption("mangaList")
+                                    }
+                                    className={
+                                        selectedOption === "mangaList"
+                                            ? "active"
+                                            : ""
+                                    }
+                                >
+                                    <AutoStoriesRoundedIcon fontSize="small" />
+                                    Manga List
+                                </button>
+                                <button
+                                    onClick={() =>
+                                        setSelectedOption("favorites")
+                                    }
+                                    className={
+                                        selectedOption === "favorites"
+                                            ? "active"
+                                            : ""
+                                    }
+                                >
+                                    <FavoriteRoundedIcon fontSize="small" />
+                                    Favorites
+                                </button>
+                                <a
+                                    href="https://anilist.co/settings"
+                                    target="_blank"
+                                >
+                                    <SettingsRoundedIcon fontSize="small" />
+                                    AniList Settings
+                                </a>
+                            </div>
                             <div className="main-content">
-                                <div className="user-options">
-                                    <button
-                                        onClick={() =>
-                                            setSelectedOption("animeList")
-                                        }
-                                    >
-                                        Anime List
-                                    </button>
-                                    <button
-                                        onClick={() =>
-                                            setSelectedOption("mangaList")
-                                        }
-                                    >
-                                        Manga List
-                                    </button>
-                                    <button
-                                        onClick={() =>
-                                            setSelectedOption("favorites")
-                                        }
-                                    >
-                                        Favorites
-                                    </button>
-                                    <button
-                                        onClick={() =>
-                                            setSelectedOption("profileStats")
-                                        }
-                                    >
-                                        Stats
-                                    </button>
-                                </div>
-                                <div className="current-option">
-                                    {renderContent()}
-                                </div>
+                                {renderContent()}
                             </div>
                         </>
                     ) : (
                         <>
-                            <button onClick={handleLogin}>
-                                Login with AniList
-                            </button>
+                            <div className="sign-in-container">
+                                <h1>Sign in to your AniList account</h1>
+                                <button onClick={handleLogin}>
+                                    Login with AniList
+                                </button>
+                            </div>
                         </>
                     )}
                 </div>

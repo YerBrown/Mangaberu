@@ -1,6 +1,21 @@
 .user-menu {
     width: 100%;
     min-height: 100%;
+
+
+}
+
+.user-menu .sign-in-container {
+    width: 90%;
+    height: 90%;
+    max-width: 500px;
+    max-height: 500px;
+    background-color: var(--text-color-2-hover);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .user-menu .user-info {
@@ -44,45 +59,62 @@
     font-size: 3rem;
 }
 
+.user-menu .user-options {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 50px;
+}
+
+.user-menu .user-options button,
+.user-menu .user-options a {
+    font-size: 1rem;
+    padding: 5px;
+    border: none;
+    background-color: transparent;
+    font-weight: bold;
+    border-radius: 0;
+    text-decoration: none;
+    color: var(--text-color-1);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.user-menu .user-options button:hover,
+.user-menu .user-options a:hover {
+    color: var(--text-color-1-hover);
+}
+
+.user-menu .user-options button:active {
+    color: var(--text-color-1);
+}
+
+.user-menu .user-options button.active {
+    border-bottom: 2px solid var(--secondary-color);
+}
+
 .user-menu .main-content {
     display: flex;
     flex-direction: row;
     box-sizing: border-box;
     width: 100%;
-    height: calc(100% - 300px)
-}
-
-.user-menu .main-content .user-options {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    box-sizing: border-box;
-    width: 300px;
-    height: 100%;
-    background-color: gray;
+    height: calc(100% - 300px);
     padding: 20px;
-    gap: 10px;
-}
-
-.user-menu .main-content .user-options button {
-    font-size: 1.5rem;
-    background-color: transparent;
-    border: none;
-    width: auto;
-}
-
-.user-menu .main-content .user-options button:active {
-    background-color: transparent;
+    overflow: hidden;
 }
 
 .user-menu .main-content .current-option {
     box-sizing: border-box;
     width: 100%;
     height: 100%;
-    background-color: var(--background-color);
-    padding: 20px;
+    background-color: var(--primary-color);
 }
 
-.user-menu .main-content .current-option h2 {
+.user-menu .main-content h2 {
     margin: 0;
+    padding: 20px 0;
+    border-bottom: 2px solid var(--secondary-color);
 }

@@ -1,20 +1,46 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useAuth } from "../context/AuthContext";
 function AniListAuth() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const hash = window.location.hash;
-        if (hash.includes("access_token")) {
-            const token = new URLSearchParams(hash.slice(1)).get(
-                "access_token"
+        const getToken = async () => {
+            const code = new URLSearchParams(window.location.search).get(
+                "code"
             );
-            localStorage.setItem("access_token", token);
-            navigate("/user");
-        } else {
-            navigate("/user");
-        }
+
+            if (!code) {
+                console.error("No authorization code found in URL");
+                return;
+            }
+
+            try {
+                const response = await fetch(
+                    "http://localhost:4000/api/auth/token",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ code }),
+                    }
+                );
+
+                const data = await response.json();
+
+                if (data.access_token) {
+                    localStorage.setItem("access_token", data.access_token);
+                    navigate("/user");
+                } else {
+                    console.error("Failed to obtain token:", data);
+                }
+            } catch (error) {
+                console.error("Fetch failed:", error);
+            }
+        };
+
+        getToken();
     }, [navigate]);
 
     return (

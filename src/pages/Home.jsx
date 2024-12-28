@@ -89,11 +89,12 @@ function Home() {
                             alt="Main Banner"
                         />
                         <div
-                            className={
-                                theme == "light"
-                                    ? "banner-filter light"
-                                    : "banner-filter dark"
-                            }
+                            // className={
+                            //     theme == "light"
+                            //         ? "banner-filter light"
+                            //         : "banner-filter dark"
+                            // }
+                            className={"banner-filter dark"}
                         ></div>
                         <div id="banner-text">
                             <h2>Your next adventure begins here!</h2>

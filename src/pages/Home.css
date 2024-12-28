@@ -97,11 +97,13 @@
 }
 
 .select-media-container button {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     align-items: center;
     font-weight: bold;
     background-color: transparent;
     border: none;
+    border-radius: 0;
+    padding: 5px;
 }
 
 .select-media-container button:active {
@@ -109,7 +111,7 @@
 }
 
 .select-media-container button.active {
-    text-decoration: underline;
+    border-bottom: 2px solid var(--secondary-color);
 }
 
 #trending-this-season .select-media-container>a {
