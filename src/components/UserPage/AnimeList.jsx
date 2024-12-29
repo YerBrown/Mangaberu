@@ -33,7 +33,7 @@ const renderItems = (animeLists, status, openEdit) => {
                                 </h4>
                             </Link>
                             <p>
-                                Chapters:{" "}
+                                Episodes:{" "}
                                 {entry.media.episodes
                                     ? `${entry.progress}/${entry.media.episodes}`
                                     : entry.progress}

@@ -11,8 +11,14 @@ import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 import "./User.css";
 function User() {
-    const { userData, animeLists, mangaLists, favouritesLists, isLoading } =
-        useAuth();
+    const {
+        userData,
+        animeLists,
+        mangaLists,
+        favouritesLists,
+        isLoading,
+        fetchUserMediaLists,
+    } = useAuth();
 
     const { theme } = useTheme();
     const [selectedOption, setSelectedOption] = useState("animeList");
@@ -26,6 +32,11 @@ function User() {
         console.log("Redirigiendo a:", authUrl);
         window.location.href = authUrl;
     };
+    const handleFetchUserLists = () => {
+        if (userData) {
+            fetchUserMediaLists(userData.id);
+        }
+    };
 
     const renderContent = () => {
         switch (selectedOption) {
@@ -34,7 +45,12 @@ function User() {
             case "mangaList":
                 return <MangaList mangaLists={mangaLists} />;
             case "favorites":
-                return <Favourites favouritesList={favouritesLists} />;
+                return (
+                    <Favourites
+                        favouritesList={favouritesLists}
+                        fetchUserMediaLists={handleFetchUserLists}
+                    />
+                );
             default:
                 return <AnimeList animeLists={animeLists} />;
         }
@@ -114,7 +130,7 @@ function User() {
                                     }
                                 >
                                     <FavoriteRoundedIcon fontSize="small" />
-                                    Favorites
+                                    Favourites
                                 </button>
                                 <a
                                     href="https://anilist.co/settings"

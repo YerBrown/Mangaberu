@@ -88,8 +88,9 @@
     color: var(--text-color-1-hover);
 }
 
-.user-menu .user-options button:active {
+.user-menu .user-options button:active:hover {
     color: var(--text-color-1);
+    background-color: transparent;
 }
 
 .user-menu .user-options button.active {

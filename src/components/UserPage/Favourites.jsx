@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { toggleFavourite } from "../../services/anilistService";
 import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import HeartBrokenRoundedIcon from "@mui/icons-material/HeartBrokenRounded";
 import "./Favourites.css";
@@ -31,7 +32,7 @@ const renderItems = (mediaList, type, handleRemove) => {
         </div>
     ));
 };
-function Favourites({ favouritesList }) {
+function Favourites({ favouritesList, fetchUserMediaLists }) {
     const [animeFavourites, setAnimeFavourites] = useState(
         favouritesList.anime.nodes
     );
@@ -42,122 +43,33 @@ function Favourites({ favouritesList }) {
     const [modalVisible, setModalVisible] = useState(false);
     const [message, setMessage] = useState("");
     const handleRemoveFromFavourites = async (mediaId, type) => {
-        const animeQuery = `
-            mutation Mutation($animeId: Int) {
-                ToggleFavourite(animeId: $animeId) {
-                    anime {
-                        nodes {
-                            id
-                            title {
-                                english
-                                romaji
-                            }
-                            coverImage {
-                                large
-                            }
-                        }
-                    }
-                    manga {
-                        nodes {
-                            id
-                            title {
-                                english
-                                romaji
-                            }
-                            coverImage {
-                                large
-                            }
-                        }
-                    }
-                }
-            }
-        `;
-
-        const mangaQuery = `
-            mutation Mutation($mangaId: Int) {
-                ToggleFavourite(mangaId: $mangaId) {
-                    anime {
-                        nodes {
-                            id
-                            title {
-                                english
-                                romaji
-                            }
-                            coverImage {
-                                large
-                            }
-                        }
-                    }
-                    manga {
-                        nodes {
-                            id
-                            title {
-                                english
-                                romaji
-                            }
-                            coverImage {
-                                large
-                            }
-                        }
-                    }
-                }
-            }
-        `;
-        let query;
-        const token = localStorage.getItem("access_token");
-        let variables = {};
-        if (type === "ANIME") {
-            query = animeQuery;
-            variables = {
-                animeId: mediaId,
-            };
-        } else {
-            query = mangaQuery;
-            variables = {
-                mangaId: mediaId,
-            };
-        }
-
         try {
-            const response = await fetch("https://graphql.anilist.co", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify({ query, variables }),
-            });
+            const data = await toggleFavourite(mediaId, type);
+            setMessage("Removed from favourites");
+            fetchUserMediaLists();
 
-            const data = await response.json();
-
-            if (data.errors) {
-                console.error("Error removing favourite:", data.errors);
-                setMessage("Failed to remove from favourites");
-            } else {
-                setMessage("Removed from favourites");
-
-                if (type === "ANIME") {
-                    setAnimeFavourites((prev) =>
-                        prev.filter((item) => item.id !== mediaId)
-                    );
-                } else if (type === "MANGA") {
-                    setMangaFavourites((prev) =>
-                        prev.filter((item) => item.id !== mediaId)
-                    );
-                }
+            if (type === "ANIME") {
+                setAnimeFavourites((prev) =>
+                    prev.filter((item) => item.id !== mediaId)
+                );
+            } else if (type === "MANGA") {
+                setMangaFavourites((prev) =>
+                    prev.filter((item) => item.id !== mediaId)
+                );
             }
-
-            // Mostrar modal temporalmente
-            setModalVisible(true);
-            setTimeout(() => {
-                setModalVisible(false);
-            }, 2000);
         } catch (error) {
-            console.error("Error during removal:", error);
             setMessage("Error connecting to AniList");
-            setModalVisible(true);
         }
+
+        setModalVisible(true);
+        setTimeout(() => {
+            setModalVisible(false);
+        }, 2000);
     };
+    useEffect(() => {
+        setAnimeFavourites(favouritesList.anime.nodes);
+        setMangaFavourites(favouritesList.manga.nodes);
+    }, [favouritesList]);
 
     return (
         <>

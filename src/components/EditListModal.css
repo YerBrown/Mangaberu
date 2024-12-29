@@ -74,13 +74,27 @@
     object-fit: cover;
 }
 
-.modal-content .modal-data .top-part button {
+
+.modal-content .modal-data .top-part .buttons-container {
     position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: right;
     right: 0;
     bottom: 10px;
+    gap: 20px;
+}
+
+.modal-content .modal-data .top-part .buttons-container button {
     font-size: 1rem;
     padding: 10px;
 }
+
+.modal-content .modal-data .top-part button.toggle-favourite {
+    right: 0;
+    bottom: 10px;
+}
+
 
 .modal-content .modal-data .bottom-part {
     display: grid;

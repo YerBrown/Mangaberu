@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useModal } from "../context/ModalContext";
 import { useAuth } from "../context/AuthContext";
+import { toggleFavourite } from "../services/anilistService";
 import "./EditListModal.css";
 
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
@@ -14,11 +15,7 @@ function EditListModal() {
     const [editedData, setEditedData] = useState(modalData || {});
     const [isSaving, setIsSaving] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
-    useEffect(() => {
-        if (modalData) {
-            setEditedData(modalData);
-        }
-    }, [modalData, isOpen]);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         if (name === "startedAt" || name === "completedAt") {
@@ -36,6 +33,21 @@ function EditListModal() {
                 ...prev,
                 [name]: value,
             }));
+        }
+    };
+    const handleToggleFavourite = async () => {
+        try {
+            await toggleFavourite(editedData.media.id, editedData.media.type);
+            setEditedData((prev) => ({
+                ...prev,
+                media: {
+                    ...prev.media,
+                    isFavourite: !prev.media.isFavourite,
+                },
+            }));
+            fetchUserMediaLists(userData.id);
+        } catch (error) {
+            console.error("Error toggling favourite:", error);
         }
     };
 
@@ -167,7 +179,12 @@ function EditListModal() {
             document.body.style.overflow = "auto";
         };
     }, [isOpen]);
-
+    useEffect(() => {
+        if (modalData) {
+            console.log(modalData);
+            setEditedData(modalData);
+        }
+    }, [isOpen]);
     if (!isOpen || !modalData) return null;
     return (
         <div className="modal-overlay" onClick={closeModal}>
@@ -190,13 +207,28 @@ function EditListModal() {
                             {modalData.media.title.english ||
                                 modalData.media.title.romaji}
                         </h3>
-                        <button
-                            onClick={handleSave}
-                            disabled={isSaving || isDeleting}
-                        >
-                            <SaveAsRoundedIcon fontSize="small" />
-                            {isSaving ? "Saving..." : "Save"}
-                        </button>
+                        <div className="buttons-container">
+                            {editedData?.media ? (
+                                <button
+                                    onClick={handleToggleFavourite}
+                                    disabled={isSaving || isDeleting}
+                                >
+                                    {editedData.media.isFavourite ? (
+                                        <HeartBrokenRoundedIcon fontSize="small" />
+                                    ) : (
+                                        <FavoriteRoundedIcon fontSize="small" />
+                                    )}
+                                </button>
+                            ) : null}
+                            <button
+                                className="save"
+                                onClick={handleSave}
+                                disabled={isSaving || isDeleting}
+                            >
+                                <SaveAsRoundedIcon fontSize="small" />
+                                {isSaving ? "Saving..." : "Save"}
+                            </button>
+                        </div>
                     </div>
                     <form action="" className="bottom-part">
                         <div className="status">

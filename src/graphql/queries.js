@@ -247,6 +247,7 @@ export const GET_USER_ANIME_LIST = gql`
                             large
                             extraLarge
                         }
+                        isFavourite
                     }
                     id
                     status
@@ -288,6 +289,7 @@ export const GET_USER_MANGA_LIST = gql`
                             large
                             extraLarge
                         }
+                        isFavourite
                     }
                     id
                     status
