@@ -18,7 +18,7 @@
 .main-container iframe {
     position: absolute;
     top: 0;
-    right: 0;
+    right: 20px;
     height: 60%;
     width: 70%;
     box-sizing: border-box;
@@ -31,14 +31,12 @@
     top: 0;
     right: 0;
     height: 60%;
-    width: 70%;
+    width: 100%;
     pointer-events: none;
     z-index: 1;
-    background: linear-gradient(to left,
-            rgba(0, 0, 0, 1) 0%,
-            rgba(0, 0, 0, 0) 20%,
-            rgba(0, 0, 0, 0) 60%,
-            rgba(0, 0, 0, 1) 100%);
+    background: linear-gradient(to right,
+            rgba(0, 0, 0, 1) 20%,
+            rgba(0, 0, 0, 0) 50%);
 }
 
 .main-container .anime-data {

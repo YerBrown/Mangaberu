@@ -40,13 +40,13 @@ function Home() {
     const bannerImages = [
         "https://i.pinimg.com/originals/a1/62/e4/a162e4b44e2b2976a6e0b9ec2049cea5.jpg",
         "https://i.redd.it/zrjrv8639k561.jpg",
-        "https://wallpapercave.com/wp/wp10891943.jpg",
-        "https://wallpapercave.com/wp/wp10891944.jpg",
+        "https://preview.redd.it/z4xusbtc58l71.jpg?width=7568&format=pjpg&auto=webp&s=e7675995626cc78d3882586fe93d4c5bf1ae5a83",
         "https://i.redd.it/lklft848moxa1.png",
         "https://wallpapercave.com/wp/wp8339914.jpg",
         "https://i.imgur.com/qAvWSrT.jpeg",
         "https://i.imgur.com/1CzsXnD.jpeg",
         "https://i.imgur.com/EwS3ILb.jpeg",
+        "https://wallpapercave.com/wp/wp10891944.jpg",
         "https://i.imgur.com/geNGqFT.jpeg",
         "https://i.imgur.com/sHjNF6L.jpeg",
     ];
@@ -54,7 +54,7 @@ function Home() {
     const { userData, isLoading } = useAuth();
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const { theme } = useTheme();
-    const [trendingMediaType, setTrendingMediaType] = useState("ANIME");
+
     const { season, seasonYear, nextSeason, nextSeasonYear } =
         getSeasonAndYear();
     useEffect(() => {
@@ -68,10 +68,6 @@ function Home() {
         return () => clearInterval(interval);
     }, [bannerImages]);
 
-    useEffect(() => {}, [trendingMediaType]);
-    const handleTrendingMediaTypeChange = (newMediaType) => {
-        setTrendingMediaType(newMediaType);
-    };
     return (
         <>
             <header>
@@ -104,54 +100,15 @@ function Home() {
                             </p>
                         </div>
                     </section>
-                    <section id="trending-this-season">
-                        <div className="select-media-container">
-                            <h2>Trending this seasson</h2>
-                            <div>
-                                <button
-                                    onClick={() =>
-                                        handleTrendingMediaTypeChange("ANIME")
-                                    }
-                                    className={
-                                        trendingMediaType == "ANIME"
-                                            ? "active"
-                                            : ""
-                                    }
-                                >
-                                    Anime
-                                </button>
-                                <button
-                                    onClick={() =>
-                                        handleTrendingMediaTypeChange("MANGA")
-                                    }
-                                    className={
-                                        trendingMediaType == "MANGA"
-                                            ? "active"
-                                            : ""
-                                    }
-                                >
-                                    Manga
-                                </button>
-                            </div>
-                            <Link>View All</Link>
-                        </div>
-                        <MediaGallery
-                            type={trendingMediaType}
-                            sort={["TRENDING_DESC"]}
-                            page={1}
-                            perPage={5}
-                            season={
-                                trendingMediaType === "ANIME"
-                                    ? season
-                                    : undefined
-                            }
-                            seasonYear={
-                                trendingMediaType === "ANIME"
-                                    ? seasonYear
-                                    : undefined
-                            }
-                        />
-                    </section>
+
+                    <MediaGallery
+                        sort={["TRENDING_DESC"]}
+                        page={1}
+                        perPage={5}
+                        season={season}
+                        seasonYear={seasonYear}
+                    />
+
                     <AnimeUpcomingNextSeason
                         season={nextSeason}
                         seasonYear={nextSeasonYear}

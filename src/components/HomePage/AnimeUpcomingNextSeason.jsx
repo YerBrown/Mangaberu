@@ -110,16 +110,16 @@ function AnimeUpcomingNextSeason({ season, seasonYear }) {
                 <div className="change-anime-container">
                     <h2>Upcoming Next Season</h2>
                     <button onClick={() => handlePreviousAnime()}>
-                        <ArrowBackIosNewRoundedIcon />
+                        <ArrowBackIosNewRoundedIcon fontSize="small" />
                     </button>
                     <button onClick={() => handleNextAnime()}>
-                        <ArrowForwardNewRoundedIcon />
+                        <ArrowForwardNewRoundedIcon fontSize="small" />
                     </button>
                     <button onClick={toggleMute}>
                         {isMuted ? (
-                            <MusicOffRoundedIcon />
+                            <MusicOffRoundedIcon fontSize="small" />
                         ) : (
-                            <MusicNoteRoundedIcon />
+                            <MusicNoteRoundedIcon fontSize="small" />
                         )}
                     </button>
                 </div>

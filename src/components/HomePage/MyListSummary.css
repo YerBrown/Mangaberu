@@ -1,7 +1,7 @@
 section#my-list-summary-section {
     flex-direction: column;
     align-items: start;
-    padding: 20px;
+    padding: 0 5%;
 }
 
 section#my-list-summary-section>h2 {}

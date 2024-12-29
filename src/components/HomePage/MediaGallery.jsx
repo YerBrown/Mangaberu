@@ -1,73 +1,86 @@
-import { useNavigate } from "react-router-dom";
-import { useQuery } from "@apollo/client";
-import { GET_MEDIA_TRENDING_SEASON } from "../../graphql/queries";
+import { Link, useNavigate } from "react-router-dom";
+import useTrendingMedia from "../../hooks/useTrendingMedia";
 import "./MediaGallery.css";
-function MediaGallery({ type, sort, page, perPage, season, seasonYear }) {
+function MediaGallery({ sort, page, perPage, season, seasonYear }) {
     const navigate = useNavigate();
 
-    const { data, loading, error } = useQuery(GET_MEDIA_TRENDING_SEASON, {
-        variables: {
-            type,
-            sort,
-            page,
-            perPage,
-            season,
-            seasonYear,
-        },
-    });
-
-    if (loading)
-        return (
-            <div className="media-gallery">
-                <p>Loading...</p>;
-            </div>
-        );
-    if (error)
-        return (
-            <div className="media-gallery">
-                <p>Error: {error.message}</p>;
-            </div>
-        );
+    const {
+        trendingMediaType,
+        trendingMedia,
+        handleTrendingMediaTypeChange,
+        loading,
+        error,
+    } = useTrendingMedia(sort, page, perPage, season, seasonYear);
 
     const handleNavigate = (route) => {
         navigate(route);
     };
     return (
-        <div className="media-gallery">
-            {data.Page.media.map((mediaItem) => (
-                <button
-                    key={mediaItem.id}
-                    className="media-item"
-                    onClick={() =>
-                        handleNavigate(`/${type.toLowerCase()}/${mediaItem.id}`)
-                    }
-                >
-                    <div className="top-part">
-                        <img
-                            src={mediaItem.coverImage.extraLarge}
-                            alt={
-                                mediaItem.title.english ||
-                                mediaItem.title.romaji
+        <section id="trending-this-season">
+            <div className="select-media-container">
+                <h2>Trending this seasson</h2>
+                <div>
+                    <button
+                        onClick={() => handleTrendingMediaTypeChange("ANIME")}
+                        className={trendingMediaType == "ANIME" ? "active" : ""}
+                    >
+                        Anime
+                    </button>
+                    <button
+                        onClick={() => handleTrendingMediaTypeChange("MANGA")}
+                        className={trendingMediaType == "MANGA" ? "active" : ""}
+                    >
+                        Manga
+                    </button>
+                </div>
+                <Link>View All</Link>
+            </div>
+            <div className="media-gallery">
+                {loading && <p>Loading...</p>}
+                {error && <p>Error: {error.message}</p>}
+                {trendingMedia.length > 0 &&
+                    trendingMedia.map((mediaItem) => (
+                        <button
+                            key={mediaItem.id}
+                            className="media-item"
+                            onClick={() =>
+                                handleNavigate(
+                                    `/${trendingMediaType.toLowerCase()}/${
+                                        mediaItem.id
+                                    }`
+                                )
                             }
-                        />
-                        <div className="more-info">
-                            <p>Genres: {mediaItem.genres.join(", ")}</p>
+                        >
+                            <div className="top-part">
+                                <img
+                                    src={mediaItem.coverImage.extraLarge}
+                                    alt={
+                                        mediaItem.title.english ||
+                                        mediaItem.title.romaji
+                                    }
+                                />
+                                <div className="more-info">
+                                    <p>Genres: {mediaItem.genres.join(", ")}</p>
 
-                            <p>
-                                {mediaItem.type === "ANIME"
-                                    ? mediaItem.episodes
-                                        ? `${mediaItem.episodes} episodes`
-                                        : ""
-                                    : mediaItem.chapters
-                                    ? `${mediaItem.chapters} chapters`
-                                    : ""}
-                            </p>
-                        </div>
-                    </div>
-                    <h3>{mediaItem.title.english || mediaItem.title.romaji}</h3>
-                </button>
-            ))}
-        </div>
+                                    <p>
+                                        {mediaItem.type === "ANIME"
+                                            ? mediaItem.episodes
+                                                ? `${mediaItem.episodes} episodes`
+                                                : ""
+                                            : mediaItem.chapters
+                                            ? `${mediaItem.chapters} chapters`
+                                            : ""}
+                                    </p>
+                                </div>
+                            </div>
+                            <h3>
+                                {mediaItem.title.english ||
+                                    mediaItem.title.romaji}
+                            </h3>
+                        </button>
+                    ))}
+            </div>
+        </section>
     );
 }
 
