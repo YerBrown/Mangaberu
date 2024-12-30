@@ -6,8 +6,17 @@ export const ModalProvider = ({ children }) => {
     const [modalData, setModalData] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
 
-    const openModal = (data) => {
-        setModalData(data);
+    const openModal = (data, mediaData, onSave = null) => {
+        if (!data) {
+            data = {
+                status: "CURRENT",
+                progress: 0,
+                score: 0,
+                startedAt: null,
+                completedAt: null,
+            };
+        }
+        setModalData({ data, mediaData, onSave });
         setIsOpen(true);
     };
 

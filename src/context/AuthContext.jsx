@@ -99,6 +99,65 @@ export const AuthProvider = ({ children }) => {
         setIsLoading(false);
     };
 
+    const fetchAnimeLists = async (userId) => {
+        const query = GET_USER_ANIME_LIST;
+        const response = await fetch("https://graphql.anilist.co", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                query: query.loc.source.body,
+                variables: { userId },
+            }),
+        });
+
+        const animeData = await response.json();
+
+        setAnimeLists(animeData.data.MediaListCollection.lists);
+        setIsLoading(false);
+    };
+
+    const fetchMangaLists = async (userId) => {
+        const query = GET_USER_MANGA_LIST;
+        const response = await fetch("https://graphql.anilist.co", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                query: query.loc.source.body,
+                variables: { userId },
+            }),
+        });
+
+        const mangaData = await response.json();
+
+        setMangaLists(mangaData.data.MediaListCollection.lists);
+        setIsLoading(false);
+    };
+
+    const fetchFavouritesLists = async () => {
+        const query = GET_USER_FAVOURITES_LIST;
+        const response = await fetch("https://graphql.anilist.co", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                query: query.loc.source.body,
+            }),
+        });
+
+        const favouritesData = await response.json();
+
+        setFavouritesLists(favouritesData.data.Viewer.favourites);
+        setIsLoading(false);
+    };
+
     useEffect(() => {
         if (token) {
             fetchUserData(5);
@@ -119,6 +178,9 @@ export const AuthProvider = ({ children }) => {
                 setMangaLists,
                 fetchUserData,
                 fetchUserMediaLists,
+                fetchAnimeLists,
+                fetchMangaLists,
+                fetchFavouritesLists,
             }}
         >
             {children}

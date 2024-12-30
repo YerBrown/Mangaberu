@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useQuery } from "@apollo/client";
+import { useQuery, useLazyQuery } from "@apollo/client";
 import { GET_MEDIA_TRENDING_SEASON } from "../graphql/queries";
 
 const useTrendingMedia = (sort, page, perPage, season, seasonYear) => {
@@ -10,11 +10,10 @@ const useTrendingMedia = (sort, page, perPage, season, seasonYear) => {
     });
 
     // Consulta para ANIME
-    const {
-        data: animeData,
-        loading: animeLoading,
-        error: animeError,
-    } = useQuery(GET_MEDIA_TRENDING_SEASON, {
+    const [
+        fetchAnime,
+        { data: animeData, loading: animeLoading, error: animeError },
+    ] = useLazyQuery(GET_MEDIA_TRENDING_SEASON, {
         variables: {
             type: "ANIME",
             sort,
@@ -26,11 +25,10 @@ const useTrendingMedia = (sort, page, perPage, season, seasonYear) => {
     });
 
     // Consulta para MANGA
-    const {
-        data: mangaData,
-        loading: mangaLoading,
-        error: mangaError,
-    } = useQuery(GET_MEDIA_TRENDING_SEASON, {
+    const [
+        fetchManga,
+        { data: mangaData, loading: mangaLoading, error: mangaError },
+    ] = useLazyQuery(GET_MEDIA_TRENDING_SEASON, {
         variables: {
             type: "MANGA",
             sort,
@@ -59,7 +57,10 @@ const useTrendingMedia = (sort, page, perPage, season, seasonYear) => {
     const handleTrendingMediaTypeChange = (type) => {
         setTrendingMediaType(type);
     };
-
+    const fetchOnMount = () => {
+        fetchAnime();
+        fetchManga();
+    };
     // Devolver datos y funciones útiles al componente que use este hook
     return {
         trendingMediaType,
@@ -71,6 +72,7 @@ const useTrendingMedia = (sort, page, perPage, season, seasonYear) => {
                 : trendingData.manga,
         loading: animeLoading || mangaLoading,
         error: animeError || mangaError,
+        fetchOnMount,
     };
 };
 

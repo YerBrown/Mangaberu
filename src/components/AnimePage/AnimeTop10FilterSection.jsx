@@ -8,6 +8,7 @@ import "./AnimeTop10FilterSection.css";
 function AnimeTop10FilterSection() {
     const { data, loading, error } = useQuery(GET_GENRES, {
         variables: {},
+        skip: true,
     });
     const [sortFilter, setSortFilter] = useState("POPULARITY_DESC");
     const [genreFilter, setGenreFilter] = useState(null);

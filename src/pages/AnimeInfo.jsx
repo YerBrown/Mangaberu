@@ -23,7 +23,8 @@ const GET_MEDIA = gql`
 function AnimeInfo() {
     // Realiza la consulta con la variable `id`
     const { loading, error, data } = useQuery(GET_MEDIA, {
-        variables: { id: 1 }, // Cambia este ID según lo necesario
+        variables: { id: 1 },
+        skip: true, // Cambia este ID según lo necesario
     });
     // Muestra un indicador de carga mientras se obtienen los datos
     if (loading) return <p>Loading...</p>;

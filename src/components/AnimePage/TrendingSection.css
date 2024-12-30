@@ -182,7 +182,6 @@
     overflow-x: hidden;
     padding-right: 10px;
     height: 50%;
-    scrollbar-width: 8px;
     scrollbar-color: var(--secondary-color) transparent;
 }
 

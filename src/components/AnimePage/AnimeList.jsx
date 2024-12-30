@@ -11,6 +11,7 @@ function AnimeList({ sortFilter, genreFilter, mediaType }) {
             sort: sortFilter,
             genreIn: genreFilter,
         },
+        skip: true,
     });
 
     const navigate = useNavigate();

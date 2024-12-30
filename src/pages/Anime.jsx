@@ -1,6 +1,7 @@
 import { useAuth } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
 import TrendingSection from "../components/AnimePage/TrendingSection";
+import DiscoverByFiltersSection from "../components/AnimePage/DiscoverByFiltersSection";
 import AnimeTop10FilterSection from "../components/AnimePage/AnimeTop10FilterSection";
 import "./Anime.css";
 function Anime() {
@@ -17,7 +18,8 @@ function Anime() {
             <main>
                 <div id="anime-menu">
                     <TrendingSection />
-                    <AnimeTop10FilterSection />
+                    <DiscoverByFiltersSection />
+                    {/* <AnimeTop10FilterSection /> */}
                 </div>
             </main>
         </>

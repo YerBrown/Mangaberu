@@ -11,8 +11,14 @@ import SaveAsRoundedIcon from "@mui/icons-material/SaveAsRounded";
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
 function EditListModal() {
     const { isOpen, modalData, closeModal } = useModal();
-    const { fetchUserMediaLists, userData } = useAuth();
-    const [editedData, setEditedData] = useState(modalData || {});
+    const {
+        fetchUserMediaLists,
+        fetchAnimeLists,
+        fetchMangaLists,
+        fetchFavouritesLists,
+        userData,
+    } = useAuth();
+    const [editedData, setEditedData] = useState(modalData || null);
     const [isSaving, setIsSaving] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
 
@@ -22,30 +28,48 @@ function EditListModal() {
             const [year, month, day] = value.split("-"); // Divide el valor yyyy-mm-dd
             setEditedData((prev) => ({
                 ...prev,
-                [name]: {
-                    year: parseInt(year, 10),
-                    month: parseInt(month, 10),
-                    day: parseInt(day, 10),
+                data: {
+                    ...prev.data,
+                    [name]: {
+                        year: parseInt(year, 10),
+                        month: parseInt(month, 10),
+                        day: parseInt(day, 10),
+                    },
                 },
             }));
         } else {
             setEditedData((prev) => ({
                 ...prev,
-                [name]: value,
+                data: {
+                    ...prev.data,
+                    [name]: value,
+                },
             }));
         }
     };
     const handleToggleFavourite = async () => {
         try {
-            await toggleFavourite(editedData.media.id, editedData.media.type);
+            await toggleFavourite(
+                editedData.mediaData.id,
+                editedData.mediaData.type
+            );
+
             setEditedData((prev) => ({
                 ...prev,
-                media: {
-                    ...prev.media,
-                    isFavourite: !prev.media.isFavourite,
+                mediaData: {
+                    ...prev.mediaData,
+                    isFavourite: !prev.mediaData.isFavourite,
                 },
             }));
-            fetchUserMediaLists(userData.id);
+            if (modalData.mediaData.type === "ANIME") {
+                fetchAnimeLists(userData.id);
+            } else {
+                fetchMangaLists(userData.id);
+            }
+            fetchFavouritesLists();
+            if (modalData.onSave) {
+                modalData.onSave();
+            }
         } catch (error) {
             console.error("Error toggling favourite:", error);
         }
@@ -53,11 +77,11 @@ function EditListModal() {
 
     const hasChanges = JSON.stringify(modalData) !== JSON.stringify(editedData);
     const handleSave = async () => {
-        if (!hasChanges) {
-            console.log("No changes to save.");
-            closeModal();
-            return;
-        }
+        // if (!hasChanges) {
+        //     console.log("No changes to save.");
+        //     closeModal();
+        //     return;
+        // }
         setIsSaving(true);
         const mutation = `
         mutation ($mediaId: Int, $progress: Int, $score: Float, $status: MediaListStatus, $startedAt: FuzzyDateInput, $completedAt: FuzzyDateInput) {
@@ -81,22 +105,22 @@ function EditListModal() {
                         `;
 
         const variables = {
-            mediaId: modalData.media.id,
-            progress: parseInt(editedData.progress, 10) || 0,
-            score: parseFloat(editedData.score) || 0,
-            status: editedData.status || "CURRENT",
-            startedAt: editedData.startedAt
+            mediaId: modalData.mediaData.id,
+            status: editedData.data.status,
+            progress: parseInt(editedData.data.progress, 10) || 0,
+            score: parseFloat(editedData.data.score) || 0,
+            startedAt: editedData.data.startedAt
                 ? {
-                      year: editedData.startedAt.year,
-                      month: editedData.startedAt.month,
-                      day: editedData.startedAt.day,
+                      year: editedData.data.startedAt.year,
+                      month: editedData.data.startedAt.month,
+                      day: editedData.data.startedAt.day,
                   }
                 : null,
-            completedAt: editedData.completedAt
+            completedAt: editedData.data.completedAt
                 ? {
-                      year: editedData.completedAt.year,
-                      month: editedData.completedAt.month,
-                      day: editedData.completedAt.day,
+                      year: editedData.data.completedAt.year,
+                      month: editedData.data.completedAt.month,
+                      day: editedData.data.completedAt.day,
                   }
                 : null,
         };
@@ -118,7 +142,14 @@ function EditListModal() {
             console.error("Error updating:", data.errors);
         } else {
             console.log("Updated successfully:", data);
-            fetchUserMediaLists(userData.id);
+            if (modalData.mediaData.type === "ANIME") {
+                fetchAnimeLists(userData.id);
+            } else {
+                fetchMangaLists(userData.id);
+            }
+            if (modalData.onSave) {
+                modalData.onSave();
+            }
             closeModal();
         }
         setIsSaving(false);
@@ -139,7 +170,7 @@ function EditListModal() {
         `;
 
         const variables = {
-            id: modalData.id,
+            id: modalData.data.id,
         };
 
         const token = localStorage.getItem("access_token");
@@ -159,7 +190,14 @@ function EditListModal() {
             console.error("Error deleting:", data.errors);
         } else {
             console.log("Entry deleted successfully:", data);
-            fetchUserMediaLists(userData.id);
+            if (modalData.mediaData.type === "ANIME") {
+                fetchAnimeLists(userData.id);
+            } else {
+                fetchMangaLists(userData.id);
+            }
+            if (modalData.onSave) {
+                modalData.onSave();
+            }
             closeModal();
         }
         setIsDeleting(false);
@@ -181,11 +219,10 @@ function EditListModal() {
     }, [isOpen]);
     useEffect(() => {
         if (modalData) {
-            console.log(modalData);
             setEditedData(modalData);
         }
     }, [isOpen]);
-    if (!isOpen || !modalData) return null;
+    if (!isOpen || !modalData || !editedData) return null;
     return (
         <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -193,27 +230,27 @@ function EditListModal() {
                     <CloseRoundedIcon />
                 </button>
                 <img
-                    src={modalData.media.bannerImage}
-                    alt={modalData.media.title.english}
+                    src={modalData.mediaData.bannerImage}
+                    alt={modalData.mediaData.title.english}
                     className="banner"
                 />
                 <div className="modal-data">
                     <div className="top-part">
                         <img
-                            src={modalData.media.coverImage.large}
-                            alt={modalData.media.title.english}
+                            src={modalData.mediaData.coverImage.large}
+                            alt={modalData.mediaData.title.english}
                         />
                         <h3>
-                            {modalData.media.title.english ||
-                                modalData.media.title.romaji}
+                            {modalData.mediaData.title.english ||
+                                modalData.mediaData.title.romaji}
                         </h3>
                         <div className="buttons-container">
-                            {editedData?.media ? (
+                            {editedData?.mediaData ? (
                                 <button
                                     onClick={handleToggleFavourite}
                                     disabled={isSaving || isDeleting}
                                 >
-                                    {editedData.media.isFavourite ? (
+                                    {editedData.mediaData.isFavourite ? (
                                         <HeartBrokenRoundedIcon fontSize="small" />
                                     ) : (
                                         <FavoriteRoundedIcon fontSize="small" />
@@ -237,10 +274,10 @@ function EditListModal() {
                                 name="status"
                                 id="media-status"
                                 onChange={handleChange}
-                                value={editedData.status}
+                                value={editedData.data.status || "CURRENT"}
                             >
                                 <option value="CURRENT">
-                                    {modalData.media.type === "ANIME"
+                                    {modalData.mediaData.type === "ANIME"
                                         ? "Watching"
                                         : "Reading"}
                                 </option>
@@ -258,13 +295,13 @@ function EditListModal() {
                                 id="score"
                                 min={0}
                                 max={100}
-                                value={editedData.score}
+                                value={editedData.data.score || 0}
                                 onChange={handleChange}
                             />
                         </div>
                         <div className="progress">
                             <label htmlFor="progress">
-                                {modalData.media.type === "ANIME"
+                                {modalData.mediaData.type === "ANIME"
                                     ? "Episode Progress:"
                                     : "Chapter Progress:"}
                             </label>
@@ -274,11 +311,11 @@ function EditListModal() {
                                 id="progress"
                                 min={0}
                                 max={
-                                    modalData.media.episodes ||
-                                    modalData.media.chapters ||
+                                    modalData.mediaData.episodes ||
+                                    modalData.mediaData.chapters ||
                                     null
                                 }
-                                value={editedData.progress}
+                                value={editedData.data.progress || 0}
                                 onChange={handleChange}
                             />
                         </div>
@@ -289,13 +326,13 @@ function EditListModal() {
                                 name="startedAt"
                                 id="start-date"
                                 value={
-                                    editedData.startedAt
+                                    editedData.data.startedAt
                                         ? `${
-                                              editedData.startedAt.year
+                                              editedData.data.startedAt.year
                                           }-${String(
-                                              editedData.startedAt.month
+                                              editedData.data.startedAt.month
                                           ).padStart(2, "0")}-${String(
-                                              editedData.startedAt.day
+                                              editedData.data.startedAt.day
                                           ).padStart(2, "0")}`
                                         : ""
                                 }
@@ -309,13 +346,13 @@ function EditListModal() {
                                 name="completedAt"
                                 id="finish-date"
                                 value={
-                                    editedData.completedAt
+                                    editedData.data.completedAt
                                         ? `${
-                                              editedData.completedAt.year
+                                              editedData.data.completedAt.year
                                           }-${String(
-                                              editedData.completedAt.month
+                                              editedData.data.completedAt.month
                                           ).padStart(2, "0")}-${String(
-                                              editedData.completedAt.day
+                                              editedData.data.completedAt.day
                                           ).padStart(2, "0")}`
                                         : ""
                                 }

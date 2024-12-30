@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useQuery, gql } from "@apollo/client";
 import { useTheme } from "../context/ThemeContext";
 import { useAuth } from "../context/AuthContext";
 import Navbar from "../components/Navbar";

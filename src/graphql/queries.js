@@ -93,6 +93,7 @@ export const GET_ANIME_TRENDING = gql`
                 season: $season
                 seasonYear: $seasonYear
             ) {
+                type
                 id
                 title {
                     english
@@ -103,6 +104,7 @@ export const GET_ANIME_TRENDING = gql`
                 genres
                 status
                 description
+                isFavourite
                 coverImage {
                     extraLarge
                     large
@@ -117,6 +119,17 @@ export const GET_ANIME_TRENDING = gql`
                 averageScore
                 startDate {
                     year
+                }
+                mediaListEntry {
+                    id
+                    progress
+                    score
+                    startedAt {
+                        day
+                        month
+                        year
+                    }
+                    status
                 }
             }
         }
@@ -343,6 +356,59 @@ export const GET_USER_FAVOURITES_LIST = gql`
                             large
                         }
                     }
+                }
+            }
+        }
+    }
+`;
+
+export const GET_ANIME_BY_FILTER = gql`
+    query Query(
+        $page: Int
+        $perPage: Int
+        $type: MediaType
+        $sort: [MediaSort]
+        $startDateLike: String
+        $genreIn: [String]
+    ) {
+        Page(page: $page, perPage: $perPage) {
+            media(
+                type: $type
+                sort: $sort
+                startDate_like: $startDateLike
+                genre_in: $genreIn
+            ) {
+                id
+                title {
+                    english
+                    romaji
+                }
+                bannerImage
+                coverImage {
+                    large
+                    extraLarge
+                }
+                genres
+                startDate {
+                    year
+                }
+                isFavourite
+                averageScore
+                streamingEpisodes {
+                    thumbnail
+                    site
+                    title
+                }
+                mediaListEntry {
+                    id
+                    progress
+                    score
+                    startedAt {
+                        day
+                        month
+                        year
+                    }
+                    status
                 }
             }
         }

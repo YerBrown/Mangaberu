@@ -30,12 +30,16 @@
   --font-color-3: blue;
   --font-color-1-hover: rgb(76, 76, 76);
   --font-color-2-hover: rgb(184, 184, 184);
+  --font-color-1-disabled: rgba(76, 76, 76, 0.5);
+  --font-color-2-disabled: rgb(184, 184, 184, 0.5);
 
   --background-color: var(--color-2);
   --text-color-1: var(--font-color-2);
   --text-color-2: var(--font-color-1);
   --text-color-1-hover: var(--font-color-2-hover);
   --text-color-2-hover: var(--font-color-1-hover);
+  --text-color-1-disabled: var(--font-color-2-disabled);
+  --text-color-2-disabled: var(--font-color-1-disabled);
   --primary-color: var(--color-2);
   --secondary-color: var(--color-1);
   --button-color-1: var(--color-4-transparent);

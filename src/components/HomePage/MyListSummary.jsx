@@ -35,8 +35,7 @@ const renderItems = (mediaList, status, redirectMoreInfo = null) => {
     );
 };
 function MyListSummary() {
-    const { userData, animeLists, mangaLists, favouritesLists, isLoading } =
-        useAuth();
+    const { userData, animeLists, mangaLists, isLoading } = useAuth();
     const navigate = useNavigate();
     const handleNavigateAnime = (animeId) => {
         navigate("/anime/" + animeId);

@@ -1,9 +1,26 @@
-import { ApolloClient, InMemoryCache } from "@apollo/client";
+import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
 
-// Configura Apollo Client
+// Endpoint de AniList
+const httpLink = createHttpLink({
+    uri: "https://graphql.anilist.co/",
+});
+
+// Middleware para agregar el token
+const authLink = setContext((_, { headers }) => {
+    const token = localStorage.getItem("access_token");
+    return {
+        headers: {
+            ...headers,
+            authorization: token ? `Bearer ${token}` : "",
+        },
+    };
+});
+
+// Configuración del Apollo Client
 const client = new ApolloClient({
-    uri: "https://graphql.anilist.co", // Endpoint de la API GraphQL
-    cache: new InMemoryCache(), // Manejo de cache para optimizar consultas
+    link: authLink.concat(httpLink),
+    cache: new InMemoryCache(),
 });
 
 export default client;

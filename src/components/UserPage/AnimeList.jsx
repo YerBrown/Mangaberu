@@ -21,7 +21,7 @@ const renderItems = (animeLists, status, openEdit) => {
                                 entry.media.title.romaji
                             }
                         />
-                        <button onClick={() => openEdit(entry)}>
+                        <button onClick={() => openEdit(entry, entry.media)}>
                             <EditRoundedIcon />
                         </button>
                         <div className="progress-data">
