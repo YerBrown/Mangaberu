@@ -6,16 +6,9 @@ export const GET_MEDIA_TRENDING_SEASON = gql`
         $sort: [MediaSort]
         $page: Int
         $perPage: Int
-        $season: MediaSeason
-        $seasonYear: Int
     ) {
         Page(page: $page, perPage: $perPage) {
-            media(
-                type: $type
-                sort: $sort
-                seasonYear: $seasonYear
-                season: $season
-            ) {
+            media(type: $type, sort: $sort) {
                 id
                 title {
                     english
@@ -77,7 +70,7 @@ export const GET_ANIME_UPCOMING_SEASON = gql`
     }
 `;
 
-export const GET_ANIME_TRENDING = gql`
+export const GET_MEDIA_TRENDING = gql`
     query (
         $type: MediaType
         $sort: [MediaSort]
@@ -136,7 +129,7 @@ export const GET_ANIME_TRENDING = gql`
     }
 `;
 
-export const GET_ANIME_BY_ID = gql`
+export const GET_MEDIA_BY_ID = gql`
     query Media($mediaId: Int) {
         Media(id: $mediaId) {
             id
@@ -147,6 +140,7 @@ export const GET_ANIME_BY_ID = gql`
             description
             genres
             episodes
+            chapters
             averageScore
             coverImage {
                 extraLarge
@@ -362,7 +356,7 @@ export const GET_USER_FAVOURITES_LIST = gql`
     }
 `;
 
-export const GET_ANIME_BY_FILTER = gql`
+export const GET_MEDIA_BY_FILTER = gql`
     query Query(
         $page: Int
         $perPage: Int
@@ -404,6 +398,56 @@ export const GET_ANIME_BY_FILTER = gql`
                     progress
                     score
                     startedAt {
+                        day
+                        month
+                        year
+                    }
+                    completedAt {
+                        day
+                        month
+                        year
+                    }
+                    status
+                }
+            }
+        }
+    }
+`;
+
+export const GET_TOP_50_MEDIA = gql`
+    query Media($type: MediaType) {
+        Page(page: 1, perPage: 50) {
+            media(sort: SCORE_DESC, type: $type) {
+                id
+                title {
+                    english
+                    romaji
+                }
+                startDate {
+                    year
+                }
+                genres
+                episodes
+                chapters
+                status
+                description
+                averageScore
+                bannerImage
+                coverImage {
+                    extraLarge
+                    large
+                    medium
+                }
+                mediaListEntry {
+                    id
+                    progress
+                    score
+                    startedAt {
+                        day
+                        month
+                        year
+                    }
+                    completedAt {
                         day
                         month
                         year

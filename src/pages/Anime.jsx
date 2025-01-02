@@ -2,7 +2,7 @@ import { useAuth } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
 import TrendingSection from "../components/AnimePage/TrendingSection";
 import DiscoverByFiltersSection from "../components/AnimePage/DiscoverByFiltersSection";
-import AnimeTop10FilterSection from "../components/AnimePage/AnimeTop10FilterSection";
+import Top10Score from "../components/AnimePage/Top10ScoreSection";
 import "./Anime.css";
 function Anime() {
     const { userData, isLoading } = useAuth();
@@ -10,7 +10,10 @@ function Anime() {
         <>
             <header>
                 {userData ? (
-                    <Navbar userAvatar={userData.avatar.medium} />
+                    <Navbar
+                        userAvatar={userData.avatar.medium}
+                        activeMenu="anime"
+                    />
                 ) : (
                     <Navbar activeMenu="anime" />
                 )}
@@ -19,7 +22,7 @@ function Anime() {
                 <div id="anime-menu">
                     <TrendingSection />
                     <DiscoverByFiltersSection />
-                    {/* <AnimeTop10FilterSection /> */}
+                    <Top10Score />
                 </div>
             </main>
         </>

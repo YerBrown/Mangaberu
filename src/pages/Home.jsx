@@ -70,7 +70,10 @@ function Home() {
         <>
             <header>
                 {userData ? (
-                    <Navbar userAvatar={userData.avatar.medium} />
+                    <Navbar
+                        userAvatar={userData.avatar.medium}
+                        activeMenu="home"
+                    />
                 ) : (
                     <Navbar activeMenu="home" />
                 )}
@@ -100,9 +103,9 @@ function Home() {
                     </section>
 
                     <MediaGallery
-                        sort={["TRENDING_DESC"]}
+                        sort={["TRENDING_DESC", "POPULARITY_DESC"]}
                         page={1}
-                        perPage={5}
+                        perPage={6}
                         season={season}
                         seasonYear={seasonYear}
                     />

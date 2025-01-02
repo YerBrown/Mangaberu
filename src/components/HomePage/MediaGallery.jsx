@@ -21,8 +21,6 @@ function MediaGallery({ sort, page, perPage, season, seasonYear }) {
                 sort,
                 page,
                 perPage,
-                season,
-                seasonYear,
             },
         });
 

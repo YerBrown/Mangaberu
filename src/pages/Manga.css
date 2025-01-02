@@ -1,0 +1,13 @@
+#manga-menu {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    color: var(--text-color);
+    box-sizing: border-box;
+}
+
+#manga-menu section {
+    display: flex;
+    box-sizing: border-box;
+    overflow: hidden;
+}

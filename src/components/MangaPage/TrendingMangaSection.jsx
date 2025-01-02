@@ -12,34 +12,12 @@ import HeartBrokenRoundedIcon from "@mui/icons-material/HeartBrokenRounded";
 import SentimentSatisfiedOutlinedIcon from "@mui/icons-material/SentimentSatisfiedOutlined";
 import SentimentNeutralOutlinedIcon from "@mui/icons-material/SentimentNeutralOutlined";
 import SentimentDissatisfiedOutlinedIcon from "@mui/icons-material/SentimentDissatisfiedOutlined";
-import PlayCircleRoundedIcon from "@mui/icons-material/PlayCircleRounded";
 import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
-import "./TrendingSection.css";
-
 let sanitizedDescriptionHTML = "";
 let averageScore = "";
 let currentBannerImage = "";
 
-function getCurrentSeasonAndYear() {
-    const date = new Date();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-
-    let season;
-    if (month >= 1 && month <= 3) {
-        season = "WINTER";
-    } else if (month >= 4 && month <= 6) {
-        season = "SPRING";
-    } else if (month >= 7 && month <= 9) {
-        season = "SUMMER";
-    } else {
-        season = "FALL";
-    }
-
-    return { season, seasonYear: year };
-}
-
-function TrendingSection() {
+function TrendingMangaSection() {
     const { theme } = useTheme();
     const { openModal } = useModal();
     const {
@@ -49,21 +27,17 @@ function TrendingSection() {
         fetchFavouritesLists,
         userData,
     } = useAuth();
-    const [trendingAnime, setTrendingAnime] = useState([]);
     const [currentTrendingIndex, setCurrentTrendingIndex] = useState(0);
     const [isWatchTrailer, setIsWatchTrailer] = useState(false);
-    const { season, seasonYear } = getCurrentSeasonAndYear();
 
     const [fetchAnime, { data, loading, error, refetch }] = useLazyQuery(
         GET_MEDIA_TRENDING,
         {
             variables: {
-                type: "ANIME",
-                sort: "POPULARITY_DESC",
+                type: "MANGA",
+                sort: "TRENDING_DESC",
                 page: 1,
                 perPage: 5,
-                season,
-                seasonYear,
             },
         }
     );
@@ -89,9 +63,6 @@ function TrendingSection() {
     };
     const handleTrendingChange = (index) => {
         setCurrentTrendingIndex(index);
-    };
-    const handleWatchTrailer = (disable) => {
-        setIsWatchTrailer(disable);
     };
     const handleNavigate = (route) => {
         navigate(route);
@@ -140,13 +111,6 @@ function TrendingSection() {
                                 : "banner-filter dark"
                         }
                     ></div>
-                    <iframe
-                        src={`https://www.youtube.com/embed/${data.Page.media[currentTrendingIndex].trailer.id}`}
-                        title="YouTube video player"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        className={isWatchTrailer ? "active" : ""}
-                    ></iframe>
                     <div
                         className={`current-anime ${
                             isWatchTrailer ? "disable" : ""
@@ -240,7 +204,7 @@ function TrendingSection() {
                                         {
                                             data.Page.media[
                                                 currentTrendingIndex
-                                            ].episodes
+                                            ].chapters
                                         }
                                     </p>
                                 )}
@@ -253,15 +217,9 @@ function TrendingSection() {
                             </div>
                             <div className="buttons-container">
                                 <button
-                                    onClick={() => handleWatchTrailer(true)}
-                                >
-                                    {"Watch Trailer"}
-                                    {<PlayCircleRoundedIcon />}
-                                </button>
-                                <button
                                     onClick={() =>
                                         handleNavigate(
-                                            `/anime/${data.Page.media[currentTrendingIndex].id}`
+                                            `/manga/${data.Page.media[currentTrendingIndex].id}`
                                         )
                                     }
                                 >
@@ -309,4 +267,4 @@ function TrendingSection() {
     );
 }
 
-export default TrendingSection;
+export default TrendingMangaSection;

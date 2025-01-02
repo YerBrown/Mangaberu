@@ -3,14 +3,14 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 import DOMPurify from "dompurify";
-import { GET_ANIME_BY_ID } from "../graphql/queries";
+import { GET_MEDIA_BY_ID } from "../graphql/queries";
 import Navbar from "../components/Navbar";
 
 import "./AnimeDetails.css";
 function AnimeDetails() {
     const { userData, isLoading } = useAuth();
     const { id_anime } = useParams();
-    const { data, loading, error } = useQuery(GET_ANIME_BY_ID, {
+    const { data, loading, error } = useQuery(GET_MEDIA_BY_ID, {
         variables: {
             mediaId: id_anime,
         },

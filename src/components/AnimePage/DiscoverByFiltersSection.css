@@ -1,10 +1,8 @@
 section#discover-by-filter {
     display: flex;
     flex-direction: column;
-    gap: 20px;
     padding: 20px 5%;
     width: 100%;
-    height: 650px;
     box-sizing: border-box;
 }
 
@@ -53,6 +51,7 @@ section#discover-by-filter {
     overflow-x: scroll;
     overflow-y: hidden;
     scrollbar-color: var(--secondary-color) transparent;
+    padding: 20px 0;
 }
 
 
@@ -76,18 +75,24 @@ section#discover-by-filter {
 
 #discover-by-filter .anime-container {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(2, 200px);
-    gap: 10px
+    grid-template-columns: repeat(10, 300px);
+    gap: 20px;
+    overflow-x: scroll;
+    padding: 20px 0;
+    scrollbar-color: var(--secondary-color) transparent;
 }
 
 #discover-by-filter .anime-container .anime-card {
     display: flex;
+    flex-direction: column;
     width: 100%;
     height: 100%;
-    border-radius: 10px;
+    height: auto;
+    border-radius: 5px;
+    padding: 0;
     overflow: hidden;
     background-color: var(--button-color-1);
+    justify-self: center;
 }
 
 #discover-by-filter .anime-container .anime-card:active {
@@ -96,13 +101,17 @@ section#discover-by-filter {
 }
 
 #discover-by-filter .anime-container .anime-card img {
-    height: 70%;
+    height: calc(100% - 55px);
+    width: 100%;
     object-fit: cover;
 }
 
 #discover-by-filter .anime-container .anime-card .anime-data {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
 
 }
 
@@ -113,6 +122,7 @@ section#discover-by-filter {
     overflow: hidden;
     text-overflow: ellipsis;
     height: 50%;
+    text-align: start;
 }
 
 #discover-by-filter .anime-container .anime-card .anime-data .extra-details {

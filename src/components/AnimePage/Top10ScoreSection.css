@@ -1,0 +1,125 @@
+#top-10-score-section {
+    display: flex;
+    width: 100%;
+    height: 700px;
+    overflow: hidden;
+    padding: 0 5%;
+}
+
+#top-10-score-section>h2 {
+    width: 25%;
+    display: flex;
+    align-items: top;
+
+}
+
+#top-10-score-section>.top-10-container {
+    width: 75%;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: repeat(10, 1fr);
+    gap: 20px;
+    overflow-y: scroll;
+    padding-right: 20px;
+    scrollbar-color: var(--secondary-color) transparent;
+}
+
+.top-10-container .anime-card {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    overflow: hidden;
+    border: 0;
+    height: 90px;
+    padding: 0;
+    transition: height 0.5s ease-in-out;
+    background-color: rgb(158, 158, 158);
+}
+
+.top-10-container .anime-card:active {
+    color: var(--text-color-1);
+    background-color: rgb(158, 158, 158);
+}
+
+.top-10-container .anime-card.active {
+    height: 300px;
+}
+
+
+.top-10-container .anime-card .anime-data {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.224);
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    gap: 20px;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+.top-10-container .anime-card .anime-data>h4 {
+    width: 40px;
+    height: 50px;
+    background-color: var(--color-2-transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    border-radius: 5px;
+}
+
+.top-10-container .anime-card .anime-data h4,
+.top-10-container .anime-card .anime-data h3 {
+    margin: 0;
+    text-align: left;
+}
+
+.top-10-container .anime-card .anime-data .content {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 15px;
+    width: 60%;
+    height: 100%;
+}
+
+.top-10-container .anime-card .anime-data .year-genres {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.top-10-container .anime-card .anime-data .score {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    top: 20px;
+    right: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+.top-10-container .anime-card img.banner {
+    position: absolute;
+    object-fit: cover;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.top-10-container .anime-card .anime-data p {
+    text-align: left;
+    overflow-y: scroll;
+}
+
+.top-10-container .anime-card .anime-data button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}

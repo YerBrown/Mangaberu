@@ -8,8 +8,7 @@ import {
 } from "@mui/icons-material";
 import StarRateRoundedIcon from "@mui/icons-material/StarRateRounded";
 import { GET_GENRES, GET_MEDIA_BY_FILTER } from "../../graphql/queries";
-import "./DiscoverByFiltersSection.css";
-
+import "./DiscoverByFiltersManga.css";
 function DiscoverByFiltersSection() {
     const [sortFilter, setSortFilter] = useState("TRENDING_DESC");
     const [genreFilter, setGenreFilter] = useState([]);
@@ -29,13 +28,13 @@ function DiscoverByFiltersSection() {
                 perPage: 10,
                 sort: sortFilter,
                 genreIn: genreFilter.length > 0 ? genreFilter : null,
-                type: "ANIME",
+                type: "MANGA",
             },
         }
     );
 
     const handleNavigate = (animeId) => {
-        navigate(`/anime/${animeId}`);
+        navigate(`/manga/${animeId}`);
     };
     // Manejo de cambios en el filtro de orden
     const handleSortFilterChange = (filter) => {
@@ -115,33 +114,37 @@ function DiscoverByFiltersSection() {
                     )
                 )}
             </div>
-            <div className="anime-container">
+            <div className="manga-container">
                 {loading ? (
                     <p>Loading...</p>
                 ) : error ? (
                     <p>{error.message}</p>
                 ) : (
-                    data?.Page?.media.map((anime) => (
+                    data?.Page?.media.map((manga) => (
                         <button
-                            key={anime.id}
-                            className="anime-card"
-                            onClick={() => handleNavigate(anime.id)}
+                            key={manga.id}
+                            className="manga-card"
+                            onClick={() => handleNavigate(manga.id)}
                         >
                             <img
                                 src={
-                                    anime.coverImage.extraLarge
-                                        ? anime.coverImage.extraLarge
-                                        : anime.coverImage.large
+                                    manga.coverImage.extraLarge
+                                        ? manga.coverImage.extraLarge
+                                        : manga.coverImage.large
                                 }
-                                alt={anime.title.english}
+                                alt={manga.title.english}
                             />
-                            <div className="anime-data">
-                                <h4>{anime.title.english}</h4>
+                            <div className="manga-data">
+                                <h4>
+                                    {manga.title.english
+                                        ? manga.title.english
+                                        : manga.title.romaji}
+                                </h4>
                                 <div className="extra-details">
-                                    <p>{anime.startDate.year}</p>
+                                    <p>{manga.startDate.year}</p>
                                     <p>
                                         <StarRateRoundedIcon fontSize="small" />
-                                        {anime.averageScore}%
+                                        {manga.averageScore}%
                                     </p>
                                 </div>
                             </div>

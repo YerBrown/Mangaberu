@@ -1,0 +1,64 @@
+#discover-by-filter .manga-container {
+    display: grid;
+    grid-template-columns: repeat(10, 250px);
+    gap: 20px;
+    overflow-x: scroll;
+    scrollbar-color: var(--secondary-color) transparent;
+    padding: 20px 0;
+}
+
+#discover-by-filter .manga-container .manga-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    height: auto;
+    border-radius: 5px;
+    padding: 0;
+    overflow: hidden;
+    background-color: var(--button-color-1);
+    justify-self: center;
+}
+
+#discover-by-filter .manga-container .manga-card:active {
+    color: var(--text-color-1);
+    background-color: var(--button-color-1-hover);
+}
+
+#discover-by-filter .manga-container .manga-card img {
+    height: calc(100% - 55px);
+    width: 100%;
+    object-fit: cover;
+}
+
+#discover-by-filter .manga-container .manga-card .manga-data {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+
+}
+
+#discover-by-filter .manga-container .manga-card .manga-data h4 {
+    margin: 0;
+    font-size: .8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 50%;
+    text-align: start;
+}
+
+#discover-by-filter .manga-container .manga-card .manga-data .extra-details {
+    display: flex;
+    justify-content: space-between;
+    height: 50%;
+}
+
+.manga-data .extra-details p {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    font-size: .8rem;
+}
