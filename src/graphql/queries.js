@@ -172,6 +172,26 @@ export const GET_MEDIA_BY_ID = gql`
                 month
                 year
             }
+            popularity
+            favourites
+            duration
+            format
+            studios {
+                nodes {
+                    name
+                }
+            }
+            characters(page: 1, perPage: 6, sort: RELEVANCE) {
+                nodes {
+                    image {
+                        large
+                        medium
+                    }
+                    name {
+                        full
+                    }
+                }
+            }
         }
     }
 `;
