@@ -20,7 +20,7 @@
     height: 500px;
     top: 0;
     left: 0;
-    background: linear-gradient(to top, var(--primary-color) 20%, rgba(0, 0, 0, 0)100%);
+    background: linear-gradient(to top, var(--primary-color) 20%, rgba(0, 0, 0, .5)100%);
 }
 
 #anime-details-menu .main-container {
@@ -57,11 +57,38 @@
     gap: 10px;
 }
 
-.main-container .main-content .cover-container img {
+.main-container .main-content .cover-container>img {
     width: 100%;
     height: 400px;
     object-fit: cover;
     border-radius: 5px;
+}
+
+.main-container .main-content .cover-container button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    height: 40px;
+}
+
+.main-container .main-content .cover-container button .icon {
+    height: 100%;
+    width: 30px;
+    object-fit: contain;
+    padding: 5px;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.main-container .main-content .cover-container button img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+.main-container .main-content .cover-container button p {
+    margin: 0;
 }
 
 .main-container .main-content .main-data {
@@ -81,7 +108,8 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    min-width: calc(100% - 500px);
+    width: 100%;
+    max-width: 100%;
     padding: 0 20px;
     box-sizing: border-box;
 }
@@ -107,13 +135,6 @@
     white-space: nowrap;
 }
 
-.details-trailer .details .top-part .genres {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: auto;
-    border-left: 2px solid var(--secondary-color);
-    padding-left: 10px;
-}
 
 .main-container .main-content .characters-container {
     width: 100%;
@@ -144,6 +165,14 @@
 .main-container .main-content .characters-container p {
     width: 100%;
     margin: 0;
+    height: 10%;
+
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
 }
 
 .details-trailer iframe {
@@ -159,4 +188,60 @@
     box-sizing: border-box;
     overflow-y: scroll;
     overflow-x: hidden;
+    height: 200px;
+    scrollbar-color: var(--secondary-color) transparent;
+}
+
+.main-container .main-content .main-data .recomendations {
+    width: 100%;
+    height: 500px;
+    padding-left: 20px;
+
+}
+
+.main-container .main-content .main-data .recomendations .recomendations-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 10px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+}
+
+.main-container .main-content .main-data .recomendations .recomendations-container button {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+.recomendations .recomendations-container button img {
+    border-radius: 5px;
+    width: 100%;
+    height: 80%;
+    object-fit: cover;
+}
+
+.recomendations .recomendations-container button h3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 20%;
+    padding: 0 10px;
+    margin: 10px 0;
+    text-align: center;
+    box-sizing: border-box;
+    font-size: .8rem;
+
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
 }

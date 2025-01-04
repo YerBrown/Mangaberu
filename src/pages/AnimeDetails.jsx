@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -39,7 +40,13 @@ function AnimeDetails() {
             mediaId: id_anime,
         },
     });
-
+    const navigate = useNavigate();
+    const handleNavigate = (mediaId) => {
+        navigate("/anime/" + mediaId);
+    };
+    const handleOpenLink = (url) => {
+        window.open(url, "_blank");
+    };
     if (loading)
         return (
             <div id="anime-details-menu">
@@ -87,6 +94,35 @@ function AnimeDetails() {
                                 />
                                 <button>Add To List</button>
                                 <button>Set Favourite</button>
+                                {data.Media.externalLinks.map(
+                                    (exterlanLink) =>
+                                        exterlanLink.type === "STREAMING" && (
+                                            <button
+                                                onClick={() =>
+                                                    handleOpenLink(
+                                                        exterlanLink.url
+                                                    )
+                                                }
+                                            >
+                                                <div
+                                                    style={{
+                                                        backgroundColor:
+                                                            exterlanLink.color,
+                                                    }}
+                                                    className="icon"
+                                                >
+                                                    <img
+                                                        src={exterlanLink.icon}
+                                                        alt={
+                                                            exterlanLink.site +
+                                                            " icon"
+                                                        }
+                                                    />
+                                                </div>
+                                                <p>{exterlanLink.site}</p>
+                                            </button>
+                                        )
+                                )}
                             </div>
                             <div className="main-data">
                                 <div className="details-trailer">
@@ -183,6 +219,57 @@ function AnimeDetails() {
                                         }}
                                     ></p>
                                 </div>
+                                {data.Page.recommendations.lenght > 0 && (
+                                    <div className="recomendations">
+                                        <h4>Recommendations</h4>
+                                        <div className="recomendations-container">
+                                            {data.Page.recommendations.map(
+                                                (recomendation) => (
+                                                    <button
+                                                        key={
+                                                            recomendation
+                                                                .mediaRecommendation
+                                                                .id
+                                                        }
+                                                        onClick={() =>
+                                                            handleNavigate(
+                                                                recomendation
+                                                                    .mediaRecommendation
+                                                                    .id
+                                                            )
+                                                        }
+                                                        className="recomendation-card"
+                                                    >
+                                                        <img
+                                                            src={
+                                                                recomendation
+                                                                    .mediaRecommendation
+                                                                    .coverImage
+                                                                    .extraLarge
+                                                            }
+                                                            alt={
+                                                                recomendation
+                                                                    .mediaRecommendation
+                                                                    .title
+                                                                    .english
+                                                            }
+                                                        />
+                                                        <h3>
+                                                            {recomendation
+                                                                .mediaRecommendation
+                                                                .title
+                                                                .english ||
+                                                                recomendation
+                                                                    .mediaRecommendation
+                                                                    .title
+                                                                    .romaji}
+                                                        </h3>
+                                                    </button>
+                                                )
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </section>

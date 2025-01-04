@@ -192,6 +192,30 @@ export const GET_MEDIA_BY_ID = gql`
                     }
                 }
             }
+            externalLinks {
+                id
+                color
+                icon
+                site
+                url
+                type
+            }
+        }
+        Page(page: 1, perPage: 10) {
+            recommendations(mediaId: $mediaId) {
+                mediaRecommendation {
+                    id
+                    type
+                    title {
+                        english
+                        romaji
+                    }
+                    coverImage {
+                        extraLarge
+                        large
+                    }
+                }
+            }
         }
     }
 `;
