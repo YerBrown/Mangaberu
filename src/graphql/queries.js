@@ -137,6 +137,7 @@ export const GET_MEDIA_BY_ID = gql`
                 english
                 romaji
             }
+            type
             description
             genres
             episodes
@@ -181,7 +182,7 @@ export const GET_MEDIA_BY_ID = gql`
                     name
                 }
             }
-            characters(page: 1, perPage: 6, sort: RELEVANCE) {
+            characters(page: 1, perPage: 6) {
                 nodes {
                     image {
                         large
@@ -199,6 +200,17 @@ export const GET_MEDIA_BY_ID = gql`
                 site
                 url
                 type
+            }
+            mediaListEntry {
+                id
+                progress
+                score
+                startedAt {
+                    day
+                    month
+                    year
+                }
+                status
             }
         }
         Page(page: 1, perPage: 10) {

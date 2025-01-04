@@ -1,5 +1,12 @@
+@font-face {
+  font-family: 'Kenyan';
+  src: url('./fonts/Kenyan-Coffee-Rg.otf') format('otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Kenyan', sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -80,7 +87,7 @@
 
 html,
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Kenyan', sans-serif;
   background-color: var(--background-color);
   color: var(--text-color-1);
   margin: 0;

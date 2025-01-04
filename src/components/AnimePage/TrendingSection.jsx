@@ -77,11 +77,6 @@ function TrendingSection() {
         try {
             await toggleFavourite(media.id, media.type);
             await refetch();
-            if (media.type === "ANIME") {
-                fetchAnimeLists(userData.id);
-            } else {
-                fetchMangaLists(userData.id);
-            }
             fetchFavouritesLists();
         } catch (error) {
             console.error("Error toggling favourite:", error);
