@@ -46,7 +46,7 @@ function Top10Score() {
                     <p>{error.message}</p>
                 ) : data ? (
                     data.Page.media.map((anime, index) => (
-                        <button
+                        <div
                             key={anime.id}
                             className={
                                 index === currentTopIndex
@@ -86,7 +86,7 @@ function Top10Score() {
                                     </button>
                                 </div>
                             </div>
-                        </button>
+                        </div>
                     ))
                 ) : null}
             </div>

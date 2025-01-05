@@ -17,7 +17,7 @@ function User() {
         mangaLists,
         favouritesLists,
         isLoading,
-        fetchUserMediaLists,
+        refetchLists,
     } = useAuth();
 
     const { theme } = useTheme();
@@ -32,11 +32,6 @@ function User() {
         console.log("Redirigiendo a:", authUrl);
         window.location.href = authUrl;
     };
-    const handleFetchUserLists = () => {
-        if (userData) {
-            fetchUserMediaLists(userData.id);
-        }
-    };
 
     const renderContent = () => {
         switch (selectedOption) {
@@ -48,7 +43,7 @@ function User() {
                 return (
                     <Favourites
                         favouritesList={favouritesLists}
-                        fetchUserMediaLists={handleFetchUserLists}
+                        fetchUserMediaLists={refetchLists}
                     />
                 );
             default:

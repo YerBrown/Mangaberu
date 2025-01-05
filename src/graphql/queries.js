@@ -182,7 +182,7 @@ export const GET_MEDIA_BY_ID = gql`
                     name
                 }
             }
-            characters(page: 1, perPage: 6) {
+            characters(page: 1, perPage: 6, sort: [ROLE, RELEVANCE, ID]) {
                 nodes {
                     image {
                         large
@@ -190,6 +190,19 @@ export const GET_MEDIA_BY_ID = gql`
                     }
                     name {
                         full
+                    }
+                }
+            }
+            staff(page: 1, perPage: 1) {
+                edges {
+                    role
+                    node {
+                        image {
+                            large
+                        }
+                        name {
+                            full
+                        }
                     }
                 }
             }
@@ -214,7 +227,7 @@ export const GET_MEDIA_BY_ID = gql`
             }
         }
         Page(page: 1, perPage: 10) {
-            recommendations(mediaId: $mediaId) {
+            recommendations(mediaId: $mediaId, sort: [RATING_DESC, ID]) {
                 mediaRecommendation {
                     id
                     type
@@ -376,6 +389,118 @@ export const GET_USER_MANGA_LIST = gql`
 
 export const GET_USER_FAVOURITES_LIST = gql`
     query {
+        Viewer {
+            favourites {
+                anime {
+                    nodes {
+                        id
+                        title {
+                            english
+                            romaji
+                        }
+                        coverImage {
+                            large
+                        }
+                    }
+                }
+                manga {
+                    pageInfo {
+                        currentPage
+                        hasNextPage
+                        total
+                    }
+                    nodes {
+                        id
+                        title {
+                            english
+                            romaji
+                        }
+                        coverImage {
+                            large
+                        }
+                    }
+                }
+            }
+        }
+    }
+`;
+
+export const GET_USER_LISTS = gql`
+    query Query($userId: Int) {
+        animeList: MediaListCollection(userId: $userId, type: ANIME) {
+            lists {
+                name
+                status
+                entries {
+                    media {
+                        type
+                        id
+                        title {
+                            english
+                            romaji
+                        }
+                        bannerImage
+                        episodes
+                        coverImage {
+                            large
+                            extraLarge
+                        }
+                        isFavourite
+                    }
+                    id
+                    status
+                    score
+                    progress
+                    startedAt {
+                        day
+                        month
+                        year
+                    }
+                    completedAt {
+                        day
+                        month
+                        year
+                    }
+                }
+            }
+        }
+        mangaList: MediaListCollection(userId: $userId, type: MANGA) {
+            lists {
+                name
+                status
+                entries {
+                    media {
+                        type
+                        id
+                        title {
+                            english
+                            romaji
+                        }
+                        bannerImage
+                        chapters
+                        coverImage {
+                            large
+                            extraLarge
+                        }
+                        isFavourite
+                    }
+                    id
+                    status
+                    score
+                    progress
+                    startedAt {
+                        day
+                        month
+                        year
+                    }
+                    completedAt {
+                        day
+                        month
+                        year
+                    }
+                }
+            }
+        }
         Viewer {
             favourites {
                 anime {

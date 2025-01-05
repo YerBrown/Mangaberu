@@ -35,6 +35,11 @@
     padding: 0;
     transition: height 0.5s ease-in-out;
     background-color: rgb(158, 158, 158);
+    border-radius: 5px;
+}
+
+.top-10-container .anime-card:hover {
+    cursor: pointer;
 }
 
 .top-10-container .anime-card:active {

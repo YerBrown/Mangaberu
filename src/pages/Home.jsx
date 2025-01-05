@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { useAuth } from "../context/AuthContext";
+import { useQuery, useLazyQuery } from "@apollo/client";
 import Navbar from "../components/Navbar";
 import MediaGallery from "../components/HomePage/MediaGallery";
 import AnimeUpcomingNextSeason from "../components/HomePage/AnimeUpcomingNextSeason";

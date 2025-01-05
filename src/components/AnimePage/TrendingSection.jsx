@@ -9,9 +9,6 @@ import { toggleFavourite } from "../../services/anilistService";
 import DOMPurify from "dompurify";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import HeartBrokenRoundedIcon from "@mui/icons-material/HeartBrokenRounded";
-import SentimentSatisfiedOutlinedIcon from "@mui/icons-material/SentimentSatisfiedOutlined";
-import SentimentNeutralOutlinedIcon from "@mui/icons-material/SentimentNeutralOutlined";
-import SentimentDissatisfiedOutlinedIcon from "@mui/icons-material/SentimentDissatisfiedOutlined";
 import PlayCircleRoundedIcon from "@mui/icons-material/PlayCircleRounded";
 import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
 import "./TrendingSection.css";
@@ -42,13 +39,7 @@ function getCurrentSeasonAndYear() {
 function TrendingSection() {
     const { theme } = useTheme();
     const { openModal } = useModal();
-    const {
-        fetchUserMediaLists,
-        fetchAnimeLists,
-        fetchMangaLists,
-        fetchFavouritesLists,
-        userData,
-    } = useAuth();
+    const { refetchLists } = useAuth();
     const [trendingAnime, setTrendingAnime] = useState([]);
     const [currentTrendingIndex, setCurrentTrendingIndex] = useState(0);
     const [isWatchTrailer, setIsWatchTrailer] = useState(false);
@@ -77,7 +68,7 @@ function TrendingSection() {
         try {
             await toggleFavourite(media.id, media.type);
             await refetch();
-            fetchFavouritesLists();
+            refetchLists();
         } catch (error) {
             console.error("Error toggling favourite:", error);
         }
@@ -101,19 +92,6 @@ function TrendingSection() {
             data.Page.media[currentTrendingIndex].bannerImage ||
             data.Page.media[currentTrendingIndex].coverImage.extraLarge;
     }
-    const renderFace = () => {
-        if (averageScore <= 33) {
-            return (
-                <SentimentDissatisfiedOutlinedIcon style={{ color: "red" }} />
-            );
-        } else if (averageScore <= 66) {
-            return <SentimentNeutralOutlinedIcon style={{ color: "orange" }} />;
-        } else {
-            return (
-                <SentimentSatisfiedOutlinedIcon style={{ color: "green" }} />
-            );
-        }
-    };
 
     return (
         <section id="trending-section">
@@ -225,7 +203,6 @@ function TrendingSection() {
                                             ].averageScore
                                         }
                                         {" % "}
-                                        {renderFace()}
                                     </p>
                                 )}
                                 {data.Page.media[currentTrendingIndex]

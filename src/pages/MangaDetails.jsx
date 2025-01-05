@@ -213,6 +213,17 @@ function AnimeDetails() {
                                                     ) || "N/A"}
                                                 </p>
                                             )}
+                                            {data.Media.staff.edges.length >
+                                                0 && (
+                                                <p>
+                                                    Creator:{" "}
+                                                    {
+                                                        data.Media.staff
+                                                            .edges[0].node.name
+                                                            .full
+                                                    }
+                                                </p>
+                                            )}
                                         </div>
                                     </div>
                                     {data.Media.trailer && (

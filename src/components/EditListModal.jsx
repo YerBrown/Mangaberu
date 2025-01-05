@@ -11,13 +11,7 @@ import SaveAsRoundedIcon from "@mui/icons-material/SaveAsRounded";
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
 function EditListModal() {
     const { isOpen, modalData, closeModal } = useModal();
-    const {
-        fetchUserMediaLists,
-        fetchAnimeLists,
-        fetchMangaLists,
-        fetchFavouritesLists,
-        userData,
-    } = useAuth();
+    const { refetchLists, userData } = useAuth();
     const [editedData, setEditedData] = useState(modalData || null);
     const [isSaving, setIsSaving] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
@@ -61,12 +55,7 @@ function EditListModal() {
                     isFavourite: !prev.mediaData.isFavourite,
                 },
             }));
-            if (modalData.mediaData.type === "ANIME") {
-                fetchAnimeLists(userData.id);
-            } else {
-                fetchMangaLists(userData.id);
-            }
-            fetchFavouritesLists();
+            refetchLists();
             if (modalData.onSave) {
                 modalData.onSave();
             }
@@ -142,11 +131,7 @@ function EditListModal() {
             console.error("Error updating:", data.errors);
         } else {
             console.log("Updated successfully:", data);
-            if (modalData.mediaData.type === "ANIME") {
-                fetchAnimeLists(userData.id);
-            } else {
-                fetchMangaLists(userData.id);
-            }
+            refetchLists();
             if (modalData.onSave) {
                 modalData.onSave();
             }
@@ -190,11 +175,7 @@ function EditListModal() {
             console.error("Error deleting:", data.errors);
         } else {
             console.log("Entry deleted successfully:", data);
-            if (modalData.mediaData.type === "ANIME") {
-                fetchAnimeLists(userData.id);
-            } else {
-                fetchMangaLists(userData.id);
-            }
+            refetchLists();
             if (modalData.onSave) {
                 modalData.onSave();
             }

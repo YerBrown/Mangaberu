@@ -59,7 +59,7 @@ function DiscoverByFiltersSection() {
 
     useEffect(() => {
         if (genreFilter.length > 0 || sortFilter) {
-            fetchAnimes();
+            refetch();
         }
     }, [sortFilter, genreFilter, fetchAnimes]);
 

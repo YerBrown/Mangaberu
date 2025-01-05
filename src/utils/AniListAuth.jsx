@@ -41,7 +41,7 @@ function AniListAuth() {
         };
 
         getToken();
-    }, [navigate]);
+    }, []);
 
     return (
         <div className="auth-container">

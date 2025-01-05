@@ -45,7 +45,7 @@ function TopPangaScore() {
                     <p>{error.message}</p>
                 ) : data ? (
                     data.Page.media.map((manga, index) => (
-                        <button
+                        <div
                             key={manga.id}
                             className={
                                 index === currentTopIndex
@@ -96,7 +96,7 @@ function TopPangaScore() {
                                     </button>
                                 </div>
                             </div>
-                        </button>
+                        </div>
                     ))
                 ) : null}
             </div>
