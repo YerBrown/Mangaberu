@@ -639,3 +639,40 @@ export const GET_TOP_50_MEDIA = gql`
         }
     }
 `;
+
+export const GET_SEARCH = gql`
+    query Query($page: Int, $perPage: Int, $search: String) {
+        animes: Page(page: $page, perPage: $perPage) {
+            media(search: $search, isAdult: false, type: ANIME) {
+                id
+                title {
+                    english
+                    romaji
+                }
+                format
+                startDate {
+                    year
+                }
+                coverImage {
+                    large
+                }
+            }
+        }
+        mangas: Page(page: $page, perPage: $perPage) {
+            media(search: $search, isAdult: false, type: MANGA) {
+                id
+                title {
+                    english
+                    romaji
+                }
+                format
+                startDate {
+                    year
+                }
+                coverImage {
+                    large
+                }
+            }
+        }
+    }
+`;

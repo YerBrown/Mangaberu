@@ -8,7 +8,7 @@ header {
     color: var(--text-color);
     z-index: 100;
     box-sizing: border-box;
-    overflow: hidden;
+
 }
 
 header h1 {

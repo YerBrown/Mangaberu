@@ -9,6 +9,7 @@
     overflow: hidden;
     padding-left: 15px;
     padding-right: 5px;
+    position: relative;
 }
 
 .search-bar input {
@@ -31,4 +32,89 @@
     padding: 0;
     display: flex;
     align-items: center;
+}
+
+.search-modal {
+    display: none;
+    justify-content: center;
+    padding-top: 90px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    gap: 20px;
+}
+
+.search-modal.active {
+    display: flex;
+}
+
+.search-modal .search-container {
+    width: 2000px;
+    max-width: 90%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.search-modal .search-results {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    box-sizing: border-box;
+    background-color: black;
+    padding: 20px;
+    border-radius: 20px;
+    width: 100%;
+}
+
+.search-modal .search-results h4 {
+    margin: 0;
+    height: 30px
+}
+
+.search-modal .search-results .item-container {
+    display: grid;
+    grid-template-rows: repeat(8, minmax(0, 1fr));
+    gap: 10px;
+    height: calc(100% - 40px);
+}
+
+.search-modal .search-results .search-item {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+}
+
+
+.search-modal .search-results .search-item img {
+    height: 100%;
+    width: 70px;
+    object-fit: cover;
+}
+
+.search-modal .search-results .search-item>div {
+    padding: 10px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    text-align: left;
+    box-sizing: border-box;
+}
+
+.search-modal .search-results .search-item h5 {
+    font-size: 1rem;
+    margin: 0;
+}
+
+
+.search-modal .search-results .search-item p {
+    font-size: .9rem;
+    margin: 0;
 }

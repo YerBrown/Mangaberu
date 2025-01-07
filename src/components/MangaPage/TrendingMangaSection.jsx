@@ -9,9 +9,6 @@ import { toggleFavourite } from "../../services/anilistService";
 import DOMPurify from "dompurify";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import HeartBrokenRoundedIcon from "@mui/icons-material/HeartBrokenRounded";
-import SentimentSatisfiedOutlinedIcon from "@mui/icons-material/SentimentSatisfiedOutlined";
-import SentimentNeutralOutlinedIcon from "@mui/icons-material/SentimentNeutralOutlined";
-import SentimentDissatisfiedOutlinedIcon from "@mui/icons-material/SentimentDissatisfiedOutlined";
 import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
 let sanitizedDescriptionHTML = "";
 let averageScore = "";
@@ -77,20 +74,6 @@ function TrendingMangaSection() {
             data.Page.media[currentTrendingIndex].bannerImage ||
             data.Page.media[currentTrendingIndex].coverImage.extraLarge;
     }
-    const renderFace = () => {
-        if (averageScore <= 33) {
-            return (
-                <SentimentDissatisfiedOutlinedIcon style={{ color: "red" }} />
-            );
-        } else if (averageScore <= 66) {
-            return <SentimentNeutralOutlinedIcon style={{ color: "orange" }} />;
-        } else {
-            return (
-                <SentimentSatisfiedOutlinedIcon style={{ color: "green" }} />
-            );
-        }
-    };
-
     return (
         <section id="trending-section">
             {loading ? (
@@ -194,7 +177,6 @@ function TrendingMangaSection() {
                                             ].averageScore
                                         }
                                         {" % "}
-                                        {renderFace()}
                                     </p>
                                 )}
                                 {data.Page.media[currentTrendingIndex]
