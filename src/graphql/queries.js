@@ -685,23 +685,24 @@ export const GET_MEDIA_BY_FILTER_SEARCH = gql`
         $sort: [MediaSort]
         $search: String
         $genreIn: [String]
-        $startDateGreater: FuzzyDateInt
-        $season: MediaSeason
+        $year: String
         $status: MediaStatus
         $formatIn: [MediaFormat]
+        $licensedBy: [Int]
     ) {
         Page(page: $page, perPage: $perPage) {
             media(
                 type: $type
                 search: $search
                 genre_in: $genreIn
-                startDate_greater: $startDateGreater
-                season: $season
+                startDate_like: $year
                 status: $status
                 format_in: $formatIn
+                licensedById_in: $licensedBy
                 sort: $sort
             ) {
                 id
+                type
                 mediaListEntry {
                     status
                 }

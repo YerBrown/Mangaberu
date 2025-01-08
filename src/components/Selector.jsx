@@ -8,6 +8,7 @@ function Selector({
     onChange,
     defaultValue = -1,
     noNull = false,
+    resetTrigger,
 }) {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOptionIndex, setSelectedOptionIndex] =
@@ -18,6 +19,15 @@ function Selector({
         setSelectedOptionIndex(defaultValue);
     }, [defaultValue]);
 
+    useEffect(() => {
+        if (onChange) {
+            if (selectedOptionIndex >= 0) {
+                onChange(options[selectedOptionIndex].id);
+            } else {
+                onChange(null);
+            }
+        }
+    }, [selectedOptionIndex]);
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (
@@ -32,7 +42,9 @@ function Selector({
         return () =>
             document.removeEventListener("mousedown", handleClickOutside);
     }, []);
-
+    useEffect(() => {
+        setSelectedOptionIndex(defaultValue);
+    }, [resetTrigger]);
     const toggleOption = (optionIndex) => {
         setSelectedOptionIndex((prev) => {
             if (prev == optionIndex && !noNull) {
@@ -41,9 +53,6 @@ function Selector({
                 return optionIndex;
             }
         });
-        if (onChange) {
-            onChange(options[optionIndex].id);
-        }
     };
     return (
         <>

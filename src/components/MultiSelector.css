@@ -5,6 +5,7 @@
     border-radius: 5px;
     width: 250px;
     height: 40px;
+    box-sizing: border-box;
 }
 
 .selector .selector-container {

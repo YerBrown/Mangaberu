@@ -20,8 +20,8 @@
 .my-list-container>div {
     display: flex;
     flex-direction: column;
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
+    background-color: var(--color-4-transparent);
+    color: var(--secondary-color);
     padding: 20px;
     border-radius: 5px;
 }
@@ -41,7 +41,7 @@
     grid-template-columns: repeat(auto-fit, 100px);
     gap: 10px;
     scrollbar-width: 8px;
-    scrollbar-color: var(--primary-color) transparent;
+    scrollbar-color: var(--secondary-color) transparent;
 }
 
 .my-list-container .anime-list-container::-webkit-scrollbar,

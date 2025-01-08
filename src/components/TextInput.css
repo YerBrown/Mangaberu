@@ -1,10 +1,12 @@
 .text-input {
     background-color: var(--color-4);
-    height: 50px;
     width: 250px;
+    height: 40px;
     overflow: hidden;
     border-radius: 5px;
     display: flex;
+    padding: 5px;
+    box-sizing: border-box;
 }
 
 .text-input input {
@@ -27,6 +29,7 @@
     pointer-events: none;
     opacity: 0;
     transition: opacity .2s ease-in-out;
+    height: 100%;
 }
 
 .text-input .clear-button.active {

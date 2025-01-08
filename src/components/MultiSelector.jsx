@@ -21,6 +21,11 @@ function MultiSelector({ options, noOptionText, onChange }) {
         return () =>
             document.removeEventListener("mousedown", handleClickOutside);
     }, []);
+    useEffect(() => {
+        if (onChange) {
+            onChange(selectedOptions);
+        }
+    }, [selectedOptions, setSelectedOptions]);
     const toggleOption = (optionId) => {
         setSelectedOptions((prev) => {
             if (prev.includes(optionId)) {
@@ -29,14 +34,11 @@ function MultiSelector({ options, noOptionText, onChange }) {
                 return [...prev, optionId];
             }
         });
-        if (onChange) {
-            onChange(selectedOptions);
-        }
     };
 
     const renderSelectedOptions = () => {
         const selectedItems = options.filter((opt) =>
-            selectedOptions.includes(opt)
+            selectedOptions.includes(opt.id)
         );
 
         if (selectedItems.length === 0) {
@@ -46,8 +48,8 @@ function MultiSelector({ options, noOptionText, onChange }) {
         return (
             <div className="option-selected-container">
                 {selectedItems.slice(0, 2).map((opt) => (
-                    <span key={opt} className="option-item">
-                        {opt}
+                    <span key={opt.id} className="option-item">
+                        {opt.label}
                     </span>
                 ))}
                 {selectedItems.length > 2 && (
@@ -77,17 +79,17 @@ function MultiSelector({ options, noOptionText, onChange }) {
                         <div className="option-container">
                             {options.map((option) => (
                                 <div
-                                    key={option}
-                                    onClick={() => toggleOption(option)}
+                                    key={option.id}
+                                    onClick={() => toggleOption(option.id)}
                                     className={
-                                        selectedOptions.includes(option)
+                                        selectedOptions.includes(option.id)
                                             ? "option-item active"
                                             : "option-item"
                                     }
                                 >
-                                    {option}
+                                    {option.label}
 
-                                    {selectedOptions.includes(option) ? (
+                                    {selectedOptions.includes(option.id) ? (
                                         <CheckCircleRoundedIcon fontSize="small" />
                                     ) : (
                                         <RadioButtonUncheckedRoundedIcon fontSize="small" />

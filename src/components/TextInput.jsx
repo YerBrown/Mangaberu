@@ -6,14 +6,18 @@ const TextInput = ({ placeHolder, onSubmit }) => {
     const [isFocused, setIsFocused] = useState(false);
 
     const handleClearValue = () => {
-        setValue("");
+        handleChange("");
+    };
+    const handleChange = (newValue) => {
+        setValue(newValue);
+        onSubmit(newValue);
     };
     return (
         <div className="text-input">
             <input
                 type="text"
                 value={value}
-                onChange={(e) => setValue(e.target.value)}
+                onChange={(e) => handleChange(e.target.value)}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
                 placeholder={placeHolder}

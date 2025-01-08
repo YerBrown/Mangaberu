@@ -1,5 +1,6 @@
 import { useQuery, useLazyQuery } from "@apollo/client";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import MultiSelector from "../components/MultiSelector";
 import Selector from "../components/Selector";
@@ -20,15 +21,18 @@ function MediaFilter() {
     const [searchFilter, setSearchFilter] = useState("");
     const [genreFilter, setGenreFilter] = useState([]);
     const [yearFilter, setYearFilter] = useState(null);
-    const [seasonFilter, setSeasonFilter] = useState(null);
-
+    const [formatFilter, setFormatFilter] = useState(null);
+    const [statusFilter, setStatusFilter] = useState(null);
+    const [resetTrigger, setResetTrigger] = useState(0);
+    const [streamingFilter, setStreamingFilter] = useState([]);
+    const navigate = useNavigate();
     const getYearsArray = (startYear = 1940) => {
         const currentYear = new Date().getFullYear();
         const endYear = currentYear + 2;
         const years = [];
 
         for (let year = startYear; year <= endYear; year++) {
-            years.push(year);
+            years.push({ id: year, label: year });
         }
 
         return years.reverse();
@@ -41,21 +45,32 @@ function MediaFilter() {
             notifyOnNetworkStatusChange: true,
         }
     );
+    const buildVariables = () => {
+        const variables = {
+            page: currentPage,
+            perPage: 10,
+            sort: sortFilter,
+            type: typeFilter,
+            genreIn: genreFilter.length > 0 ? genreFilter : null,
+            search: searchFilter || null,
+            year: yearFilter ? yearFilter + "%" : null,
+            formatIn: formatFilter || null,
+            status: statusFilter || null,
+            licensedBy:
+                streamingFilter.length > 0 && typeFilter === "ANIME"
+                    ? streamingFilter
+                    : null,
+        };
+
+        // Filtrar las variables que sean null o undefined
+        return Object.fromEntries(
+            Object.entries(variables).filter(([_, value]) => value !== null)
+        );
+    };
     const handleSearch = () => {
         setCurrentPage(1);
         fetchMedia({
-            variables: {
-                page: 1,
-                perPage: 10,
-                sort: sortFilter,
-                type: typeFilter,
-                ...(!genreFilter || genreFilter.length === 0
-                    ? {}
-                    : { genreIn: genreFilter }),
-                ...(!searchFilter ? {} : { search: searchFilter }),
-                ...(!yearFilter ? {} : { year: yearFilter }),
-                ...(!seasonFilter ? {} : { season: seasonFilter }),
-            },
+            variables: buildVariables(),
         });
     };
     const handleTitleSearchFilter = (search) => {
@@ -63,48 +78,33 @@ function MediaFilter() {
     };
     const handleTypeFilterChange = (filter) => {
         setTypeFilter(filter);
+        setResetTrigger((prev) => prev + 1);
+        setFormatFilter(null);
     };
     const handleSortFilterChange = (filter) => {
         setSortFilter(filter);
     };
-    const handleToggleGenreFilter = (genre) => {
-        setGenreFilter((prev) => {
-            return prev.includes(genre)
-                ? prev.filter((g) => g !== genre)
-                : [...prev, genre];
-        });
+    const handleToggleGenreFilter = (genres) => {
+        setGenreFilter(genres);
     };
     const handleYearFilterChange = (year) => {
         setYearFilter(year);
     };
-    const handleSeasonFilterChange = (season) => {
-        setSeasonFilter(season);
-    };
-    const handleResetFilters = () => {
-        setTypeFilter("ANIME");
-        setSortFilter(["POPULARITY_DESC"]);
-        setSearchFilter("");
-        setGenreFilter([]);
-        setYearFilter(null);
-        setSeasonFilter(null);
-    };
     const handleToggleExtra = () => {
         setIsExtra(!isExtra);
     };
+    const handleFormatFilterChange = (format) => {
+        setFormatFilter(format);
+    };
+    const handleStatusFilterChange = (status) => {
+        setStatusFilter(status);
+    };
+    const handleStreamingFilterToggle = (streaming) => {
+        setStreamingFilter(streaming);
+    };
     useEffect(() => {
         fetchMedia({
-            variables: {
-                page: currentPage,
-                perPage: 10,
-                sort: sortFilter,
-                type: typeFilter,
-                ...(!genreFilter || genreFilter.length === 0
-                    ? {}
-                    : { genreIn: genreFilter }),
-                ...(!searchFilter ? {} : { search: searchFilter }),
-                ...(!yearFilter ? {} : { year: yearFilter }),
-                ...(!seasonFilter ? {} : { season: seasonFilter }),
-            },
+            variables: buildVariables(),
         });
     }, [currentPage, setCurrentPage]);
 
@@ -127,6 +127,9 @@ function MediaFilter() {
             }
         });
     };
+    const handleNavigate = (route) => {
+        navigate(route);
+    };
 
     return (
         <>
@@ -143,121 +146,7 @@ function MediaFilter() {
             <main>
                 <div id="media-filter-menu">
                     <div className="filters">
-                        <div className="filter-container active">
-                            <div className="search-input">
-                                <label htmlFor="search">Search</label>
-                                <TextInput onSubmit={handleTitleSearchFilter} />
-                            </div>
-                            <div>
-                                <label htmlFor="genres">Genres</label>
-                                <MultiSelector
-                                    options={[
-                                        "Action",
-                                        "Adventure",
-                                        "Comedy",
-                                        "Drama",
-                                        "Ecchi",
-                                        "Fantasy",
-                                        "Horror",
-                                        "Mahou Shoujo",
-                                        "Mecha",
-                                        "Music",
-                                        "Mystery",
-                                        "Psychological",
-                                        "Romance",
-                                        "Sci-Fi",
-                                        "Slice of Life",
-                                        "Sports",
-                                        "Supernatural",
-                                        "Thriller",
-                                    ]}
-                                    noOptionText={"Any"}
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="year">Year</label>
-                                <Selector
-                                    options={getYearsArray()}
-                                    noOptionText={"Any"}
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="seasson">Seasson</label>
-                                <Selector
-                                    options={[
-                                        "Winter",
-                                        "Spring",
-                                        "Summer",
-                                        "Fall",
-                                    ]}
-                                    noOptionText={"Any"}
-                                />
-                            </div>
-                            <button
-                                className={
-                                    isExtra ? "show-extra active" : "show-extra"
-                                }
-                                onClick={() => handleToggleExtra()}
-                            >
-                                <TuneRoundedIcon />
-                            </button>
-                        </div>
-                        <div
-                            className={
-                                isExtra
-                                    ? "filter-container active"
-                                    : "filter-container"
-                            }
-                        >
-                            <div>
-                                <label htmlFor="format">Format</label>
-                                <Selector
-                                    options={[
-                                        "TV Show",
-                                        "Movie",
-                                        "TV Short",
-                                        "Special",
-                                        "OVA",
-                                        "ONA",
-                                        "Music",
-                                    ]}
-                                    noOptionText={"Any"}
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="status">Airing Status</label>
-                                <Selector
-                                    options={[
-                                        "Airing",
-                                        "Finished",
-                                        "Not Yet Aired",
-                                        "Canceled",
-                                    ]}
-                                    noOptionText={"Any"}
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="streaming">Streaming On</label>
-                                <MultiSelector
-                                    options={[
-                                        "Crunchyroll",
-                                        "Hulu",
-                                        "Netflix",
-                                        "YouTube",
-                                        "Amazon Prime Video",
-                                        "Vimeo",
-                                        "Adult Swim",
-                                        "Disney Plus",
-                                        "Max",
-                                    ]}
-                                    noOptionText={"Any"}
-                                />
-                            </div>
-                        </div>
                         <div className="main-filters">
-                            <button onClick={() => handleSearch()}>
-                                <SearchOutlinedIcon />
-                            </button>
                             <div>
                                 <label htmlFor="media">Media Type</label>
                                 <Selector
@@ -272,7 +161,7 @@ function MediaFilter() {
                                 />
                             </div>
                             <div>
-                                <label htmlFor="sort">Sort Type</label>
+                                <label htmlFor="sort">Sort By</label>
                                 <Selector
                                     options={[
                                         {
@@ -294,6 +183,263 @@ function MediaFilter() {
                                     noNull={true}
                                 />
                             </div>
+                            <button onClick={() => handleSearch()}>
+                                <SearchOutlinedIcon />
+                            </button>
+                        </div>
+                        <div className="filter-container active">
+                            <div className="search-input">
+                                <label htmlFor="search">Search</label>
+                                <TextInput onSubmit={handleTitleSearchFilter} />
+                            </div>
+                            <div>
+                                <label htmlFor="genres">Genres</label>
+                                <MultiSelector
+                                    options={[
+                                        {
+                                            id: "Action",
+                                            label: "Action",
+                                        },
+                                        {
+                                            id: "Adventure",
+                                            label: "Adventure",
+                                        },
+                                        {
+                                            id: "Comedy",
+                                            label: "Comedy",
+                                        },
+                                        {
+                                            id: "Drama",
+                                            label: "Drama",
+                                        },
+                                        {
+                                            id: "Ecchi",
+                                            label: "Ecchi",
+                                        },
+                                        {
+                                            id: "Fantasy",
+                                            label: "Fantasy",
+                                        },
+                                        {
+                                            id: "Horror",
+                                            label: "Horror",
+                                        },
+                                        {
+                                            id: "Mecha",
+                                            label: "Mecha",
+                                        },
+                                        {
+                                            id: "Music",
+                                            label: "Music",
+                                        },
+                                        {
+                                            id: "Mystery",
+                                            label: "Mystery",
+                                        },
+                                        {
+                                            id: "Psychological",
+                                            label: "Psychological",
+                                        },
+                                        {
+                                            id: "Romance",
+                                            label: "Romance",
+                                        },
+                                        {
+                                            id: "Sci-Fi",
+                                            label: "Sci-Fi",
+                                        },
+                                        {
+                                            id: "Slice of Life",
+                                            label: "Slice of Life",
+                                        },
+                                        {
+                                            id: "Sports",
+                                            label: "Sports",
+                                        },
+                                        {
+                                            id: "Supernatural",
+                                            label: "Supernatural",
+                                        },
+                                        {
+                                            id: "Thriller",
+                                            label: "Thriller",
+                                        },
+                                    ]}
+                                    noOptionText={"Any"}
+                                    onChange={handleToggleGenreFilter}
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="year">Year</label>
+                                <Selector
+                                    options={getYearsArray()}
+                                    noOptionText={"Any"}
+                                    onChange={handleYearFilterChange}
+                                />
+                            </div>
+                            <button
+                                className={
+                                    isExtra ? "show-extra active" : "show-extra"
+                                }
+                                onClick={() => handleToggleExtra()}
+                            >
+                                <TuneRoundedIcon />
+                            </button>
+                        </div>
+                        <div
+                            className={
+                                isExtra
+                                    ? "filter-container active"
+                                    : "filter-container"
+                            }
+                        >
+                            <div>
+                                <label htmlFor="format">Format</label>
+                                {typeFilter === "ANIME" ? (
+                                    <Selector
+                                        options={[
+                                            {
+                                                id: "TV",
+                                                label: "TV Show",
+                                            },
+                                            {
+                                                id: "MOVIE",
+                                                label: "Movie",
+                                            },
+                                            {
+                                                id: "TV_SHORT",
+                                                label: "TV Short",
+                                            },
+                                            {
+                                                id: "SPECIAL",
+                                                label: "Special",
+                                            },
+                                            {
+                                                id: "OVA",
+                                                label: "OVA",
+                                            },
+                                            {
+                                                id: "ONA",
+                                                label: "ONA",
+                                            },
+                                            {
+                                                id: "MUSIC",
+                                                label: "Music",
+                                            },
+                                        ]}
+                                        noOptionText={"Any"}
+                                        resetTrigger={resetTrigger}
+                                        onChange={handleFormatFilterChange}
+                                    />
+                                ) : (
+                                    <Selector
+                                        options={[
+                                            {
+                                                id: "MANGA",
+                                                label: "Manga",
+                                            },
+                                            {
+                                                id: "NOVEL",
+                                                label: "Novel",
+                                            },
+                                            {
+                                                id: "ONE_SHOT",
+                                                label: "One Shot",
+                                            },
+                                        ]}
+                                        noOptionText={"Any"}
+                                        resetTrigger={resetTrigger}
+                                        onChange={handleFormatFilterChange}
+                                    />
+                                )}
+                            </div>
+                            <div>
+                                <label htmlFor="status">
+                                    {typeFilter === "ANIME"
+                                        ? "Airing Status"
+                                        : "Releasing Status"}
+                                </label>
+                                <Selector
+                                    options={
+                                        typeFilter === "ANIME"
+                                            ? [
+                                                  {
+                                                      id: "RELEASING",
+                                                      label: "Airing",
+                                                  },
+                                                  {
+                                                      id: "FINISHED",
+                                                      label: "Finished",
+                                                  },
+                                                  {
+                                                      id: "NOT_YET_RELEASED",
+                                                      label: "Not Yet Aired",
+                                                  },
+                                                  {
+                                                      id: "CANCELLED",
+                                                      label: "Canceled",
+                                                  },
+                                              ]
+                                            : [
+                                                  {
+                                                      id: "RELEASING",
+                                                      label: "Releasing",
+                                                  },
+                                                  {
+                                                      id: "FINISHED",
+                                                      label: "Finished",
+                                                  },
+                                                  {
+                                                      id: "NOT_YET_RELEASED",
+                                                      label: "Not Yet Released",
+                                                  },
+                                                  {
+                                                      id: "CANCELLED",
+                                                      label: "Canceled",
+                                                  },
+                                              ]
+                                    }
+                                    noOptionText={"Any"}
+                                    onChange={handleStatusFilterChange}
+                                />
+                            </div>
+                            {typeFilter === "ANIME" ? (
+                                <div>
+                                    <label htmlFor="streaming">
+                                        Streaming On
+                                    </label>
+                                    <MultiSelector
+                                        options={[
+                                            {
+                                                id: "5",
+                                                label: "Crunchyroll",
+                                            },
+                                            {
+                                                id: "10",
+                                                label: "Netflix",
+                                            },
+                                            {
+                                                id: "13",
+                                                label: "YouTube",
+                                            },
+                                            {
+                                                id: "21",
+                                                label: "Amazon Prime Video",
+                                            },
+                                            {
+                                                id: "118",
+                                                label: "Disney Plus",
+                                            },
+                                            {
+                                                id: "211",
+                                                label: "Max",
+                                            },
+                                        ]}
+                                        noOptionText={"Any"}
+                                        onChange={handleStreamingFilterToggle}
+                                    />
+                                </div>
+                            ) : null}
                         </div>
                     </div>
                     <div className="media-container">
@@ -323,7 +469,17 @@ function MediaFilter() {
                         ) : data ? (
                             <div className="media-items-container">
                                 {data.Page.media.map((media) => (
-                                    <div key={media.id} className="media-item">
+                                    <button
+                                        key={media.id}
+                                        className="media-item"
+                                        onClick={() =>
+                                            handleNavigate(
+                                                media.type === "ANIME"
+                                                    ? `/anime/${media.id}`
+                                                    : `/manga/${media.id}`
+                                            )
+                                        }
+                                    >
                                         <img
                                             src={media.coverImage.extraLarge}
                                             alt={
@@ -335,7 +491,7 @@ function MediaFilter() {
                                             {media.title.english ||
                                                 media.title.romaji}
                                         </h4>
-                                    </div>
+                                    </button>
                                 ))}
                             </div>
                         ) : null}
