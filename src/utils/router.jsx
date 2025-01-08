@@ -7,6 +7,7 @@ import MangaDetails from "../pages/MangaDetails";
 import Manga from "../pages/Manga";
 import User from "../pages/User";
 import AniListAuth from "./AniListAuth";
+import MediaFilter from "../pages/MediaFilter";
 // import ErrorPage from "./pages/ErrorPage";
 
 // Definimos nuestras rutas
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
             {
                 path: "auth-redirect",
                 element: <AniListAuth />,
+            },
+            {
+                path: "media",
+                element: <MediaFilter />,
             },
         ],
     },

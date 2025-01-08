@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import { useModal } from "../../context/ModalContext";
 import { useAuth } from "../../context/AuthContext";
@@ -9,8 +9,10 @@ import { toggleFavourite } from "../../services/anilistService";
 import DOMPurify from "dompurify";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import HeartBrokenRoundedIcon from "@mui/icons-material/HeartBrokenRounded";
-import PlayCircleRoundedIcon from "@mui/icons-material/PlayCircleRounded";
+import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
+import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
+import FormatListBulletedRoundedIcon from "@mui/icons-material/FormatListBulletedRounded";
 import "./TrendingSection.css";
 
 let sanitizedDescriptionHTML = "";
@@ -44,7 +46,7 @@ function TrendingSection() {
     const [currentTrendingIndex, setCurrentTrendingIndex] = useState(0);
     const [isWatchTrailer, setIsWatchTrailer] = useState(false);
     const { season, seasonYear } = getCurrentSeasonAndYear();
-
+    const iframeRef = useRef(null);
     const [fetchAnime, { data, loading, error, refetch }] = useLazyQuery(
         GET_MEDIA_TRENDING,
         {
@@ -63,7 +65,22 @@ function TrendingSection() {
     useEffect(() => {
         fetchAnime();
     }, []);
-
+    const pauseVideo = () => {
+        if (iframeRef.current) {
+            iframeRef.current.contentWindow.postMessage(
+                '{"event":"command","func":"pauseVideo","args":""}',
+                "*"
+            );
+        }
+    };
+    const playVideo = () => {
+        if (iframeRef.current) {
+            iframeRef.current.contentWindow.postMessage(
+                '{"event":"command","func":"playVideo","args":""}',
+                "*"
+            );
+        }
+    };
     const handleToggleFavourite = async (media) => {
         try {
             await toggleFavourite(media.id, media.type);
@@ -77,6 +94,11 @@ function TrendingSection() {
         setCurrentTrendingIndex(index);
     };
     const handleWatchTrailer = (disable) => {
+        if (!disable) {
+            pauseVideo();
+        } else {
+            playVideo();
+        }
         setIsWatchTrailer(disable);
     };
     const handleNavigate = (route) => {
@@ -114,12 +136,23 @@ function TrendingSection() {
                         }
                     ></div>
                     <iframe
-                        src={`https://www.youtube.com/embed/${data.Page.media[currentTrendingIndex].trailer.id}`}
+                        ref={iframeRef}
+                        src={`https://www.youtube.com/embed/${data.Page.media[currentTrendingIndex].trailer.id}?enablejsapi=1`}
                         title="YouTube video player"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
                         className={isWatchTrailer ? "active" : ""}
                     ></iframe>
+                    <button
+                        className={
+                            isWatchTrailer
+                                ? "close-trailer active"
+                                : "close-trailer"
+                        }
+                        onClick={() => handleWatchTrailer(false)}
+                    >
+                        <HighlightOffRoundedIcon />
+                    </button>
                     <div
                         className={`current-anime ${
                             isWatchTrailer ? "disable" : ""
@@ -147,6 +180,7 @@ function TrendingSection() {
                                         )
                                     }
                                 >
+                                    <FormatListBulletedRoundedIcon fontSize="small" />
                                     {data.Page.media[currentTrendingIndex]
                                         .mediaListEntry
                                         ? "Edit List Entry"
@@ -227,8 +261,8 @@ function TrendingSection() {
                                 <button
                                     onClick={() => handleWatchTrailer(true)}
                                 >
+                                    {<PlayArrowRoundedIcon fontSize="small" />}
                                     {"Watch Trailer"}
-                                    {<PlayCircleRoundedIcon />}
                                 </button>
                                 <button
                                     onClick={() =>
@@ -237,8 +271,8 @@ function TrendingSection() {
                                         )
                                     }
                                 >
+                                    {<InfoRoundedIcon fontSize="small" />}
                                     {"More Info"}
-                                    {<InfoRoundedIcon />}
                                 </button>
                             </div>
                         </div>
@@ -259,7 +293,7 @@ function TrendingSection() {
                                     <img
                                         src={
                                             mediaItem.bannerImage ||
-                                            mediaItem.coverImage.medium
+                                            mediaItem.coverImage.extraLarge
                                         }
                                         alt={
                                             mediaItem.title.english ||

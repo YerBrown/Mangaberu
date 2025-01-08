@@ -92,7 +92,8 @@ function TopPangaScore() {
                                     <button
                                         onClick={() => handleNavigate(manga.id)}
                                     >
-                                        More Info <InfoRoundedIcon />
+                                        More Info{" "}
+                                        <InfoRoundedIcon fontSize="small" />
                                     </button>
                                 </div>
                             </div>

@@ -37,12 +37,12 @@ function DiscoverByFiltersSection() {
     const handleNavigate = (animeId) => {
         navigate(`/anime/${animeId}`);
     };
-    // Manejo de cambios en el filtro de orden
+
     const handleSortFilterChange = (filter) => {
         setSortFilter(filter);
     };
 
-    // Manejo de cambios en géneros (toggle)
+    // Manejo de cambios en géneros
     const handleGenreFilterToggle = (filter) => {
         setGenreFilter((prevGenres) =>
             prevGenres.includes(filter)

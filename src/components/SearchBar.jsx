@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLazyQuery } from "@apollo/client";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
@@ -7,7 +7,7 @@ import "./SearchBar.css";
 function SearchBar() {
     const [inputValue, setInputValue] = useState("");
     const [debouncedInputValue, setDebouncedInputValue] = useState("");
-
+    const debounceTimeoutRef = useRef(null);
     const [fetchSearch, { data, loading, error }] = useLazyQuery(GET_SEARCH, {
         variables: {
             page: 1,
@@ -25,7 +25,11 @@ function SearchBar() {
     };
 
     useEffect(() => {
-        const delayInputTimeoutId = setTimeout(() => {
+        if (debounceTimeoutRef.current) {
+            clearTimeout(debounceTimeoutRef.current);
+        }
+
+        debounceTimeoutRef.current = setTimeout(() => {
             setDebouncedInputValue(inputValue);
         }, 1000);
         if (inputValue.length > 0) {
@@ -34,19 +38,20 @@ function SearchBar() {
             document.body.style.overflow = "auto";
         }
 
-        return (
-            () => clearTimeout(delayInputTimeoutId),
-            () => {
-                document.body.style.overflow = "auto";
+        return () => {
+            if (debounceTimeoutRef.current) {
+                clearTimeout(debounceTimeoutRef.current);
             }
-        );
+            document.body.style.overflow = "auto";
+        };
     }, [inputValue]);
 
     useEffect(() => {
         if (debouncedInputValue.length > 0) {
+            console.log("Debounce input value: ", debouncedInputValue);
             fetchSearch();
         }
-    }, [debouncedInputValue, fetchSearch]);
+    }, [debouncedInputValue]);
 
     return (
         <>

@@ -676,3 +676,50 @@ export const GET_SEARCH = gql`
         }
     }
 `;
+
+export const GET_MEDIA_BY_FILTER_SEARCH = gql`
+    query Page(
+        $page: Int
+        $perPage: Int
+        $type: MediaType
+        $sort: [MediaSort]
+        $search: String
+        $genreIn: [String]
+        $startDateGreater: FuzzyDateInt
+        $season: MediaSeason
+        $status: MediaStatus
+        $formatIn: [MediaFormat]
+    ) {
+        Page(page: $page, perPage: $perPage) {
+            media(
+                type: $type
+                search: $search
+                genre_in: $genreIn
+                startDate_greater: $startDateGreater
+                season: $season
+                status: $status
+                format_in: $formatIn
+                sort: $sort
+            ) {
+                id
+                mediaListEntry {
+                    status
+                }
+                title {
+                    english
+                    romaji
+                }
+                coverImage {
+                    extraLarge
+                    large
+                }
+            }
+            pageInfo {
+                currentPage
+                perPage
+                hasNextPage
+                total
+            }
+        }
+    }
+`;

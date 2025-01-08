@@ -82,7 +82,8 @@ function Top10Score() {
                                     <button
                                         onClick={() => handleNavigate(anime.id)}
                                     >
-                                        More Info <InfoRoundedIcon />
+                                        More Info{" "}
+                                        <InfoRoundedIcon fontSize="small" />
                                     </button>
                                 </div>
                             </div>
