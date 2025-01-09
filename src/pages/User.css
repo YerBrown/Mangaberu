@@ -127,6 +127,7 @@
 @media (max-width: 900px) {
     .user-menu .user-options {
         flex-wrap: wrap;
+        height: auto;
     }
 
     .user-menu .main-content {
@@ -134,7 +135,7 @@
         box-sizing: border-box;
         width: 100%;
         height: calc(100% - 300px);
-        padding: 20px;
+        padding: 0 20px;
         overflow: hidden;
     }
 }
