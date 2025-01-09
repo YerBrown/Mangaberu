@@ -96,7 +96,9 @@ function DiscoverByFiltersSection() {
                 ) : (
                     genreData?.GenreCollection.map(
                         (genre) =>
-                            genre !== "Hentai" && (
+                            genre !== "Hentai" &&
+                            genre !== "Ecchi" &&
+                            genre !== "Mahou Shoujo" && (
                                 <button
                                     key={genre}
                                     onClick={() =>
@@ -116,7 +118,15 @@ function DiscoverByFiltersSection() {
             </div>
             <div className="manga-container">
                 {loading ? (
-                    <p>Loading...</p>
+                    Array.from({ length: 10 }).map((_, index) => (
+                        <button key={`empty-${index}`} className="manga-card">
+                            <img
+                                src="/src/assets/images/M-White.png"
+                                alt="Dark Theme Logo"
+                            />
+                            <h4>Loading...</h4>
+                        </button>
+                    ))
                 ) : error ? (
                     <p>{error.message}</p>
                 ) : (

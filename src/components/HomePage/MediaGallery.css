@@ -156,3 +156,33 @@
     margin: 0;
     margin: 20px;
 }
+
+@media (max-width: 900px) {
+    #trending-this-season .select-media-container {
+        flex-direction: column;
+        height: auto;
+        justify-content: start;
+        gap: 10px;
+    }
+
+    #trending-this-season .select-media-container h2 {
+        width: 100%;
+        text-align: center;
+    }
+
+    .media-gallery {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+    }
+
+    .media-item h3 {
+        display: none;
+    }
+
+    .media-item .more-info {
+        display: none;
+    }
+
+
+}

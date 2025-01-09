@@ -8,7 +8,7 @@ header {
     color: var(--text-color);
     z-index: 100;
     box-sizing: border-box;
-
+    background-color: var(--primary-color);
 }
 
 header h1 {
@@ -24,12 +24,13 @@ nav {
     height: 100%;
     background-color: transparent;
     padding: 15px;
-    overflow: hidden;
     align-items: center;
+    position: relative;
 }
 
 
 nav #left-part,
+nav #left-part-button,
 nav #central-part,
 nav #right-part {
     display: flex;
@@ -37,6 +38,10 @@ nav #right-part {
     width: 30%;
     height: 100%;
     gap: 20px;
+}
+
+nav #left-part-button {
+    display: none;
 }
 
 nav #left-part {
@@ -82,4 +87,43 @@ nav a svg {
     height: 100%;
     width: 100%;
     object-fit: contain;
+}
+
+@media (max-width: 900px) {
+
+    nav #left-part {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        transform: translateY(100%);
+        overflow: hidden;
+        background-color: var(--primary-color);
+        width: 100%;
+        padding: 20px;
+        opacity: 0;
+        transition: opacity .5s ease-in-out;
+        pointer-events: none;
+        align-items: center;
+        box-sizing: border-box;
+    }
+
+    nav #left-part.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    nav #left-part-button {
+        display: flex;
+    }
+
+    nav #left-part-button button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+    }
+
+    nav #left-part-button button:active {
+        color: var(--color-4);
+    }
 }

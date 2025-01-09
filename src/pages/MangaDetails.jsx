@@ -11,6 +11,11 @@ import { toggleFavourite } from "../services/anilistService";
 import RemoveRedEyeRoundedIcon from "@mui/icons-material/RemoveRedEyeRounded";
 import StarRateRoundedIcon from "@mui/icons-material/StarRateRounded";
 import LinkRoundedIcon from "@mui/icons-material/LinkRounded";
+import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
+import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded";
+import HeartBrokenRoundedIcon from "@mui/icons-material/HeartBrokenRounded";
+import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
+import PlaylistAddRoundedIcon from "@mui/icons-material/PlaylistAddRounded";
 function getHourMinFormat(mins) {
     const hours = Math.floor(mins / 60);
     const minutesRes = mins % 60;
@@ -111,18 +116,34 @@ function AnimeDetails() {
                                         )
                                     }
                                 >
-                                    {data.Media.mediaListEntry
-                                        ? "Edit List"
-                                        : "Add To List"}
+                                    {data.Media.mediaListEntry ? (
+                                        <>
+                                            <EditNoteRoundedIcon fontSize="small" />
+                                            Edit List
+                                        </>
+                                    ) : (
+                                        <>
+                                            <PlaylistAddRoundedIcon fontSize="small" />
+                                            Add To List
+                                        </>
+                                    )}
                                 </button>
                                 <button
                                     onClick={() =>
                                         handleToggleFavourite(data.Media)
                                     }
                                 >
-                                    {data.Media.isFavourite
-                                        ? "Remove Favourite"
-                                        : "Add To Favourites"}
+                                    {data.Media.isFavourite ? (
+                                        <>
+                                            <FavoriteOutlinedIcon fontSize="small" />
+                                            Remove Favourite
+                                        </>
+                                    ) : (
+                                        <>
+                                            <FavoriteBorderRoundedIcon fontSize="small" />
+                                            Add To Favourites
+                                        </>
+                                    )}
                                 </button>
                                 {data.Media.externalLinks.map(
                                     (exterlanLink) =>

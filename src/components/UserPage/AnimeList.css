@@ -193,3 +193,22 @@
     font-size: 0.8rem;
     margin: 10px 0;
 }
+
+@media (max-width: 900px) {
+    .filter-container {
+        width: 100%;
+        height: auto;
+        padding: 20px 0;
+    }
+
+    .user-anime-list,
+    .user-manga-list {
+        height: auto;
+        width: 100%;
+    }
+
+    .list-grid .anime-item button,
+    .list-grid .manga-item button {
+        opacity: 1;
+    }
+}

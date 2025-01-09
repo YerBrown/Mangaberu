@@ -121,3 +121,33 @@
     font-size: 1rem;
     padding: 10px;
 }
+
+@media (max-width: 900px) {
+    .modal-content {
+        max-width: 100%;
+        border-radius: 0;
+        height: auto;
+    }
+
+    .modal-content .modal-data .top-part .buttons-container {
+        top: 0;
+    }
+
+    .modal-content .modal-data .top-part h3 {
+        margin: 0;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-clamp: 2;
+        -webkit-line-clamp: 2;
+    }
+
+    .modal-content .modal-data .bottom-part {
+        gap: 10px;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+    }
+
+
+}

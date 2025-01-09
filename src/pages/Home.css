@@ -58,9 +58,11 @@
     background-color: rgba(255, 255, 255, 0.4);
 }
 
+@media (max-width: 900px) {
 
-@media (prefers-color-scheme: dark) {
-    #main-banner img {
-        /* filter: invert(1); */
+
+    #main-banner {
+        padding: 20px;
     }
+
 }

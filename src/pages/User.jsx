@@ -9,6 +9,7 @@ import LiveTvRoundedIcon from "@mui/icons-material/LiveTvRounded";
 import AutoStoriesRoundedIcon from "@mui/icons-material/AutoStoriesRounded";
 import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
+import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import "./User.css";
 function User() {
     const {
@@ -33,6 +34,10 @@ function User() {
         window.location.href = authUrl;
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem("access_token");
+        window.location.href = "/";
+    };
     const renderContent = () => {
         switch (selectedOption) {
             case "animeList":
@@ -134,6 +139,10 @@ function User() {
                                     <SettingsRoundedIcon fontSize="small" />
                                     AniList Settings
                                 </a>
+                                <button onClick={() => handleLogout()}>
+                                    <LogoutRoundedIcon fontSize="small" />
+                                    Logout
+                                </button>
                             </div>
                             <div className="main-content">
                                 {renderContent()}

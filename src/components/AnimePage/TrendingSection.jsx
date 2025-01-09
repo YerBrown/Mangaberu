@@ -12,7 +12,8 @@ import HeartBrokenRoundedIcon from "@mui/icons-material/HeartBrokenRounded";
 import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
 import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
-import FormatListBulletedRoundedIcon from "@mui/icons-material/FormatListBulletedRounded";
+import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
+import PlaylistAddRoundedIcon from "@mui/icons-material/PlaylistAddRounded";
 import "./TrendingSection.css";
 
 let sanitizedDescriptionHTML = "";
@@ -180,11 +181,18 @@ function TrendingSection() {
                                         )
                                     }
                                 >
-                                    <FormatListBulletedRoundedIcon fontSize="small" />
                                     {data.Page.media[currentTrendingIndex]
-                                        .mediaListEntry
-                                        ? "Edit List Entry"
-                                        : "Add To List"}
+                                        .mediaListEntry ? (
+                                        <>
+                                            <EditNoteRoundedIcon fontSize="small" />
+                                            Edit List Entry
+                                        </>
+                                    ) : (
+                                        <>
+                                            <PlaylistAddRoundedIcon fontSize="small" />
+                                            Add To List
+                                        </>
+                                    )}
                                 </button>
                                 <button
                                     onClick={() =>

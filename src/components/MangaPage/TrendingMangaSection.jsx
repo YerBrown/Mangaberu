@@ -9,6 +9,8 @@ import { toggleFavourite } from "../../services/anilistService";
 import DOMPurify from "dompurify";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import HeartBrokenRoundedIcon from "@mui/icons-material/HeartBrokenRounded";
+import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
+import PlaylistAddRoundedIcon from "@mui/icons-material/PlaylistAddRounded";
 import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
 let sanitizedDescriptionHTML = "";
 let averageScore = "";
@@ -122,9 +124,17 @@ function TrendingMangaSection() {
                                     }
                                 >
                                     {data.Page.media[currentTrendingIndex]
-                                        .mediaListEntry
-                                        ? "Edit List Entry"
-                                        : "Add To List"}
+                                        .mediaListEntry ? (
+                                        <>
+                                            <EditNoteRoundedIcon fontSize="small" />
+                                            Edit List Entry
+                                        </>
+                                    ) : (
+                                        <>
+                                            <PlaylistAddRoundedIcon fontSize="small" />
+                                            Add To List
+                                        </>
+                                    )}
                                 </button>
                                 <button
                                     onClick={() =>
@@ -205,8 +215,8 @@ function TrendingMangaSection() {
                                         )
                                     }
                                 >
+                                    {<InfoRoundedIcon fontSize="small" />}
                                     {"More Info"}
-                                    {<InfoRoundedIcon />}
                                 </button>
                             </div>
                         </div>

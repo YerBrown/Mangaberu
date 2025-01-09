@@ -12,6 +12,11 @@ import RemoveRedEyeRoundedIcon from "@mui/icons-material/RemoveRedEyeRounded";
 import StarRateRoundedIcon from "@mui/icons-material/StarRateRounded";
 import AccessTimeRoundedIcon from "@mui/icons-material/AccessTimeRounded";
 import LinkRoundedIcon from "@mui/icons-material/LinkRounded";
+import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
+import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded";
+import HeartBrokenRoundedIcon from "@mui/icons-material/HeartBrokenRounded";
+import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
+import PlaylistAddRoundedIcon from "@mui/icons-material/PlaylistAddRounded";
 import "./AnimeDetails.css";
 
 function getHourMinFormat(mins) {
@@ -83,6 +88,7 @@ function AnimeDetails() {
             </header>
             <main>
                 <div id="anime-details-menu">
+                    {loading}
                     {data.Media.bannerImage && (
                         <img
                             src={data.Media.bannerImage}
@@ -114,18 +120,34 @@ function AnimeDetails() {
                                         )
                                     }
                                 >
-                                    {data.Media.mediaListEntry
-                                        ? "Edit List"
-                                        : "Add To List"}
+                                    {data.Media.mediaListEntry ? (
+                                        <>
+                                            <EditNoteRoundedIcon fontSize="small" />
+                                            Edit List
+                                        </>
+                                    ) : (
+                                        <>
+                                            <PlaylistAddRoundedIcon fontSize="small" />
+                                            Add To List
+                                        </>
+                                    )}
                                 </button>
                                 <button
                                     onClick={() =>
                                         handleToggleFavourite(data.Media)
                                     }
                                 >
-                                    {data.Media.isFavourite
-                                        ? "Remove Favourite"
-                                        : "Add To Favourites"}
+                                    {data.Media.isFavourite ? (
+                                        <>
+                                            <FavoriteOutlinedIcon fontSize="small" />
+                                            Remove Favourite
+                                        </>
+                                    ) : (
+                                        <>
+                                            <FavoriteBorderRoundedIcon fontSize="small" />
+                                            Add To Favourites
+                                        </>
+                                    )}
                                 </button>
                                 {data.Media.externalLinks.map(
                                     (exterlanLink) =>
@@ -169,7 +191,7 @@ function AnimeDetails() {
                                     <div className="details">
                                         <div className="top-part">
                                             <p>
-                                                <RemoveRedEyeRoundedIcon fontSize="small" />
+                                                <HeartBrokenRoundedIcon fontSize="small" />
                                                 {data.Media.popularity}
                                             </p>
                                             {data.Media.averageScore && (

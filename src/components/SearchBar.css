@@ -119,3 +119,9 @@
     font-size: .9rem;
     margin: 0;
 }
+
+@media (max-width: 900px) {
+    .search-bar {
+        display: none;
+    }
+}

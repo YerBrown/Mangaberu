@@ -463,7 +463,20 @@ function MediaFilter() {
                             </button>
                         </div>
                         {loading ? (
-                            <p>Loading ...</p>
+                            <div className="media-items-container">
+                                {Array.from({ length: 10 }).map((_, index) => (
+                                    <button
+                                        key={`empty-${index}`}
+                                        className="media-item"
+                                    >
+                                        <img
+                                            src="/src/assets/images/M-White.png"
+                                            alt="Dark Theme Logo"
+                                        />
+                                        <h4>Loading...</h4>
+                                    </button>
+                                ))}
+                            </div>
                         ) : error ? (
                             <p>Error loading</p>
                         ) : data ? (
@@ -494,7 +507,16 @@ function MediaFilter() {
                                     </button>
                                 ))}
                             </div>
-                        ) : null}
+                        ) : (
+                            <div className="media-items-container">
+                                {Array.from({ length: 10 }).map((_, index) => (
+                                    <div
+                                        key={`empty-${index}`}
+                                        className="media-item"
+                                    ></div>
+                                ))}
+                            </div>
+                        )}
                         <div className="bottom-part">
                             <button
                                 disabled={currentPage == 1}

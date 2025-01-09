@@ -137,3 +137,10 @@ section#discover-by-filter {
     margin: 0;
     font-size: .8rem;
 }
+
+@media (max-width: 900px) {
+
+    #discover-by-filter .sort-filters-container {
+        padding: 20px;
+    }
+}

@@ -128,3 +128,17 @@
     align-items: center;
     gap: 5px;
 }
+
+@media (max-width: 900px) {
+    #top-10-score-section {
+        flex-direction: column;
+    }
+
+    #top-10-score-section>h2 {
+        width: 100%;
+    }
+
+    #top-10-score-section>.top-10-container {
+        width: 100%;
+    }
+}

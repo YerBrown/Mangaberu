@@ -100,7 +100,7 @@ function MediaGallery({ sort, page, perPage, season, seasonYear }) {
                         Manga
                     </button>
                 </div>
-                <Link to="/trending">View All</Link>
+                <div>{""}</div>
             </div>
 
             <div className="media-gallery">

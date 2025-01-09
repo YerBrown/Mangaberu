@@ -107,3 +107,11 @@
     margin: 0;
     color: var(--text-color-1);
 }
+
+@media (max-width: 900px) {
+    #my-list-summary-section .my-list-container {
+        grid-template-columns: 100%;
+        grid-template-rows: repeat(4, 400px);
+    }
+
+}

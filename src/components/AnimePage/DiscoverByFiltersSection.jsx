@@ -10,17 +10,48 @@ import StarRateRoundedIcon from "@mui/icons-material/StarRateRounded";
 import { GET_GENRES, GET_MEDIA_BY_FILTER } from "../../graphql/queries";
 import "./DiscoverByFiltersSection.css";
 
+// Componente para mostrar placeholders mientras se cargan datos
+function LoadingPlaceholders({ count }) {
+    return Array.from({ length: count }).map((_, index) => (
+        <button key={`empty-${index}`} className="anime-card">
+            <img src="/src/assets/images/M-White.png" alt="Dark Theme Logo" />
+            <h4>Loading...</h4>
+        </button>
+    ));
+}
+
+// Componente para renderizar los filtros de género
+function GenreFilters({ genres, selectedGenres, onToggle }) {
+    return (
+        <div className="genre-filters-container">
+            {genres.map((genre) => (
+                <button
+                    key={genre}
+                    onClick={() => onToggle(genre)}
+                    className={
+                        selectedGenres.includes(genre)
+                            ? "filter-button active"
+                            : "filter-button"
+                    }
+                >
+                    {genre}
+                </button>
+            ))}
+        </div>
+    );
+}
+
+// Componente principal
 function DiscoverByFiltersSection() {
     const [sortFilter, setSortFilter] = useState("TRENDING_DESC");
     const [genreFilter, setGenreFilter] = useState([]);
     const navigate = useNavigate();
-    // Query para obtener géneros
+
     const [
         fetchGenres,
         { data: genreData, loading: loadingGenres, error: errorGenres },
     ] = useLazyQuery(GET_GENRES);
 
-    // Query para obtener animes con filtros
     const [fetchAnimes, { data, loading, error, refetch }] = useLazyQuery(
         GET_MEDIA_BY_FILTER,
         {
@@ -34,23 +65,6 @@ function DiscoverByFiltersSection() {
         }
     );
 
-    const handleNavigate = (animeId) => {
-        navigate(`/anime/${animeId}`);
-    };
-
-    const handleSortFilterChange = (filter) => {
-        setSortFilter(filter);
-    };
-
-    // Manejo de cambios en géneros
-    const handleGenreFilterToggle = (filter) => {
-        setGenreFilter((prevGenres) =>
-            prevGenres.includes(filter)
-                ? prevGenres.filter((g) => g !== filter)
-                : [...prevGenres, filter]
-        );
-    };
-
     useEffect(() => {
         if (!genreData || genreData.length === 0) {
             fetchGenres();
@@ -63,61 +77,72 @@ function DiscoverByFiltersSection() {
         }
     }, [sortFilter, genreFilter, fetchAnimes]);
 
+    const handleNavigate = (animeId) => {
+        navigate(`/anime/${animeId}`);
+    };
+
+    const handleSortFilterChange = (filter) => {
+        setSortFilter(filter);
+    };
+
+    const handleGenreFilterToggle = (filter) => {
+        setGenreFilter((prevGenres) =>
+            prevGenres.includes(filter)
+                ? prevGenres.filter((g) => g !== filter)
+                : [...prevGenres, filter]
+        );
+    };
+
+    const genresToDisplay = (genreData?.GenreCollection || []).filter(
+        (genre) => !["Hentai", "Ecchi", "Mahou Shoujo"].includes(genre)
+    );
+
     return (
         <section id="discover-by-filter">
             <div className="sort-filters-container">
-                <button
-                    className={sortFilter === "TRENDING_DESC" ? "active" : ""}
-                    onClick={() => handleSortFilterChange("TRENDING_DESC")}
-                >
-                    <TrendingUpRounded fontSize="medium" />
-                    Trending Now
-                </button>
-                <button
-                    className={sortFilter === "POPULARITY_DESC" ? "active" : ""}
-                    onClick={() => handleSortFilterChange("POPULARITY_DESC")}
-                >
-                    <LocalFireDepartmentRounded fontSize="medium" />
-                    Popular Now
-                </button>
-                <button
-                    className={sortFilter === "SCORE_DESC" ? "active" : ""}
-                    onClick={() => handleSortFilterChange("SCORE_DESC")}
-                >
-                    <StarRounded fontSize="medium" />
-                    Best Score
-                </button>
-            </div>
+                {["TRENDING_DESC", "POPULARITY_DESC", "SCORE_DESC"].map(
+                    (filter, index) => {
+                        const icons = [
+                            <TrendingUpRounded fontSize="medium" />,
+                            <LocalFireDepartmentRounded fontSize="medium" />,
+                            <StarRounded fontSize="medium" />,
+                        ];
+                        const labels = [
+                            "Trending Now",
+                            "Popular Now",
+                            "Best Score",
+                        ];
 
-            <div className="genre-filters-container">
-                {loadingGenres ? (
-                    <p>Loading genres...</p>
-                ) : errorGenres ? (
-                    <p>Error loading genres</p>
-                ) : (
-                    genreData?.GenreCollection.map(
-                        (genre) =>
-                            genre !== "Hentai" && (
-                                <button
-                                    key={genre}
-                                    onClick={() =>
-                                        handleGenreFilterToggle(genre)
-                                    }
-                                    className={
-                                        genreFilter.includes(genre)
-                                            ? "filter-button active"
-                                            : "filter-button"
-                                    }
-                                >
-                                    {genre}
-                                </button>
-                            )
-                    )
+                        return (
+                            <button
+                                key={filter}
+                                className={
+                                    sortFilter === filter ? "active" : ""
+                                }
+                                onClick={() => handleSortFilterChange(filter)}
+                            >
+                                {icons[index]} {labels[index]}
+                            </button>
+                        );
+                    }
                 )}
             </div>
+
+            {loadingGenres ? (
+                <p>Loading genres...</p>
+            ) : errorGenres ? (
+                <p>Error loading genres</p>
+            ) : (
+                <GenreFilters
+                    genres={genresToDisplay}
+                    selectedGenres={genreFilter}
+                    onToggle={handleGenreFilterToggle}
+                />
+            )}
+
             <div className="anime-container">
                 {loading ? (
-                    <p>Loading...</p>
+                    <LoadingPlaceholders count={10} />
                 ) : error ? (
                     <p>{error.message}</p>
                 ) : (
@@ -129,9 +154,8 @@ function DiscoverByFiltersSection() {
                         >
                             <img
                                 src={
-                                    anime.coverImage.extraLarge
-                                        ? anime.coverImage.extraLarge
-                                        : anime.coverImage.large
+                                    anime.coverImage.extraLarge ||
+                                    anime.coverImage.large
                                 }
                                 alt={anime.title.english}
                             />

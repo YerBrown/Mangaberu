@@ -1,8 +1,12 @@
 .user-menu {
     width: 100%;
     min-height: 100%;
+    padding-top: 70px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
 
-
+    flex-direction: column;
 }
 
 .user-menu .sign-in-container {
@@ -118,4 +122,19 @@
     margin: 0;
     padding: 20px 0;
     border-bottom: 2px solid var(--secondary-color);
+}
+
+@media (max-width: 900px) {
+    .user-menu .user-options {
+        flex-wrap: wrap;
+    }
+
+    .user-menu .main-content {
+        flex-direction: column;
+        box-sizing: border-box;
+        width: 100%;
+        height: calc(100% - 300px);
+        padding: 20px;
+        overflow: hidden;
+    }
 }

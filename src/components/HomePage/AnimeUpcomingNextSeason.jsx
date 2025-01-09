@@ -119,8 +119,8 @@ function AnimeUpcomingNextSeason({ season, seasonYear }) {
                                 handleNavigateToAnime(animesArray[0].id)
                             }
                         >
+                            <InfoRoundedIcon fontSize="small" />
                             More Info
-                            <InfoRoundedIcon />
                         </button>
                     </div>
                     <div className="change-anime-container">
