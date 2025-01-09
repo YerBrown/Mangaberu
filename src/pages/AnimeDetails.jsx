@@ -198,7 +198,7 @@ function AnimeDetails() {
                                     <div className="details">
                                         <div className="top-part">
                                             <p>
-                                                <HeartBrokenRoundedIcon fontSize="small" />
+                                                <RemoveRedEyeRoundedIcon fontSize="small" />
                                                 {data.Media.popularity}
                                             </p>
                                             {data.Media.averageScore && (
