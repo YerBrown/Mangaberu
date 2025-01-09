@@ -153,6 +153,7 @@
     text-overflow: ellipsis;
     text-align: left;
     font-size: 2rem;
+    height: 60px;
 }
 
 .current-anime-data h4 {

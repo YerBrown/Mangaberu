@@ -110,48 +110,54 @@ function TrendingMangaSection() {
                                 alt="current-anime-cover"
                             />
                             <div className="buttons-container">
-                                <button
-                                    onClick={() =>
-                                        openModal(
-                                            data.Page.media[
+                                {userData && (
+                                    <>
+                                        <button
+                                            onClick={() =>
+                                                openModal(
+                                                    data.Page.media[
+                                                        currentTrendingIndex
+                                                    ].mediaListEntry,
+                                                    data.Page.media[
+                                                        currentTrendingIndex
+                                                    ],
+                                                    refetch
+                                                )
+                                            }
+                                        >
+                                            {data.Page.media[
                                                 currentTrendingIndex
-                                            ].mediaListEntry,
-                                            data.Page.media[
+                                            ].mediaListEntry ? (
+                                                <>
+                                                    <EditNoteRoundedIcon fontSize="small" />
+                                                    Edit List Entry
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <PlaylistAddRoundedIcon fontSize="small" />
+                                                    Add To List
+                                                </>
+                                            )}
+                                        </button>
+                                        <button
+                                            onClick={() =>
+                                                handleToggleFavourite(
+                                                    data.Page.media[
+                                                        currentTrendingIndex
+                                                    ]
+                                                )
+                                            }
+                                        >
+                                            {data.Page.media[
                                                 currentTrendingIndex
-                                            ],
-                                            refetch
-                                        )
-                                    }
-                                >
-                                    {data.Page.media[currentTrendingIndex]
-                                        .mediaListEntry ? (
-                                        <>
-                                            <EditNoteRoundedIcon fontSize="small" />
-                                            Edit List Entry
-                                        </>
-                                    ) : (
-                                        <>
-                                            <PlaylistAddRoundedIcon fontSize="small" />
-                                            Add To List
-                                        </>
-                                    )}
-                                </button>
-                                <button
-                                    onClick={() =>
-                                        handleToggleFavourite(
-                                            data.Page.media[
-                                                currentTrendingIndex
-                                            ]
-                                        )
-                                    }
-                                >
-                                    {data.Page.media[currentTrendingIndex]
-                                        .isFavourite ? (
-                                        <HeartBrokenRoundedIcon />
-                                    ) : (
-                                        <FavoriteOutlinedIcon />
-                                    )}
-                                </button>
+                                            ].isFavourite ? (
+                                                <HeartBrokenRoundedIcon />
+                                            ) : (
+                                                <FavoriteOutlinedIcon />
+                                            )}
+                                        </button>
+                                    </>
+                                )}
                             </div>
                         </div>
 

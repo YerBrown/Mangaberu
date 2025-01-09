@@ -111,44 +111,51 @@ function AnimeDetails() {
                                     src={data.Media.coverImage.extraLarge}
                                     alt={data.Media.title.romaji}
                                 />
-                                <button
-                                    onClick={() =>
-                                        openModal(
-                                            data.Media.mediaListEntry,
-                                            data.Media,
-                                            refetch
-                                        )
-                                    }
-                                >
-                                    {data.Media.mediaListEntry ? (
-                                        <>
-                                            <EditNoteRoundedIcon fontSize="small" />
-                                            Edit List
-                                        </>
-                                    ) : (
-                                        <>
-                                            <PlaylistAddRoundedIcon fontSize="small" />
-                                            Add To List
-                                        </>
-                                    )}
-                                </button>
-                                <button
-                                    onClick={() =>
-                                        handleToggleFavourite(data.Media)
-                                    }
-                                >
-                                    {data.Media.isFavourite ? (
-                                        <>
-                                            <FavoriteOutlinedIcon fontSize="small" />
-                                            Remove Favourite
-                                        </>
-                                    ) : (
-                                        <>
-                                            <FavoriteBorderRoundedIcon fontSize="small" />
-                                            Add To Favourites
-                                        </>
-                                    )}
-                                </button>
+                                {userData && (
+                                    <>
+                                        <button
+                                            onClick={() =>
+                                                openModal(
+                                                    data.Media.mediaListEntry,
+                                                    data.Media,
+                                                    refetch
+                                                )
+                                            }
+                                        >
+                                            {data.Media.mediaListEntry ? (
+                                                <>
+                                                    <EditNoteRoundedIcon fontSize="small" />
+                                                    Edit List
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <PlaylistAddRoundedIcon fontSize="small" />
+                                                    Add To List
+                                                </>
+                                            )}
+                                        </button>
+                                        <button
+                                            onClick={() =>
+                                                handleToggleFavourite(
+                                                    data.Media
+                                                )
+                                            }
+                                        >
+                                            {data.Media.isFavourite ? (
+                                                <>
+                                                    <FavoriteOutlinedIcon fontSize="small" />
+                                                    Remove Favourite
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <FavoriteBorderRoundedIcon fontSize="small" />
+                                                    Add To Favourites
+                                                </>
+                                            )}
+                                        </button>
+                                    </>
+                                )}
+
                                 {data.Media.externalLinks.map(
                                     (exterlanLink) =>
                                         exterlanLink.type === "STREAMING" && (
