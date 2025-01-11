@@ -28,7 +28,8 @@ function User() {
 
     const handleLogin = () => {
         const clientId = "23300";
-        const redirectUri = "https://localhost:3000/auth-redirect";
+        const redirectUri =
+            "https://mangaberu.yeraymorenogarcia.com/auth-redirect";
         const authUrl = `https://anilist.co/api/v2/oauth/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}`;
         console.log("Redirigiendo a:", authUrl);
         window.location.href = authUrl;
