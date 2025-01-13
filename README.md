@@ -4,9 +4,9 @@ MangaBeru es una aplicación web que te permite gestionar y descubrir tu conteni
 
 ## Características principales
 
-### Gestión de listas:
+#### Gestión de listas:
 
-#### Clasifica tus animes y mangas en tres listas principales:
+##### Clasifica tus animes y mangas en tres listas principales:
 
 Planeado, En curso y Completado.
 
@@ -31,7 +31,7 @@ Planeado, En curso y Completado.
 ### Frontend
 
 -   React
--   Apollo Client para gestión de estado y caché
+-   Apollo Client 
 
 ### Backend
 
