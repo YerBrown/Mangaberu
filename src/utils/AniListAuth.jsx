@@ -17,13 +17,20 @@ function AniListAuth() {
 
             try {
                 const response = await fetch(
-                    "http://localhost:4000/api/auth/token",
+                    "https://anilist.co/api/v2/oauth/token",
                     {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
+                            Accept: "application/json",
                         },
-                        body: JSON.stringify({ code }),
+                        body: JSON.stringify({
+                            grant_type: "authorization_code",
+                            client_id: import.meta.env.VITE_CLIENT_ID,
+                            client_secret: import.meta.env.VITE_CLIENT_SECRET,
+                            redirect_uri: import.meta.env.VITE_REDIRECT_URI,
+                            code: code,
+                        }),
                     }
                 );
 
