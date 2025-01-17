@@ -17,7 +17,7 @@ function AniListAuth() {
 
             try {
                 const response = await fetch(
-                    "http://localhost:4000/api/auth/token",
+                    "https://server-mangaberu.yeraymorenogarcia.com/api/auth/token",
                     {
                         method: "POST",
                         headers: {
